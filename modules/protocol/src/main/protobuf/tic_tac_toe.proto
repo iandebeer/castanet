@@ -2,12 +2,6 @@ syntax = "proto3";
 
 package ee.mn8;
 
-message Move {
-  int32 row = 1;
-  int32 col = 2;
-  bool cross = 3;
-}
-
 enum Opponent {
     HUMAN = 0;
     COMPUTER = 1;
@@ -15,38 +9,57 @@ enum Opponent {
 
 message Invite {
     Opponent type = 1;
-    optional string name = 2;
+  //  optional string name = 2;
 }
 
-message Acceptance {
+message Accept {
     oneof response {
        Invite accepted = 1;
-       Quit quit = 2;
+       End quit = 2;
     }
 }
 
-message Quit {
-    enum Outcome {
-        ABADON = 0;
-        LOOSE = 1;
-        WIN = 2; 
-    }
-    Outcome outcome = 1;
+message Move {
+  enum Symbol {
+     NOUGHT = 0;
+     CROSS = 1;
+  }
+  int32 row = 1;
+  int32 col = 2;
+  Symbol symbol = 3;
 }
 
 message Response {
   enum Outcome {
     VALID = 0;
     INVALID_PLAY = 1;
-    INVALID_POSITION = 2;
+    I_WON = 2;
     YOU_WON = 3;
   }
   Outcome result = 1;
   string message = 2;
 }
 
+message End {
+    enum Result {
+        ABADON = 0;
+        LOOSE = 1;
+        WIN = 2; 
+    }
+    Result result = 1;
+}
+
+message Acknowledge {
+    enum Result {
+        CONGRATULATION = 0;
+        THANKS = 1;
+        BAD = 2; 
+    }
+    Result result = 1;
+}
+
 service TicTacToe {
-    rpc InitiatePlay (Invite) returns (Acceptance);
+    rpc InitiatePlay (Invite) returns (Accept);
     rpc MakeMove (Move) returns (Response);
-    rpc Resign (Quit) returns (Response);
+    rpc Terminate (End) returns (Acknowledge);
 }

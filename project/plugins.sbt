@@ -1,8 +1,7 @@
-addSbtPlugin("ch.epfl.lamp" % "sbt-dotty" % "0.5.3")
+resolvers += Resolver.mavenLocal
 
-addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.2.18")
+addSbtPlugin("ch.epfl.lamp" % "sbt-dotty" % "0.5.5")
 
-addSbtPlugin("com.thesamet" % "sbt-protoc" % "1.0.2")
+addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.2.21")
 
-libraryDependencies += "com.thesamet.scalapb" %% "compilerplugin" % "0.11.0-M7"
-
+addSbtPlugin("org.typelevel" % "sbt-fs2-grpc" % "2.1.2")

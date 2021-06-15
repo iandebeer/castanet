@@ -9,7 +9,7 @@ import ee.mn8._
 1+1
 val a = s"${Main.msg} :)"
 
-s"I can sssert:$a + "
+s"I can assert:$a + "
 ```
 
 ## this is another thing

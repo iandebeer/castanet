@@ -1,21 +1,69 @@
-import cats._
-import cats.effect._
-import scala.reflect.io.Path
-import cats.effect.IOApp
-import fs2.Stream
 
-val s0 = Stream.empty
-val s1 = Stream.emit(1)
-(Stream(1,2,3) ++ Stream(4,5)).toList
-def unit(companyId: Int): Unit = ()
-unit(1)
-1+1
-val l0 : List[String] = List.empty[Nothing] 
-val l1 : List[Unit] = List.empty[Nothing]
-val l3 = List(())
+import ee.mn8.castanet.Dag
+val zzz = """{
+  "tasks" : [
+    {
+      "name" : "A",
+      "template" : "echo",
+      "arguments" : {
+        "parameters" : [
+          {
+            "name" : "message",
+            "value" : "A"
+          }
+        ]
+      }
+    },
+    {
+      "name" : "B",
+      "dependencies" : [
+        "A"
+      ],
+      "template" : "echo",
+      "arguments" : {
+        "parameters" : [
+          {
+            "name" : "message",
+            "value" : "B"
+          }
+        ]
+      }
+    },
+    {
+      "name" : "C",
+      "dependencies" : [
+        "A"
+      ],
+      "template" : "echo",
+      "arguments" : {
+        "parameters" : [
+          {
+            "name" : "message",
+            "value" : "C"
+          }
+        ]
+      }
+    },
+    {
+      "name" : "D",
+      "dependencies" : [
+        "B",
+        "C"
+      ],
+      "template" : "echo",
+      "arguments" : {
+        "parameters" : [
+          {
+            "name" : "message",
+            "value" : "D"
+          }
+        ]
+      }
+    }
+  ]
+}"""
 
-val u : Id[Unit] = println("hello")
-val l :List[Unit] = List(())
-val c  = println("").getClass()
+import io.circe._, io.circe.parser._
+import io.circe.generic.auto._, io.circe.syntax._
 
-1+1
+decode[Dag](zzz)

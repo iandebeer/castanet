@@ -1,14 +1,14 @@
 val Scala3 = "3.0.0"
-val Scala213 = "2.13.5"
+val Scala213 = "2.13.6"
 
 val catsVersion = "2.6.1"
 val ceVersion = "3.1.1" 
 val fs2Version = "3.0.4"
 val munitVersion = "0.7.26"
-val muniteCEVersion = "1.0.3"
+val muniteCEVersion = "1.0.5"
 val munitCheckEffVersion = "0.7.1"
-val grpcVersion = "1.38.0"
-val googleProtoVersion = "3.17.1"
+val grpcVersion = "1.38.1"
+val googleProtoVersion = "3.17.3"
 val circeVersion = "0.14.1"
 val monocleVersion = "3.0.0-RC2"
 
@@ -116,7 +116,7 @@ lazy val server = project
  lazy val docs = project // new documentation project
   .in(file("./castanet-docs"))
   .settings(
-    scalaVersion := Scala3,
+   // scalaVersion := Scala3,
     libraryDependencies += ("org.scalameta" %% "mdoc" % "2.2.21")
     //.withDottyCompat(scalaVersion.value)
   )

@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package ee.mn8.castanet
+package ee.mn8
+package castanet
 
 import fs2.{Stream,text}
 import fs2.text._
 import fs2.io.file._
-import cats._
-import cats.effect._
-import cats.syntax.either._
+import cats.*, cats.syntax.all.*, cats.implicits.*
+import cats.effect.*
+import cats.instances.all.*
 
 import scala.concurrent.duration._
 import java.nio.file.Paths
@@ -31,6 +32,9 @@ import monocle.syntax.all._
 import monocle.Lens
 import scala.collection.mutable
 import scala.collection.immutable.ListSet
+import ee.mn8.castanet.PetriElement
+import org.yaml.snakeyaml.nodes.NodeId
+//import ee.mn8.castanet.ColouredPetriNet
 
 case class Workflow(apiVersion:String, kind:String, metadata:Metadata, spec:Spec)
 case class Spec(entrypoint:String, templates:List[Template])
@@ -45,34 +49,49 @@ case class Parameter(name:String,value:String)
 case class Inputs(parameters:List[Parameter])
 case class Container(image:String, command:List[String])
 
-sealed trait CPN
+sealed trait PetriElement
+sealed trait ConcatenableProcess extends PetriElement with Monoid[PetriElement] 
 
-trait ConcatenableProcess extends CPN with Monoid[CPN] 
+type NodeId = Int
 
-type Id = Long
+enum Arc extends PetriElement:
+  val from:NodeId
+  val to:NodeId
+  case  Timed(from:NodeId, to:NodeId,interval: Long) extends Arc
+  case  Weighted(from:NodeId, to:NodeId, weight:Int) extends Arc
 
-case class Place(id:Id, name:String, capacity:Int) extends CPN
-case class Transition(id:Id, name: String, fn: Place => Place) extends CPN
+enum LinkableElement extends PetriElement :
+  val id:NodeId
+  val name: String
+  case  Place(id:NodeId, name:String, capacity:Int) extends LinkableElement
+  case  Transition(id:NodeId, name: String, fn: LinkableElement => Unit) extends LinkableElement
 
-enum Arc(from:Id, to:Id) extends CPN:
-  case Timed(from:Id, to:Id,interval: Long) extends Arc(from:Id, to:Id)
-  case Weighted(from:Id, to:Id, weight:Int) extends Arc(from:Id, to:Id)
+type PetriGraph = Map[NodeId,ListSet[LinkableElement]] 
 
 
+case class PetriNetBuilder(nodes:ListSet[PetriElement] = ListSet()) extends ConcatenableProcess :
+  case class ColouredPetriNet(val graph: PetriGraph) 
+// Set is a Semigroup but not ListSet
+  given [T]:Semigroup[ListSet[T]] = Semigroup.instance[ListSet[T]](_ ++ _)
 
-case class Net(arcs:Set[Arc] = ListSet(), places:Set[Place] = ListSet(), transitions: Set[Transition] = ListSet()) extends ConcatenableProcess :
-  def empty =  Net()
-  override def combine(n:CPN, a:CPN):ConcatenableProcess = Net().add(n).add(a)
+  def empty = PetriNetBuilder()  
+  override def combine(n:PetriElement, a:PetriElement):ConcatenableProcess = PetriNetBuilder().add(n).add(a)
 
-  val cpn = Map[Id,CPN]()
-  def add[P <: CPN](p:P): Net = 
-    p match 
-      case p:Place => this.focus(_.places).replace(places + p) 
-      case a:Arc => this.focus(_.arcs).replace(arcs + a) 
-      case t:Transition => this.focus(_.transitions).replace(transitions + t) 
-      case _ => println("not implemented ")
-        this
-
+  def add[P <: PetriElement](p:P): PetriNetBuilder = 
+    this.focus(_.nodes).replace(nodes + p)
+  def add[P <: PetriElement](p:ListSet[P]): PetriNetBuilder = 
+    this.focus(_.nodes).replace(nodes ++ p)
+  def build(): ColouredPetriNet = 
+    val linkables = nodes.foldRight(Map[NodeId,LinkableElement]())((n,m) => n match 
+      case p:LinkableElement => m + (p.id -> p) 
+      case _ => m
+    )
+    val linked = nodes.foldRight(Map[NodeId,ListSet[LinkableElement]]())((n,m) => n match 
+      case t:Arc => m |+| Map[NodeId,ListSet[LinkableElement]](t.from -> ListSet(linkables(t.to)))
+      case _ => m
+    )
+    new ColouredPetriNet(linked)
+  
 object Petri extends IOApp.Simple:
   def fromYaml(s:String) =
     for

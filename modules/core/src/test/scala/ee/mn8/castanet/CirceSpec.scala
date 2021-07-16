@@ -4,6 +4,7 @@ import io.circe._, io.circe.parser._
 import io.circe.generic.auto._, io.circe.syntax._
 import scala.io.Source
 import scala.collection.immutable.ListSet
+import scodec.bits._
 
 class CirceSpec extends FunSuite {
   val t = Source
@@ -49,26 +50,26 @@ class CirceSpec extends FunSuite {
     import Arc._
     //val p = PetriNetBuilder.ColouredPetriNet(Map[NodeId,ListSet[LinkableElement]]())
     val p1 = Place(1, "start", 1)
-    val p2 = Place(2, "left", 2)
+    val p2 = Place(2, "left", 3)
     val p3 = Place(3, "right", 1)
-    val p4 = Place(4, "joint", 1)
+    val p4 = Place(4, "joint", 3)
     val p5 = Place(5, "end", 1)
 
     val t1 = Transition(6, "splitter", (l: LinkableElement) => println(l))
     val t2 = Transition(7, "joiner", (l: LinkableElement) => println(l))
     val t3 = Transition(8, "continuer", (l: LinkableElement) => println(l))
 
-    val n = PetriNetBuilder().add(ListSet(p1, p2, p3, p4, p5))
+    val n = PetriNetBuilder().addAll(ListSet(p1, p2, p3, p4, p5))
     //arcs = ListSet(Arc.Weighted(from = 1l,to = 2l,weight = 1)), places = ListSet[Place](p1), transitions = ListSet[Transition](Transition(id = 2l, name = "test", fn = t)))
-    val n2 = n.add(ListSet(t1, t2, t3))
+    val n2 = n.addAll(ListSet(t1, t2, t3))
     val n3 = n2
       .add(Weighted(1, 6, 1))
       .add(Weighted(6, 2, 1))
       .add(Weighted(6, 3, 1))
-      .add(Weighted(2, 7, 1))
+      .add(Weighted(2, 7, 2))
       .add(Weighted(3, 7, 1))
       .add(Weighted(7, 4, 1))
-      .add(Weighted(4, 8, 1))
+      .add(Weighted(4, 8, 3))
       .add(Weighted(8, 5, 1))
     //val x = n3.ColouredPetriNet(Map[NodeId,ListSet[LinkableElement]]())
     println("_" * 10)
@@ -76,6 +77,33 @@ class CirceSpec extends FunSuite {
     println("_" * 10)
     println(s"Linkables: ${n3.build()}")
     println("_" * 10)
-    PetriPrinter(graph = n3.build().graph).print()
+    val pn = n3.build()
+    val places = pn.elements.values.collect { case p: Place =>
+      p
+    }
+    val dimensions = (places.size, places.maxBy(p => p.capacity).capacity)
+    println(dimensions)
+
+    val m1 = Markers(pn)
+    println(s"${m1}\n${m1.toStateVector}")
+
+    val m2 = m1.setMarker(Marker(1, bin"1"))
+    println(s"${m2}\n${m2.toStateVector}")
+
+    val m3 = m2.setMarker(Marker(2, bin"1")).setMarker(Marker(4, bin"11"))
+    println(s"${m3}\n${m3.toStateVector}")
+
+    val m4 = Markers(pn, m3.toStateVector)
+    println(s"${m4}\n${m4.toStateVector} \n${m4.serialize}")
+
+    val m5 = Markers(pn, m4.serialize)
+    println(s"${m5}\n${m5.toStateVector} \n${m5.serialize}")
+    PetriPrinter(fileName = "petrinet1", petriNet = pn).print(Option(m3))
+    val m6 = pn.step(m3, true, 1)
+    PetriPrinter(fileName = "petrinet2", petriNet = pn).print(Option(m6))
+    val m7 = pn.step(m6, true, 2)
+    PetriPrinter(fileName = "petrinet3", petriNet = pn).print(Option(m7))
+    val m8 = pn.step(m7, true, 3)
+    PetriPrinter(fileName = "petrinet4", petriNet = pn).print(Option(m8))
   }
 }

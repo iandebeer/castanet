@@ -11,6 +11,7 @@ val grpcVersion = "1.38.1"
 val googleProtoVersion = "3.17.3"
 val circeVersion = "0.14.1"
 val monocleVersion = "3.0.0-RC2"
+val scodecVersion = "1.1.27"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 Global / scalaVersion := Scala3
@@ -42,6 +43,7 @@ lazy val core = project
        "io.grpc" % "grpc-netty" % grpcVersion,
       "io.grpc" % "grpc-services" % grpcVersion,
       "dev.optics" %% "monocle-core"  % monocleVersion,
+       "org.scodec" %% "scodec-bits" % scodecVersion,
       "org.scalameta" %% "munit" % munitVersion % Test,
       "org.scalameta" %% "munit-scalacheck" % munitVersion % Test,
       "org.typelevel" %% "munit-cats-effect-3" % muniteCEVersion % Test,

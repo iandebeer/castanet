@@ -5,6 +5,7 @@ import io.circe.generic.auto._, io.circe.syntax._
 import scala.io.Source
 import scala.collection.immutable.ListSet
 import scodec.bits._
+import cats.data.State
 
 class CirceSpec extends FunSuite {
   val t = Source
@@ -99,11 +100,17 @@ class CirceSpec extends FunSuite {
     val m5 = Markers(pn, m4.serialize)
     println(s"${m5}\n${m5.toStateVector} \n${m5.serialize}")
     PetriPrinter(fileName = "petrinet1", petriNet = pn).print(Option(m3))
-    val m6 = pn.step(m3, true, 1)
-    PetriPrinter(fileName = "petrinet2", petriNet = pn).print(Option(m6))
-    val m7 = pn.step(m6, true, 2)
-    PetriPrinter(fileName = "petrinet3", petriNet = pn).print(Option(m7))
-    val m8 = pn.step(m7, true, 3)
-    PetriPrinter(fileName = "petrinet4", petriNet = pn).print(Option(m8))
+    val steps: State[Step, Unit] =
+      for
+        p1 <- pn.step
+        p2 <- pn.step
+        p3 <- pn.step
+      yield (
+        PetriPrinter(fileName = "petrinet2", petriNet = pn).print(Option(p1)),
+        PetriPrinter(fileName = "petrinet3", petriNet = pn).print(Option(p2)),
+        PetriPrinter(fileName = "petrinet4", petriNet = pn).print(Option(p3))
+      )
+    steps.run(Step(m3, true, 1)).value
+
   }
 }

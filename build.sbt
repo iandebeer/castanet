@@ -1,20 +1,20 @@
-val Scala3 = "3.0.0"
+val Scala3   = "3.0.1"
 val Scala213 = "2.13.6"
 
-val catsVersion = "2.6.1"
-val ceVersion = "3.1.1" 
-val fs2Version = "3.0.4"
-val munitVersion = "0.7.26"
-val muniteCEVersion = "1.0.5"
+val catsVersion          = "2.6.1"
+val ceVersion            = "3.1.1"
+val fs2Version           = "3.0.6"
+val munitVersion         = "0.7.27"
+val muniteCEVersion      = "1.0.5"
 val munitCheckEffVersion = "0.7.1"
-val grpcVersion = "1.38.1"
-val googleProtoVersion = "3.17.3"
-val circeVersion = "0.14.1"
-val monocleVersion = "3.0.0-RC2"
-val scodecVersion = "1.1.27"
+val grpcVersion          = "1.39.0"
+val googleProtoVersion   = "3.17.3"
+val circeVersion         = "0.14.1"
+val monocleVersion       = "3.0.0"
+val scodecVersion        = "1.1.27"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
-Global / scalaVersion := Scala3
+Global / scalaVersion         := Scala3
 ThisBuild / initialCommands := """
   |import cats._, data._, syntax.all._
   |import cats.effect._, concurrent._, cats.effect.implicits._
@@ -35,18 +35,18 @@ lazy val core = project
     name := "core",
     resolvers += "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository",
     libraryDependencies ++= Seq(
-      "org.typelevel" %% "cats-core" % catsVersion,
-      "co.fs2" %% "fs2-core" % fs2Version,
-      "co.fs2" %% "fs2-io" % fs2Version,
-      "org.typelevel" %% "cats-effect" % ceVersion,
-      "com.google.protobuf" % "protobuf-java" % googleProtoVersion % "protobuf",
-       "io.grpc" % "grpc-netty" % grpcVersion,
-      "io.grpc" % "grpc-services" % grpcVersion,
-      "dev.optics" %% "monocle-core"  % monocleVersion,
-       "org.scodec" %% "scodec-bits" % scodecVersion,
-      "org.scalameta" %% "munit" % munitVersion % Test,
-      "org.scalameta" %% "munit-scalacheck" % munitVersion % Test,
-      "org.typelevel" %% "munit-cats-effect-3" % muniteCEVersion % Test,
+      "org.typelevel"      %% "cats-core"           % catsVersion,
+      "co.fs2"             %% "fs2-core"            % fs2Version,
+      "co.fs2"             %% "fs2-io"              % fs2Version,
+      "org.typelevel"      %% "cats-effect"         % ceVersion,
+      "com.google.protobuf" % "protobuf-java"       % googleProtoVersion % "protobuf",
+      "io.grpc"             % "grpc-netty"          % grpcVersion,
+      "io.grpc"             % "grpc-services"       % grpcVersion,
+      "dev.optics"         %% "monocle-core"        % monocleVersion,
+      "org.scodec"         %% "scodec-bits"         % scodecVersion,
+      "org.scalameta"      %% "munit"               % munitVersion       % Test,
+      "org.scalameta"      %% "munit-scalacheck"    % munitVersion       % Test,
+      "org.typelevel"      %% "munit-cats-effect-3" % muniteCEVersion    % Test
     ),
     libraryDependencies ++= Seq(
       "io.circe" %% "circe-yaml",
@@ -59,24 +59,24 @@ lazy val core = project
 lazy val stt_compiler = project
   .in(file("modules/stt-compiler"))
   .settings(
-    name := "stt-compiler",
+    name        := "stt-compiler",
     description := "State Transnition Table Compiler",
     libraryDependencies ++= Seq(
       //"org.typelevel" %% "cats-core" % catsVersion,
       //"co.fs2" %% "fs2-core" % fs2Version,
       // ("io.circe" % "circe-yaml" % "0.13.1").cross(CrossVersion.for3Use2_13),
       //"org.typelevel" %% "cats-effect" % ceVersion,
-      "org.scalameta" %% "munit" % munitVersion % Test,
-      "org.scalameta" %% "munit-scalacheck" % munitVersion % Test,
+      "org.scalameta" %% "munit"               % munitVersion    % Test,
+      "org.scalameta" %% "munit-scalacheck"    % munitVersion    % Test,
       "org.typelevel" %% "munit-cats-effect-3" % muniteCEVersion % Test,
-      "com.novocode" % "junit-interface" % "0.11" % Test
+      "com.novocode"   % "junit-interface"     % "0.11"          % Test
     )
   )
 
 lazy val protocol = project
   .in(file("modules/protocol"))
   .settings(
-    name := "protocol",
+    name        := "protocol",
     description := "Protobuf definitions",
     resolvers += Resolver.mavenLocal,
     libraryDependencies ++= Seq(
@@ -88,7 +88,7 @@ lazy val protocol = project
 lazy val client = project
   .in(file("modules/client"))
   .settings(
-    name := "client",
+    name        := "client",
     description := "Protobuf Client",
     libraryDependencies ++= Seq(
       "io.grpc" % "grpc-netty" % grpcVersion
@@ -103,10 +103,10 @@ lazy val server = project
   .in(file("modules/server"))
   .settings(
     scalaVersion := Scala3,
-    name := "server",
-    description := "Protobuf Server",
+    name         := "server",
+    description  := "Protobuf Server",
     libraryDependencies ++= List(
-      "io.grpc" % "grpc-netty" % grpcVersion,
+      "io.grpc" % "grpc-netty"    % grpcVersion,
       "io.grpc" % "grpc-services" % grpcVersion
     ),
     scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage
@@ -115,12 +115,12 @@ lazy val server = project
   .dependsOn(protocol)
   .dependsOn(protocol % "protobuf")
 
- lazy val docs = project // new documentation project
+lazy val docs = project // new documentation project
   .in(file("./castanet-docs"))
   .settings(
-   // scalaVersion := Scala3,
+    // scalaVersion := Scala3,
     libraryDependencies += ("org.scalameta" %% "mdoc" % "2.2.21")
     //.withDottyCompat(scalaVersion.value)
   )
   .dependsOn(core)
-  .enablePlugins(MdocPlugin) 
+  .enablePlugins(MdocPlugin)

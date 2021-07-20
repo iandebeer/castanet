@@ -1,7 +1,7 @@
 # Castanet is a Colored Petri Net for GRPC/HTTP orchestration (e.g. FS2-GRPC or HTTP4S)
 
-Formally Petri Nets consist of Places (circles), Transitions (rectangles) and Arcs (arrows) that connect the Places to Transitions and Transitions to Places.
-It is well suited for describing the orchestration of concurrent processes.
+Formally, a Petri Net is a state transition graph that maps Places (circles) to Transitions (rectangles) and Transitions to Places via Arcs (arrows).
+It is well suited for describing the flow of concurrent processes.
 
 From the Castanet perspective, Petri Nets are directed graphs consisting of Places(States), Transitions(Services) and Arcs(Guards). It models state-transitions of (concurrent) processes.
 It is easy to see (if you are that way inclined) that Petri Nets form a Category of Petri  
@@ -45,18 +45,25 @@ val m3 = m2.setMarker(Marker(2, bin"1")).setMarker(Marker(4, bin"11"))
 
 ![alt text](modules/core/src/test/resource/petrinet1.png "Petri Net 1")
 
-For a given set of Markers (current state) the PetriNet can be asked to step through to the next state (set of markers) as indicated by the guards placed on the Arcs that join Places and Transitions. 
+For a given set of Markers (current state) the PetriNet can be asked to step through to the next state (set of markers) as indicated by the guards placed on the Arcs that join Places and Transitions.
+
+A ColouredPetrNet is traversable using a state monad to step from an initial state
+
+The resulting state changes can be visualized with a PetriPrinter.
 
 ```scala
-val m6 = petrinet.step(m3, true, 1)
+    PetriPrinter(fileName = "petrinet1", petriNet = pn).print(Option(m3))
+    val steps: State[Step, Unit] =
+      for
+        p1 <- pn.step
+        p2 <- pn.step
+        p3 <- pn.step
+      yield (
+        PetriPrinter(fileName = "petrinet2", petriNet = pn).print(Option(p1)),
+        PetriPrinter(fileName = "petrinet3", petriNet = pn).print(Option(p2)),
+        PetriPrinter(fileName = "petrinet4", petriNet = pn).print(Option(p3))
+      )
+    steps.run(Step(m3, true, 1)).value
 ```
 
-![alt text](modules/core/src/test/resource/step1.png "step 1")
-
-The resulting state can be visualized with a PetriPrinter.
-
-```scala
-PetriPrinter(fileName = "petrinet1", petriNet = petrinet).print(Option(m3))
-```
-
-![alt text](modules/core/src/test/resource/petrinet2.png "Petri Net 2")
+![alt text](modules/core/src/test/resource/animate.gif "Petri Net Animation")

@@ -6,10 +6,13 @@ import io.circe.generic.auto._
 import io.circe.syntax._
 import io.circe.parser.decode
 import io.circe.{Decoder, Encoder}
+import io.circe.syntax._
+import io.circe.generic.auto._
 import scala.io.Source
 import scala.collection.immutable.ListSet
 import scodec.bits._
 import cats.data.State
+import scala.quoted.*
 
 class PetriSpec extends FunSuite {
   val t = Source
@@ -53,22 +56,48 @@ class PetriSpec extends FunSuite {
   test("build petri net") {
     import LinkableElement._
     import Arc._
-    val j1 = """{"id":1,"name":"start","capacity":1}"""
+    val jp1 = """{"id":1,"name":"start","capacity":1}"""
 
-    val p1: Place = decode[Place](j1).getOrElse(Place(999, "Error", 0))
+    val p1: Place = decode[Place](jp1).getOrElse(Place(999, "Error", 0))
     val pp1       = p1.asJson.noSpaces
 
     println(s"\nPlace:\n$pp1\n")
-    val p2 = Place(2, "left", 3)
-    val p3 = Place(3, "right", 1)
-    val p4 = Place(4, "joint", 3)
-    val p5 = Place(5, "end", 1)
 
-    val t1 = Transition(6, "splitter", (l: LinkableElement) => println(l))
-    val t2 = Transition(7, "joiner", (l: LinkableElement) => println(l))
-    val t3 = Transition(8, "continuer", (l: LinkableElement) => println(l))
+    val p2: Place = Place(2, "left", 3)
+    val p3: Place = Place(3, "right", 1)
+    val p4: Place = Place(4, "joint", 3)
+    val p5: Place = Place(5, "end", 1)
 
-    val n = PetriNetBuilder().addAll(ListSet(p1, p2, p3, p4, p5))
+    // val rpc =
+
+    val jt1 = """{"id":6,"name":"splitter","capacity":1}""""""
+    val l   = (l: String) => println(l)
+    val s1 = Service(
+      "ee.mn8.castanet",
+      "HelloFs2Grpc",
+      List[RPC](RPC(name = "sayHello", input = "", output = ""))
+    )
+    val r1 = s1.rpcs.head
+    // def func(serviceName: String, rpcName: String): Function1[String, Unit] = ???
+    // '{(l: String) => println(l)}
+
+    val t1: Transition = Transition(6, "splitter", s1, r1)
+    // val tt1       = t1.asJson.noSpaces
+
+    val t2: Transition = Transition(7, "joiner", s1, r1)
+    val t3: Transition = Transition(8, "continuer", s1, r1)
+
+    val n    = PetriNetBuilder().addAll(ListSet(p1, p2, p3, p4, p5))
+    val json = List(p1, p2, p3, p4, p5).asJson.spaces2
+    println(s"\n\nJSON LIST:\n $json")
+    val ps = decode[List[Place]](json)
+    println(s"\n\nJSON decoded: $ps")
+
+    val json2 = List(t1, t2, t3).asJson.spaces2
+    println(s"\n\nJSON LIST:\n $json2")
+    val ts = decode[List[Transition]](json2)
+    println(s"\n\nJSON decoded: $ts")
+
     //arcs = ListSet(Arc.Weighted(from = 1l,to = 2l,weight = 1)), places = ListSet[Place](p1), transitions = ListSet[Transition](Transition(id = 2l, name = "test", fn = t)))
     val n2 = n.addAll(ListSet(t1, t2, t3))
     val n3 = n2

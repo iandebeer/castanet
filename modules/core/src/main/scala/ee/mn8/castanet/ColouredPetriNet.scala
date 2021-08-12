@@ -55,7 +55,7 @@ enum LinkableElement extends PetriElement:
   val id: NodeId
   val name: String
   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement
-  case Transition(id: NodeId, name: String, fn: LinkableElement => Unit) extends LinkableElement
+  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement
 
 type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]
 
@@ -95,6 +95,7 @@ object Markers:
   def apply(cpn: ColouredPetriNet, markers: String): Markers =
     Markers(cpn, BitVector.fromValidBase64(markers, Bases.Alphabets.Base64))
 
+end Markers    
 case class Markers(cpn: ColouredPetriNet, state: SortedMap[NodeId, BitVector]):
   import LinkableElement._
 
@@ -108,6 +109,7 @@ case class Markers(cpn: ColouredPetriNet, state: SortedMap[NodeId, BitVector]):
       case v: BitVector    => b ++ v
   )
   def serialize = toStateVector.toBase64
+end Markers
 
 case class ArcId(from: Int, to: Int):
   import scala.math.Ordered.orderingToOrdered 
@@ -161,6 +163,7 @@ trait ColouredPetriNet:
     // update the state and return the markers resulting from the step (reduced origin and increased destination steps)
     (Step(m2,step.show,step.count + 1),m2)
     )
+end ColouredPetriNet
 
 case class PetriNetBuilder(nodes: ListSet[PetriElement] = ListSet()) extends ConcatenableProcess:
   import Arc._

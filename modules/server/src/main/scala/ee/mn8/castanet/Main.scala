@@ -18,8 +18,7 @@ case class AuthInterceptor(msg: String = "hello") extends ServerInterceptor:
         next.startCall(call,requestHeaders)
 
 class GreeterImpl extends GreeterFs2Grpc[IO, Metadata] :
-  override def sayHello(request: HelloRequest,
-                        clientHeaders: Metadata): IO[HelloReply] =
+  override def sayHello(request: HelloRequest, clientHeaders: Metadata): IO[HelloReply] =
     IO(HelloReply("Request name is: " + request.name))
 
 

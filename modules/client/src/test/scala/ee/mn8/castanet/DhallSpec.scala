@@ -8,7 +8,11 @@ import org.dhallj.yaml.YamlConverter
 import org.dhallj.circe.Converter
 import io.circe.syntax._
 
-class DahlSpec extends FunSuite {
+class DhallSpec extends FunSuite {
+
+  val  jPlace = """
+  {"id":1,"name":"start","capacity":1}
+  """
   val expr1 = parse("""
 let educationalBook =
       \(publisher : Text) ->

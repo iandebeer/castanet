@@ -43,16 +43,20 @@ object Main extends IOApp:
       .intercept(KeycloakInterceptor("hi"))
       .stream[IO]
 
+  
+  //def getStub(fqn:String):fs2.grpc.GeneratedCompanion = ???
+  def func1(stub:GreeterFs2Grpc[cats.effect.IO, Metadata],s:String)(f: Function1[String,String]):String = f(s)
   override def run(args: List[String]): IO[ExitCode] = {
     for {
       dispatcher     <- Stream.resource(Dispatcher[IO])
       managedChannel <- managedChannelStream
-      helloStub = GreeterFs2Grpc.stub[IO](dispatcher, managedChannel, ClientOptions.default)
+      helloStub: GreeterFs2Grpc[cats.effect.IO, Metadata] = GreeterFs2Grpc.stub[IO](dispatcher, managedChannel, ClientOptions.default)
       // _ <- Stream.eval(runProgram(helloStub))
       _ <- Stream.eval(
         for {
           response <- helloStub.sayHello(HelloRequest("Ian de Beer"), new Metadata())
-          _        <- IO(println(response.message))
+          message <- IO(response.message)
+          _        <- IO.println(message)
         } yield ()
       )
 

@@ -1,27 +1,27 @@
 package ee.mn8.castanet
 
-import munit.*
-import org.dhallj.syntax.*
-import org.dhallj.parser.DhallParser.parse
-import org.dhallj.core.converters.JsonConverter
-import org.dhallj.yaml.YamlConverter
-import org.dhallj.circe.Converter
+import java.nio.file.Path
 
-import io.circe.{Decoder, Encoder} //, io.circe.generic.auto._
-import io.circe.generic.auto._
-import io.circe.syntax._
-import io.circe.parser.decode
-
-import scala.io.Source
-import io.circe.Json
-import io.circe.Decoder.Result
 import scala.collection.immutable.ListSet
+import scala.io.Source
 
+import cats.syntax.functor._
+import io.circe.Decoder
+import io.circe.Decoder.Result
+import io.circe.Encoder
+import io.circe.Json
+import io.circe.generic.auto._
+import io.circe.parser.decode
+import io.circe.syntax._
+import munit.*
+import org.dhallj.circe.Converter
 import org.dhallj.core.Expr
+import org.dhallj.core.converters.JsonConverter
 import org.dhallj.imports.mini.Resolver
 import org.dhallj.parser.DhallParser
-import java.nio.file.Path
-import cats.syntax.functor._
+import org.dhallj.parser.DhallParser.parse
+import org.dhallj.syntax.*
+import org.dhallj.yaml.YamlConverter
 
 class DhallSpec extends FunSuite {
   import LinkableElement._

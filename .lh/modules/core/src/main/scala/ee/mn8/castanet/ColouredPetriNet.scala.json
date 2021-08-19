@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 40,
             "patches": [
                 {
                     "date": 1629275319970,
@@ -32,6 +32,142 @@
                 {
                     "date": 1629279187198,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n \n-enum LinkableElement extends PetriElement:\n+enum LinkableElement extends PetriElement derives Decoder:\n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n"
+                },
+                {
+                    "date": 1629376161871,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,8 +52,9 @@\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n \n+  \n enum LinkableElement extends PetriElement derives Decoder:\n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n"
+                },
+                {
+                    "date": 1629376199820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,17 +52,17 @@\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n \n-  \n+\n enum LinkableElement extends PetriElement derives Decoder:\n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n-\n+case class\n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n   override def empty = Marker(id, BitVector.empty)\n   def add(m: Marker) = combine(this, m)\n"
+                },
+                {
+                    "date": 1629376225537,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,9 @@\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n-case class\n+\n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n   override def empty = Marker(id, BitVector.empty)\n   def add(m: Marker) = combine(this, m)\n"
+                },
+                {
+                    "date": 1629376232595,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,9 @@\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n-\n+type\n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n   override def empty = Marker(id, BitVector.empty)\n   def add(m: Marker) = combine(this, m)\n"
+                },
+                {
+                    "date": 1629376243642,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,8 +59,10 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n+\n+  \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n type\n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n"
+                },
+                {
+                    "date": 1629376253767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,9 @@\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n \n-  \n+type Elements  \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n type\n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n"
+                },
+                {
+                    "date": 1629376267352,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,9 @@\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n \n-type Elements  \n+type Elements = ListSet[LinkableElement]  \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n type\n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n"
+                },
+                {
+                    "date": 1629376283281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,10 +61,10 @@\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n \n type Elements = ListSet[LinkableElement]  \n-type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n-type\n+type PetriGraph = SortedMap[NodeId, Elem]\n+\n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n   override def empty = Marker(id, BitVector.empty)\n   def add(m: Marker) = combine(this, m)\n"
+                },
+                {
+                    "date": 1629376288557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -61,9 +61,9 @@\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n \n type Elements = ListSet[LinkableElement]  \n-type PetriGraph = SortedMap[NodeId, Elem]\n+type PetriGraph = SortedMap[NodeId, Elements]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n   override def empty = Marker(id, BitVector.empty)\n"
+                },
+                {
+                    "date": 1629376299114,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,8 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-\n type Elements = ListSet[LinkableElement]  \n type PetriGraph = SortedMap[NodeId, Elements]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n"
+                },
+                {
+                    "date": 1629376307843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-type Elements = ListSet[LinkableElement]  \n+type Elements = ListSet[LinkableElement] derive \n type PetriGraph = SortedMap[NodeId, Elements]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n"
+                },
+                {
+                    "date": 1629376314688,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,9 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-type Elements = ListSet[LinkableElement] derive \n+type Elements = ListSet[LinkableElement] derive s \n type PetriGraph = SortedMap[NodeId, Elements]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n"
+                },
+                {
+                    "date": 1629376340776,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,8 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-type Elements = ListSet[LinkableElement] derive s \n type PetriGraph = SortedMap[NodeId, Elements]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n"
+                },
+                {
+                    "date": 1629376360839,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,8 +59,9 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n+type Elements = ListSet[LinkableElement] derives Decoder \n type PetriGraph = SortedMap[NodeId, Elements]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n"
+                },
+                {
+                    "date": 1629376366393,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,11 +59,12 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-type Elements = ListSet[LinkableElement] derives Decoder \n-type PetriGraph = SortedMap[NodeId, Elements]\n \n+type Elements = ListSet[LinkableElement]  \n+type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n+\n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n   override def empty = Marker(id, BitVector.empty)\n   def add(m: Marker) = combine(this, m)\n"
+                },
+                {
+                    "date": 1629376371596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -59,9 +59,8 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-\n type Elements = ListSet[LinkableElement]  \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n"
+                },
+                {
+                    "date": 1629376376677,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,8 @@\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n \n-\n enum LinkableElement extends PetriElement derives Decoder:\n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n"
+                },
+                {
+                    "date": 1629379311565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,10 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-type Elements = ListSet[LinkableElement]  \n+case class Elements(l: List[List[LinkableElement]] = List[List[LinkableElement]]()) derives Decoder\n+\n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n"
+                },
+                {
+                    "date": 1629379444588,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-case class Elements(l: List[List[LinkableElement]] = List[List[LinkableElement]]()) derives Decoder\n+case class PetriElements(l: List[List[LinkableElement]] = List[List[LinkableElement]]()) derives Decoder\n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n"
+                },
+                {
+                    "date": 1629379536445,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n \n-enum LinkableElement extends PetriElement derives Decoder:\n+enum LinkableElement extends PetriElement //derives Decoder:\n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n"
+                },
+                {
+                    "date": 1629379544340,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n \n-enum LinkableElement extends PetriElement //derives Decoder:\n+enum LinkableElement extends PetriElement: //derives Decoder:\n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n"
+                },
+                {
+                    "date": 1629379565749,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n sealed trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]\n \n type NodeId = Int\n \n-enum Arc extends PetriElement derives Decoder:\n+enum Arc extends PetriElement : //derives Decoder:\n   val from: NodeId\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n"
+                },
+                {
+                    "date": 1629380652595,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-case class PetriElements(l: List[List[LinkableElement]] = List[List[LinkableElement]]()) derives Decoder\n+case class PetriElements(l: [List[LinkableElement]] = List[List[LinkableElement]]()) derives Decoder\n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n"
+                },
+                {
+                    "date": 1629380668875,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-case class PetriElements(l: [List[LinkableElement]] = List[List[LinkableElement]]()) derives Decoder\n+case class PetriElements(l: [List[LinkableElement] = [List[LinkableElement]]()) derives Decoder\n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n"
+                },
+                {
+                    "date": 1629380674285,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-case class PetriElements(l: [List[LinkableElement] = [List[LinkableElement]]()) derives Decoder\n+case class PetriElements(l: [List[LinkableElement] = [List[LinkableElement]()) derives Decoder\n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n"
+                },
+                {
+                    "date": 1629380685065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-case class PetriElements(l: [List[LinkableElement] = [List[LinkableElement]()) derives Decoder\n+case class PetriElements(l: [List[LinkableElement] = [List[LinkableElement]]()) derives Decoder\n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n"
+                },
+                {
+                    "date": 1629380691909,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-case class PetriElements(l: [List[LinkableElement] = [List[LinkableElement]]()) derives Decoder\n+case class PetriElements(l: [List[LinkableElement]] = [List[LinkableElement]]()) derives Decoder\n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n"
+                },
+                {
+                    "date": 1629380698866,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-case class PetriElements(l: [List[LinkableElement]] = [List[LinkableElement]]()) derives Decoder\n+case class PetriElements(l: List[LinkableElement] = [List[LinkableElement]]()) derives Decoder\n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n"
+                },
+                {
+                    "date": 1629380705866,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-case class PetriElements(l: List[LinkableElement] = [List[LinkableElement]]()) derives Decoder\n+case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) derives Decoder\n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n"
+                },
+                {
+                    "date": 1629384777421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n \n-enum LinkableElement extends PetriElement: //derives Decoder:\n+enum LinkableElement extends PetriElement: /\n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n"
+                },
+                {
+                    "date": 1629384795297,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,15 +52,15 @@\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n \n-enum LinkableElement extends PetriElement: /\n+enum LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n \n-case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) derives Decoder\n+case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n"
+                },
+                {
+                    "date": 1629384815286,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n sealed trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]\n \n type NodeId = Int\n \n-enum Arc extends PetriElement : //derives Decoder:\n+enum Arc extends PetriElement : \n   val from: NodeId\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n"
+                },
+                {
+                    "date": 1629384822268,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,11 +38,11 @@\n import scala.collection.immutable.ListSet\n import scala.collection.immutable.SortedMap\n import scala.collection.mutable\n import scala.concurrent.duration.*\n-import us.oyanglul.dhall.generic.Decoder\n \n \n+\n sealed trait PetriElement \n sealed trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]\n \n type NodeId = Int\n"
+                },
+                {
+                    "date": 1629384848923,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,26 +121,9 @@\n   \n case class Step(markers:Markers, show: Boolean = false, count:  Int = 0) :\n     val inits: SortedMap[NodeId, BitVector] = markers.state.filter(m => m._2 > BitVector.empty.padRight(m._2.size))\n \n-/* object PetriDerivation:   \n- import LinkableElement._\n- import Service._   \n- import Arc._\n- given  encodePetriElemnt: Encoder[PetriElement] = Encoder.instance {\n-    case place @ Place(_,_,_) => place.asJson\n-    case transition @ Transition(_,_,_,_) => transition.asJson\n-    case timed @ Timed(_,_,_) => timed.asJson\n-    case weighted @ Weighted(_,_,_) => weighted.asJson\n-  }\n \n-  given decodeEvent: Decoder[PetriElement] =\n-    List[Decoder[PetriElement]](\n-      Decoder[Place].widen,\n-      Decoder[Transition].widen,\n-      Decoder[Timed].widen,\n-      Decoder[Weighted].widen\n-    ).reduceLeft(_ or _) */\n \n trait ColouredPetriNet:\n   import LinkableElement._\n   import cats.data.State\n"
                 }
             ],
             "date": 1629275319969,

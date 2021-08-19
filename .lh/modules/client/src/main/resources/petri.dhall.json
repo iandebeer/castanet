@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 203,
+            "activePatchIndex": 267,
             "patches": [
                 {
                     "date": 1629282457697,
@@ -820,6 +820,262 @@
                 {
                     "date": 1629370336554,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n \n let places =  ./places.dhall\n \n let transitions  = ./transitions.dhall\n+\n let List/map = https://prelude.dhall-lang.org/v11.1.0/List/map sha256:dd845ffb4568d40327f2a817eb42d1c6138b929ca758d50bc33112ef3c885680\n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n \n"
+                },
+                {
+                    "date": 1629370409963,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,8 @@\n \n let Arc = <T: Timed | W: Weighted>\n \n let PetriElement : Type = < A : Arc | L : LinkableElement >\n-\n let PetriNet : Type = List PetriElement \n \n let places =  ./places.dhall\n \n"
+                },
+                {
+                    "date": 1629370421557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,8 @@\n \n let Timed : Type = {from: Natural, to: Natural, interval: Natural}\n   \n let Weighted : Type = {from: Natural, to: Natural, weight: Natural}\n-\n let Arc = <T: Timed | W: Weighted>\n \n let PetriElement : Type = < A : Arc | L : LinkableElement >\n let PetriNet : Type = List PetriElement \n"
+                },
+                {
+                    "date": 1629370429544,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n \n let Timed : Type = {from: Natural, to: Natural, interval: Natural}\n   \n let Weighted : Type = {from: Natural, to: Natural, weight: Natural}\n+\n let Arc = <T: Timed | W: Weighted>\n \n let PetriElement : Type = < A : Arc | L : LinkableElement >\n let PetriNet : Type = List PetriElement \n"
+                },
+                {
+                    "date": 1629370451502,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,14 +7,14 @@\n \n let LinkableElement = < P: Place | T : Transition >\n \n let Timed : Type = {from: Natural, to: Natural, interval: Natural}\n-  \n let Weighted : Type = {from: Natural, to: Natural, weight: Natural}\n \n let Arc = <T: Timed | W: Weighted>\n \n let PetriElement : Type = < A : Arc | L : LinkableElement >\n+\n let PetriNet : Type = List PetriElement \n \n let places =  ./places.dhall\n \n"
+                },
+                {
+                    "date": 1629370478590,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,8 @@\n let ProtoItem = <R : RPC | S : Service>\n \n let Place: Type = {id : Natural, name : Text, capacity : Natural}\n let Transition : Type = {id : Natural, name : Text , service : Service, rpc : RPC}\n-\n let LinkableElement = < P: Place | T : Transition >\n \n let Timed : Type = {from: Natural, to: Natural, interval: Natural}\n let Weighted : Type = {from: Natural, to: Natural, weight: Natural}\n"
+                },
+                {
+                    "date": 1629370494238,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,10 +6,9 @@\n let Transition : Type = {id : Natural, name : Text , service : Service, rpc : RPC}\n let LinkableElement = < P: Place | T : Transition >\n \n let Timed : Type = {from: Natural, to: Natural, interval: Natural}\n-let Weighted : Type = {from: Natural, to: Natural, weight: Natural}\n-\n+let Weighted : Type = {from: Natural, to: Natural, weight: Natural\n let Arc = <T: Timed | W: Weighted>\n \n let PetriElement : Type = < A : Arc | L : LinkableElement >\n \n"
+                },
+                {
+                    "date": 1629370502825,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,17 +6,16 @@\n let Transition : Type = {id : Natural, name : Text , service : Service, rpc : RPC}\n let LinkableElement = < P: Place | T : Transition >\n \n let Timed : Type = {from: Natural, to: Natural, interval: Natural}\n-let Weighted : Type = {from: Natural, to: Natural, weight: Natural\n+let Weighted : Type = {from: Natural, to: Natural, weight: Natural}\n let Arc = <T: Timed | W: Weighted>\n \n let PetriElement : Type = < A : Arc | L : LinkableElement >\n \n let PetriNet : Type = List PetriElement \n \n let places =  ./places.dhall\n-\n let transitions  = ./transitions.dhall\n \n let List/map = https://prelude.dhall-lang.org/v11.1.0/List/map sha256:dd845ffb4568d40327f2a817eb42d1c6138b929ca758d50bc33112ef3c885680\n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n"
+                },
+                {
+                    "date": 1629370523347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,8 @@\n \n let places =  ./places.dhall\n let transitions  = ./transitions.dhall\n \n-let List/map = https://prelude.dhall-lang.org/v11.1.0/List/map sha256:dd845ffb4568d40327f2a817eb42d1c6138b929ca758d50bc33112ef3c885680\n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n \n in  [linkablePlace places, linkableTransition transitions]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629370530487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n \n let places =  ./places.dhall\n let transitions  = ./transitions.dhall\n \n+\n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n \n in  [linkablePlace places, linkableTransition transitions]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629370535611,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n+\n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n \n@@ -16,9 +17,8 @@\n \n let places =  ./places.dhall\n let transitions  = ./transitions.dhall\n \n-\n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n \n in  [linkablePlace places, linkableTransition transitions]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629370578350,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n+let List/map = https://prelude.dhall-lang.org/v11.1.0/List/map sha256:dd845ffb4568d40327f2a817eb42d1c6138b929ca758d50bc33112ef3c885680\n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n@@ -20,5 +21,5 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n \n-in  [linkablePlace places, linkableTransition transitions]\n\\ No newline at end of file\n+in  [linkablePlace ./places.dhall, linkableTransition transitions]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629370616577,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,5 +21,5 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n \n-in  [linkablePlace ./places.dhall, linkableTransition transitions]\n\\ No newline at end of file\n+in  [linkablePlace ./places.dhall, linkableTransition ./transitions.dhall]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629370622332,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,11 +15,8 @@\n let PetriElement : Type = < A : Arc | L : LinkableElement >\n \n let PetriNet : Type = List PetriElement \n \n-let places =  ./places.dhall\n-let transitions  = ./transitions.dhall\n-\n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n \n in  [linkablePlace ./places.dhall, linkableTransition ./transitions.dhall]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629372116841,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let List/map = https://prelude.dhall-lang.org/v11.1.0/List/map sha256:dd845ffb4568d40327f2a817eb42d1c6138b929ca758d50bc33112ef3c885680\n+let List/map = ./prelude.dhall-lang.org/v11.1.0/List/map sha256:dd845ffb4568d40327f2a817eb42d1c6138b929ca758d50bc33112ef3c885680\n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n"
+                },
+                {
+                    "date": 1629372123665,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let List/map = ./prelude.dhall-lang.org/v11.1.0/List/map sha256:dd845ffb4568d40327f2a817eb42d1c6138b929ca758d50bc33112ef3c885680\n+let List/map = ./prelude.dhall-lang.org/v11.1.0/List/map \n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n"
+                },
+                {
+                    "date": 1629372160755,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let List/map = ./prelude.dhall-lang.org/v11.1.0/List/map \n+let List/map = ./Prelude.dhall-lang.org/v11.1.0/List/map \n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n"
+                },
+                {
+                    "date": 1629372170359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let List/map = ./Prelude.dhall-lang.org/v11.1.0/List/map \n+let List/map = ./Prelude/List/map \n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n"
+                },
+                {
+                    "date": 1629372265821,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let List/map = ./Prelude/List/map \n+let List/map = ./Prelude/List/map.dh \n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n"
+                },
+                {
+                    "date": 1629372392918,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let List/map = ./Prelude/List/map.dh \n+let List/map = .modules/client/src/main/resources/Prelude/List/map.dhall\n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n"
+                },
+                {
+                    "date": 1629372406916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let List/map = .modules/client/src/main/resources/Prelude/List/map.dhall\n+let List/map = ./Prelude/List/map.dhall\n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n"
+                },
+                {
+                    "date": 1629374300569,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let List/map = ./Prelude/List/map.dhall\n+--let List/map = ./Prelude/List/map.dhall\n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n"
+                },
+                {
+                    "date": 1629374468376,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n---let List/map = ./Prelude/List/map.dhall\n-\n+let List/map = ./Prelude/List/map.dhall\n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n \n"
+                },
+                {
+                    "date": 1629374474545,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let List/map = ./Prelude/List/map.dhall\n+let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n \n"
+                },
+                {
+                    "date": 1629374490281,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,5 +17,5 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n \n-in  [linkablePlace ./places.dhall, linkableTransition ./transitions.dhall]\n\\ No newline at end of file\n+in  [linkablePlace ./modules/client/src/main/resourcesplaces.dhall, linkableTransition ./transitions.dhall]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629374498020,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,5 +17,5 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n \n-in  [linkablePlace ./modules/client/src/main/resourcesplaces.dhall, linkableTransition ./transitions.dhall]\n\\ No newline at end of file\n+in  [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629379817833,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n let Arc = <T: Timed | W: Weighted>\n \n let PetriElement : Type = < A : Arc | L : LinkableElement >\n \n+\n let PetriNet : Type = List PetriElement \n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n"
+                },
+                {
+                    "date": 1629379823184,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,9 @@\n let Weighted : Type = {from: Natural, to: Natural, weight: Natural}\n let Arc = <T: Timed | W: Weighted>\n \n let PetriElement : Type = < A : Arc | L : LinkableElement >\n+let PetriElements : Type = < A : Arc | L : LinkableElement >\n \n \n let PetriNet : Type = List PetriElement \n \n"
+                },
+                {
+                    "date": 1629379849626,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n let Timed : Type = {from: Natural, to: Natural, interval: Natural}\n let Weighted : Type = {from: Natural, to: Natural, weight: Natural}\n let Arc = <T: Timed | W: Weighted>\n \n-let PetriElement : Type = < A : Arc | L : LinkableElement >\n+let PetriElement  = < A : Arc | L : LinkableElement >\n let PetriElements : Type = < A : Arc | L : LinkableElement >\n \n \n let PetriNet : Type = List PetriElement \n"
+                },
+                {
+                    "date": 1629379861669,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,10 @@\n let Timed : Type = {from: Natural, to: Natural, interval: Natural}\n let Weighted : Type = {from: Natural, to: Natural, weight: Natural}\n let Arc = <T: Timed | W: Weighted>\n \n-let PetriElement  = < A : Arc | L : LinkableElement >\n-let PetriElements : Type = < A : Arc | L : LinkableElement >\n+let PetriElement = < A : Arc | L : LinkableElement >\n+let PetriElements : Type = List\n \n \n let PetriNet : Type = List PetriElement \n \n"
+                },
+                {
+                    "date": 1629379869142,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n let Weighted : Type = {from: Natural, to: Natural, weight: Natural}\n let Arc = <T: Timed | W: Weighted>\n \n let PetriElement = < A : Arc | L : LinkableElement >\n-let PetriElements : Type = List\n+let PetriElements : Type = List Link\n \n \n let PetriNet : Type = List PetriElement \n \n"
+                },
+                {
+                    "date": 1629379877291,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n let Weighted : Type = {from: Natural, to: Natural, weight: Natural}\n let Arc = <T: Timed | W: Weighted>\n \n let PetriElement = < A : Arc | L : LinkableElement >\n-let PetriElements : Type = List Link\n+let PetriElements : Type = List LinkableElement\n \n \n let PetriNet : Type = List PetriElement \n \n"
+                },
+                {
+                    "date": 1629379967220,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,5 +19,6 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n \n+\n in  [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629379973785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,7 @@\n let PetriNet : Type = List PetriElement \n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n+let ptri\n \n-\n in  [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629379980372,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,7 @@\n let PetriNet : Type = List PetriElement \n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n-let ptri\n+let petriElements =\n \n in  [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629380249726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,7 @@\n let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n+let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n+\n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n \n@@ -18,7 +20,7 @@\n let PetriNet : Type = List PetriElement \n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n-let petriElements =\n+let petriElements = \n \n in  [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629380255481,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n-let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n+let List/maconp = ./modules/client/src/main/resources/Prelude/List/map.dhall\n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n"
+                },
+                {
+                    "date": 1629380262623,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n-let List/maconp = ./modules/client/src/main/resources/Prelude/List/map.dhall\n+let List/ = ./modules/client/src/main/resources/Prelude/List/map.dhall\n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n"
+                },
+                {
+                    "date": 1629380272817,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n-let List/ = ./modules/client/src/main/resources/Prelude/List/map.dhall\n+let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n"
+                },
+                {
+                    "date": 1629380314705,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,7 +20,7 @@\n let PetriNet : Type = List PetriElement \n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n-let petriElements = \n+let petriElements = concat\n \n in  [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629380357690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,7 +20,7 @@\n let PetriNet : Type = List PetriElement \n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n-let petriElements = concat\n+let petriElements = concat \n \n in  [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629380366096,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,7 +20,7 @@\n let PetriNet : Type = List PetriElement \n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n-let petriElements = concat \n+let petriElements = concat LinkableElement \n \n in  [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629380378883,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,7 +20,7 @@\n let PetriNet : Type = List PetriElement \n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n-let petriElements = concat LinkableElement \n+let petriElements = concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n \n\\ No newline at end of file\n-in  [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n+in  petri\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629380386458,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,5 +22,5 @@\n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n let petriElements = concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n \n-in  petri\n\\ No newline at end of file\n+in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629380498432,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,7 +20,7 @@\n let PetriNet : Type = List PetriElement \n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n-let petriElements = concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n+let petriElements = Listconcat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n \n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381089340,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,7 +20,7 @@\n let PetriNet : Type = List PetriElement \n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n-let petriElements = Listconcat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n-\n+let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n+let \n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381094979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,6 +21,6 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n-let \n+let petriNet = \n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381106656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,6 +21,6 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n-let petriNet = \n+let petriNet = pp\n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381154161,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,12 +15,9 @@\n \n let PetriElement = < A : Arc | L : LinkableElement >\n let PetriElements : Type = List LinkableElement\n \n-\n-let PetriNet : Type = List PetriElement \n-\n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n-let petriNet = pp\n+let petriNet = \n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381164706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,6 +18,5 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n-let petriNet = \n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381213877,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,9 @@\n let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n \n+\n+\n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n \n@@ -18,5 +20,6 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n+\n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381220331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,11 @@\n let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n \n+let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n+let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n+--\n \n-\n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n \n"
+                },
+                {
+                    "date": 1629381226053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,11 @@\n let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n \n-let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n+--let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n---\n \n+\n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n let ProtoItem = <R : RPC | S : Service>\n \n"
+                },
+                {
+                    "date": 1629381238935,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n-let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n+let List/map = ./Prelude/List/map.dhall\n let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n \n --let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n-let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n+--let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n \n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n"
+                },
+                {
+                    "date": 1629381250893,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n let List/map = ./Prelude/List/map.dhall\n-let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n+let List/concat = ./Prelude/List/concat.dhall\n \n --let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n --let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n \n"
+                },
+                {
+                    "date": 1629381284952,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,6 +22,7 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n+let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n \n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381296373,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,8 @@\n let PetriElements : Type = List LinkableElement\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n-let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n-let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n+-- let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n+let petriElements = List/concat LinkableElement [linkablePlace .places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n \n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381306191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,7 +22,7 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n -- let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n-let petriElements = List/concat LinkableElement [linkablePlace .places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n+let petriElements = List/concat LinkableElement [linkablePlace ./places.dhall, linkableTransition ./transitions.dhall]\n \n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381448329,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n let PetriElements : Type = List LinkableElement\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n+\n -- let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n let petriElements = List/concat LinkableElement [linkablePlace ./places.dhall, linkableTransition ./transitions.dhall]\n \n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381753375,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n \n let PetriElement = < A : Arc | L : LinkableElement >\n let PetriElements : Type = List LinkableElement\n \n-let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n+let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElemen--t.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n \n -- let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n let petriElements = List/concat LinkableElement [linkablePlace ./places.dhall, linkableTransition ./transitions.dhall]\n"
+                },
+                {
+                    "date": 1629381762299,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let List/map = ./Prelude/List/map.dhall\n+--let List/map = ./Prelude/List/map.dhall\n let List/concat = ./Prelude/List/concat.dhall\n \n --let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n --let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n@@ -19,11 +19,10 @@\n \n let PetriElement = < A : Arc | L : LinkableElement >\n let PetriElements : Type = List LinkableElement\n \n-let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElemen--t.P p)\n+let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n-\n -- let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n let petriElements = List/concat LinkableElement [linkablePlace ./places.dhall, linkableTransition ./transitions.dhall]\n \n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381768842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n --let List/map = ./Prelude/List/map.dhall\n-let List/concat = ./Prelude/List/concat.dhall\n+--let List/concat = ./Prelude/List/concat.dhall\n \n---let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n+let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n --let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n \n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n"
+                },
+                {
+                    "date": 1629381788980,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n --let List/map = ./Prelude/List/map.dhall\n --let List/concat = ./Prelude/List/concat.dhall\n \n let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n---let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n+-let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n \n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n"
+                },
+                {
+                    "date": 1629381799514,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n --let List/map = ./Prelude/List/map.dhall\n --let List/concat = ./Prelude/List/concat.dhall\n \n let List/map = ./modules/client/src/main/resources/Prelude/List/map.dhall\n--let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n+let List/concat = ./modules/client/src/main/resources/Prelude/List/concat.dhall\n \n \n let RPC : Type = {name : Text, input : Text,  output : Text}\n let Service : Type = {packageName : Text, name : Text, rpcs: List RPC} \n@@ -22,7 +22,7 @@\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n -- let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n-let petriElements = List/concat LinkableElement [linkablePlace ./places.dhall, linkableTransition ./transitions.dhall]\n+--let petriElements = List/concat LinkableElement [linkablePlace ./places.dhall, linkableTransition ./transitions.dhall]\n \n in  petriElements\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629381804841,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,8 @@\n let PetriElements : Type = List LinkableElement\n \n let linkablePlace = List/map Place LinkableElement (\\(p : Place) -> LinkableElement.P p)\n let linkableTransition = List/map Transition LinkableElement (\\(t : Transition) -> LinkableElement.T t)\n--- let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n---let petriElements = List/concat LinkableElement [linkablePlace ./places.dhall, linkableTransition ./transitions.dhall]\n+let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]\n+-- let petriElements = List/concat LinkableElement [linkablePlace ./places.dhall, linkableTransition ./transitions.dhall]\n \n in  petriElements\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1629282457697,

@@ -39,7 +39,7 @@ import scala.collection.immutable.ListSet
 import scala.collection.immutable.SortedMap
 import scala.collection.mutable
 import scala.concurrent.duration.*
-import us.oyanglul.dhall.generic.Decoder
+
 
 
 sealed trait PetriElement 
@@ -47,17 +47,19 @@ sealed trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]
 
 type NodeId = Int
 
-enum Arc extends PetriElement derives Decoder:
+enum Arc extends PetriElement : 
   val from: NodeId
   val to: NodeId
   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc
   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc
 
-enum LinkableElement extends PetriElement derives Decoder:
+enum LinkableElement extends PetriElement: 
   val id: NodeId
   val name: String
   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement
   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement
+
+case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) 
 
 type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]
 
@@ -119,25 +121,6 @@ case class ArcId(from: Int, to: Int):
   
 case class Step(markers:Markers, show: Boolean = false, count:  Int = 0) :
     val inits: SortedMap[NodeId, BitVector] = markers.state.filter(m => m._2 > BitVector.empty.padRight(m._2.size))
-
-/* object PetriDerivation:   
- import LinkableElement._
- import Service._   
- import Arc._
- given  encodePetriElemnt: Encoder[PetriElement] = Encoder.instance {
-    case place @ Place(_,_,_) => place.asJson
-    case transition @ Transition(_,_,_,_) => transition.asJson
-    case timed @ Timed(_,_,_) => timed.asJson
-    case weighted @ Weighted(_,_,_) => weighted.asJson
-  }
-
-  given decodeEvent: Decoder[PetriElement] =
-    List[Decoder[PetriElement]](
-      Decoder[Place].widen,
-      Decoder[Transition].widen,
-      Decoder[Timed].widen,
-      Decoder[Weighted].widen
-    ).reduceLeft(_ or _) */
 
 trait ColouredPetriNet:
   import LinkableElement._

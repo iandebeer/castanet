@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 15,
             "patches": [
                 {
                     "date": 1629275083089,
@@ -64,6 +64,10 @@
                 {
                     "date": 1629279251526,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n \n     //println(s\"\\n\\nplaces: $places\\n\\n\")\n \n     val norm = Expr.makeApplication(placeList, expr).normalize\n-    val l = norm.as[List[List[Element]]]\n+    val l = norm.as[List[List[LElement]]]\n     //println(s\"\\n\\nnorm: ${norm}\")\n     /* val json = Converter(norm).get\n     println(s\"\\n\\njson: ${json}\")\n     val l = decode[List[List[PetriElement]]](json.noSpaces) */\n"
+                },
+                {
+                    "date": 1629383833610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n \n     println(s\"\\n\\n${JsonConverter.toCompactString(norm)}\")\n     val json = JsonConverter.toCompactString(norm)\n     val elements = decode[List[LinkableElement]](json)\n-    println(selements)\n+    println(s\"elements)\n     /* val elements = for {\n       e <- JsonConverter.toCompactString(norm).as[List[LinkableElement]]\n     } yield e */\n     val petriNet = PetriNetBuilder()\n"
                 }
             ],
             "date": 1629275083089,

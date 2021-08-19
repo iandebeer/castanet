@@ -1,0 +1,74 @@
+{
+    "sourceFile": "modules/client/src/test/scala/ee/mn8/castanet/DhallSpec.scala",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 14,
+            "patches": [
+                {
+                    "date": 1629275083089,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1629275099195,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,11 +44,11 @@\n     val norm = Expr.makeApplication(placeList, expr).normalize\n     //println(s\"\\n\\nnorm: ${norm}\")\n     val json = Converter(norm).get\n     println(s\"\\n\\njson: ${json}\")\n-    val l = decode[List[List[PetriElem]]](json.noSpaces)\n+    val l = decode[List[List[PetriElement]]](json.noSpaces)\n     val list = ListSet() ++ l\n-      .getOrElse(List[List[LinkableElement]]())\n+      .getOrElse(List[List[PetriElement]]())\n       .flatten\n     /*  val list: ListSet[LinkableElement] =\n       ListSet() ++ json\n         .as[List[List[LinkableElement]]]\n"
+                },
+                {
+                    "date": 1629275277691,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n import org.dhallj.core.Expr\n import org.dhallj.imports.mini.Resolver\n import org.dhallj.parser.DhallParser\n import java.nio.file.Path\n-import PetriDerivation._\n+//import PetriDerivation._\n \n class DhallSpec extends FunSuite {\n \n   val file = \"modules/client/src/main/resources/petri.dhall\"\n"
+                },
+                {
+                    "date": 1629277864177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n import org.dhallj.core.Expr\n import org.dhallj.imports.mini.Resolver\n import org.dhallj.parser.DhallParser\n import java.nio.file.Path\n+import org.latestbit.circe.adt.codec._\n //import PetriDerivation._\n \n class DhallSpec extends FunSuite {\n \n"
+                },
+                {
+                    "date": 1629277959172,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,9 +21,9 @@\n import org.dhallj.core.Expr\n import org.dhallj.imports.mini.Resolver\n import org.dhallj.parser.DhallParser\n import java.nio.file.Path\n-import org.latestbit.circe.adt.codec._\n+import org.dhallj.syntax._\n //import PetriDerivation._\n \n class DhallSpec extends FunSuite {\n \n"
+                },
+                {
+                    "date": 1629277988004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,9 @@\n import org.dhallj.imports.mini.Resolver\n import org.dhallj.parser.DhallParser\n import java.nio.file.Path\n import org.dhallj.syntax._\n+import us.oyanglul.dhall.generic.Decoder\n //import PetriDerivation._\n \n class DhallSpec extends FunSuite {\n \n"
+                },
+                {
+                    "date": 1629278402568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,11 +44,11 @@\n     //println(s\"\\n\\nplaces: $places\\n\\n\")\n \n     val norm = Expr.makeApplication(placeList, expr).normalize\n     //println(s\"\\n\\nnorm: ${norm}\")\n-    val json = Converter(norm).get\n+    /* val json = Converter(norm).get\n     println(s\"\\n\\njson: ${json}\")\n-    val l = decode[List[List[PetriElement]]](json.noSpaces)\n+    val l = decode[List[List[PetriElement]]](json.noSpaces) */\n     val list = ListSet() ++ l\n       .getOrElse(List[List[PetriElement]]())\n       .flatten\n     /*  val list: ListSet[LinkableElement] =\n"
+                },
+                {
+                    "date": 1629278413696,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,8 +43,9 @@\n \n     //println(s\"\\n\\nplaces: $places\\n\\n\")\n \n     val norm = Expr.makeApplication(placeList, expr).normalize\n+    val l = \n     //println(s\"\\n\\nnorm: ${norm}\")\n     /* val json = Converter(norm).get\n     println(s\"\\n\\njson: ${json}\")\n     val l = decode[List[List[PetriElement]]](json.noSpaces) */\n"
+                },
+                {
+                    "date": 1629278444853,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     val placeList = parse(places)\n \n     //println(s\"\\n\\nplaces: $places\\n\\n\")\n \n-    val norm = Expr.makeApplication(placeList, expr).normalize\n+    val norm = Expr.makeApplication(placeList, exp\n     val l = \n     //println(s\"\\n\\nnorm: ${norm}\")\n     /* val json = Converter(norm).get\n     println(s\"\\n\\njson: ${json}\")\n"
+                },
+                {
+                    "date": 1629278453684,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     val placeList = parse(places)\n \n     //println(s\"\\n\\nplaces: $places\\n\\n\")\n \n-    val norm = Expr.makeApplication(placeList, exp\n+    val norm = Expr.makeApplication(placeList, expr)\n     val l = \n     //println(s\"\\n\\nnorm: ${norm}\")\n     /* val json = Converter(norm).get\n     println(s\"\\n\\njson: ${json}\")\n"
+                },
+                {
+                    "date": 1629278464350,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     val placeList = parse(places)\n \n     //println(s\"\\n\\nplaces: $places\\n\\n\")\n \n-    val norm = Expr.makeApplication(placeList, expr)\n+    val norm = Expr.makeApplication(placeList, expr).\n     val l = \n     //println(s\"\\n\\nnorm: ${norm}\")\n     /* val json = Converter(norm).get\n     println(s\"\\n\\njson: ${json}\")\n"
+                },
+                {
+                    "date": 1629278474037,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,10 +42,10 @@\n     val placeList = parse(places)\n \n     //println(s\"\\n\\nplaces: $places\\n\\n\")\n \n-    val norm = Expr.makeApplication(placeList, expr).\n-    val l = \n+    val norm = Expr.makeApplication(placeList, expr).normalize\n+    val l = norm.as\n     //println(s\"\\n\\nnorm: ${norm}\")\n     /* val json = Converter(norm).get\n     println(s\"\\n\\njson: ${json}\")\n     val l = decode[List[List[PetriElement]]](json.noSpaces) */\n"
+                },
+                {
+                    "date": 1629278508706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n import org.dhallj.imports.mini.Resolver\n import org.dhallj.parser.DhallParser\n import java.nio.file.Path\n import org.dhallj.syntax._\n-import us.oyanglul.dhall.generic.Decoder\n+import us.oyanglul.dhall.generic._\n //import PetriDerivation._\n \n class DhallSpec extends FunSuite {\n \n@@ -43,9 +43,9 @@\n \n     //println(s\"\\n\\nplaces: $places\\n\\n\")\n \n     val norm = Expr.makeApplication(placeList, expr).normalize\n-    val l = norm.as\n+    val l = norm.as[]\n     //println(s\"\\n\\nnorm: ${norm}\")\n     /* val json = Converter(norm).get\n     println(s\"\\n\\njson: ${json}\")\n     val l = decode[List[List[PetriElement]]](json.noSpaces) */\n"
+                },
+                {
+                    "date": 1629278539110,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n \n     //println(s\"\\n\\nplaces: $places\\n\\n\")\n \n     val norm = Expr.makeApplication(placeList, expr).normalize\n-    val l = norm.as[]\n+    val l = norm.as[List[List[PetriElement]]]\n     //println(s\"\\n\\nnorm: ${norm}\")\n     /* val json = Converter(norm).get\n     println(s\"\\n\\njson: ${json}\")\n     val l = decode[List[List[PetriElement]]](json.noSpaces) */\n"
+                },
+                {
+                    "date": 1629279251526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n \n     //println(s\"\\n\\nplaces: $places\\n\\n\")\n \n     val norm = Expr.makeApplication(placeList, expr).normalize\n-    val l = norm.as[List[List[Element]]]\n+    val l = norm.as[List[List[LElement]]]\n     //println(s\"\\n\\nnorm: ${norm}\")\n     /* val json = Converter(norm).get\n     println(s\"\\n\\njson: ${json}\")\n     val l = decode[List[List[PetriElement]]](json.noSpaces) */\n"
+                }
+            ],
+            "date": 1629275083089,
+            "name": "Commit-0",
+            "content": "package ee.mn8.castanet\n\nimport munit.*\nimport org.dhallj.syntax.*\nimport org.dhallj.parser.DhallParser.parse\nimport org.dhallj.core.converters.JsonConverter\nimport org.dhallj.yaml.YamlConverter\nimport org.dhallj.circe.Converter\n\nimport io.circe.syntax._\nimport io.circe.{Decoder, Encoder}//, io.circe.generic.auto._\n\nimport scala.io.Source\nimport io.circe.Json\nimport io.circe.Decoder.Result\nimport io.circe.parser.decode\n\nimport ee.mn8.castanet.LinkableElement.Place\nimport scala.collection.immutable.ListSet\n\nimport org.dhallj.core.Expr\nimport org.dhallj.imports.mini.Resolver\nimport org.dhallj.parser.DhallParser\nimport java.nio.file.Path\nimport PetriDerivation._\n\nclass DhallSpec extends FunSuite {\n\n  val file = \"modules/client/src/main/resources/petri.dhall\"\n  val pl   = \"modules/client/src/main/resources/places.dhall\"\n\n  test(\"read from file\") {\n    val conf   = Source.fromFile(file).getLines.mkString(\"\\n\")\n    val places = Source.fromFile(pl).getLines.mkString(\"\\n\")\n    //println(conf)\n    val expr = parse(conf)\n    println(expr)\n    //val norm = expr.normalize\n\n    val placeList = parse(places)\n\n    //println(s\"\\n\\nplaces: $places\\n\\n\")\n\n    val norm = Expr.makeApplication(placeList, expr).normalize\n    //println(s\"\\n\\nnorm: ${norm}\")\n    val json = Converter(norm).get\n    println(s\"\\n\\njson: ${json}\")\n    val l = decode[List[List[PetriElem]]](json.noSpaces)\n    val list = ListSet() ++ l\n      .getOrElse(List[List[LinkableElement]]())\n      .flatten\n    /*  val list: ListSet[LinkableElement] =\n      ListSet() ++ json\n        .as[List[List[LinkableElement]]]\n        .getOrElse(List[List[LinkableElement]]())\n        .flatten */\n\n    println(s\"\\n\\nlist: ${l}\")\n\n    println(PetriNetBuilder().addAll(list).build().elements)\n    // val json = obj.right.asJson\n    //obj.foreach(println(_))\n  }\n}\n"
+        }
+    ]
+}

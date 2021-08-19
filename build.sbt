@@ -2,7 +2,7 @@ val Scala3   = "3.0.1"
 val Scala213 = "2.13.6"
 
 val catsVersion          = "2.6.1"
-val ceVersion            = "3.2.0"
+val ceVersion            = "3.2.3"
 val fs2Version           = "3.1.0"
 val munitVersion         = "0.7.28"
 val muniteCEVersion      = "1.0.5"
@@ -48,7 +48,15 @@ lazy val core = project
       "dev.optics"          %% "monocle-core"        % monocleVersion,
       "org.scodec"          %% "scodec-bits"         % scodecVersion,
       "org.scala-lang"      %% "scala3-staging"      % Scala3,
-      "us.oyanglul" %% "dhall-generic" % "0.3.47",
+      ("us.oyanglul" %% "dhall-generic" % "0.3.47").exclude(
+        "org.typelevel", "cats-kernel_3"
+      ).exclude(
+        "org.typelevel", "cats-core_3"
+      ).exclude(
+        "org.typelevel", "cats-kernel_2.13"
+      ).exclude(
+        "org.typelevel", "cats-core_2.13"
+      ),
       "org.scalameta"       %% "munit"               % munitVersion       % Test,
       "org.scalameta"       %% "munit-scalacheck"    % munitVersion       % Test,
       "org.typelevel"       %% "munit-cats-effect-3" % muniteCEVersion    % Test
@@ -68,10 +76,6 @@ lazy val stt_compiler = project
     name        := "stt-compiler",
     description := "State Transnition Table Compiler",
     libraryDependencies ++= Seq(
-      //"org.typelevel" %% "cats-core" % catsVersion,
-      //"co.fs2" %% "fs2-core" % fs2Version,
-      // ("io.circe" % "circe-yaml" % "0.13.1").cross(CrossVersion.for3Use2_13),
-      //"org.typelevel" %% "cats-effect" % ceVersion,
       "org.scalameta" %% "munit"               % munitVersion    % Test,
       "org.scalameta" %% "munit-scalacheck"    % munitVersion    % Test,
       "org.typelevel" %% "munit-cats-effect-3" % muniteCEVersion % Test,
@@ -97,10 +101,20 @@ lazy val client = project
     name        := "client",
     description := "Protobuf Client",
     libraryDependencies ++= Seq(
-      "org.dhallj"          %% "dhall-scala"         % dhallVersion,
+      // "org.dhallj"          %% "dhall-scala"         % dhallVersion,
+      "org.dhallj"           % "dhall-imports-mini"  % dhallVersion,
       "org.dhallj"           % "dhall-yaml"          % dhallVersion,
-      "org.dhallj"          %% "dhall-circe"         % dhallVersion,
-      "us.oyanglul" %% "dhall-generic" % "0.3.47",
+      "org.dhallj"          %% "dhall-circe"         % dhallVersion, 
+      ("us.oyanglul" %% "dhall-generic" % "0.3.47")
+      .exclude(
+        "org.typelevel", "cats-kernel_3"
+      ).exclude(
+        "org.typelevel", "cats-core_3"
+      ).exclude(
+        "org.typelevel", "cats-kernel_2.13"
+      ).exclude(
+        "org.typelevel", "cats-core_2.13"
+      ),
       "org.scalameta"       %% "munit"               % munitVersion    % Test,
       "org.scalameta"       %% "munit-scalacheck"    % munitVersion    % Test,
       "org.typelevel"       %% "munit-cats-effect-3" % muniteCEVersion % Test,
@@ -109,7 +123,7 @@ lazy val client = project
     scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage
   )
   .enablePlugins(Fs2Grpc)
-  .dependsOn(protocol)
+  .dependsOn(protocol,core)
   .dependsOn(protocol % "protobuf")
 
 lazy val server = project

@@ -4,10 +4,10 @@ import scala.io.Source
 import scala.quoted.*
 import cats.data.State
 
-sealed trait ProtoLine
+sealed trait ProtoItem
 case class Service(packageName: String = "", name: String = "", rpcs: List[RPC] = List())
-    extends ProtoLine
-case class RPC(name: String, input: String, output: String) extends ProtoLine {
+    extends ProtoItem
+case class RPC(name: String, input: String, output: String) extends ProtoItem {
   def toFunction[I, O](): Function1[State[Markers,I], State[Markers,O]] = ???
 }
 

@@ -1,0 +1,634 @@
+{
+    "sourceFile": "modules/client/src/main/resources/places.dhall",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 154,
+            "patches": [
+                {
+                    "date": 1629279683228,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1629279717379,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,5 +28,5 @@\n         ]  \n     }\n   }\n ]\n-in places, transitions]\n\\ No newline at end of file\n+in (places, transitions\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629279772026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,5 +28,5 @@\n         ]  \n     }\n   }\n ]\n-in (places, transitions\n\\ No newline at end of file\n+in places, transitions)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629279778322,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,5 +28,6 @@\n         ]  \n     }\n   }\n ]\n-in places, transitions)\n\\ No newline at end of file\n+in places\n+in transitions)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629279823508,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,6 +28,6 @@\n         ]  \n     }\n   }\n ]\n-in places\n-in transitions)\n\\ No newline at end of file\n+in [places\n+in transitions\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629279829557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,6 +28,5 @@\n         ]  \n     }\n   }\n ]\n-in [places\n-in transitions\n\\ No newline at end of file\n+in [places, transitions\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629280400653,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,16 +4,9 @@\n     , name = \"place1\"\n     , capacity = 2\n   }\n ]\n--- Transition(id: NodeId, name: String, service:Service, rpc:RPC)\n-{-\n-case class Service(packageName: String = \"\", name: String = \"\", rpcs: List[RPC] = List())\n-    extends ProtoItem\n-case class RPC(name: String, input: String, output: String) extends ProtoItem {\n-  def toFunction[I, O](): Function1[State[Markers,I], State[Markers,O]] = ???\n-}\n--}\n+\n let transitions : List Transition = [\n    {\n       id = 2 \n     , name = \"testTransition\"\n@@ -28,5 +21,5 @@\n         ]  \n     }\n   }\n ]\n-in [places, transitions\n\\ No newline at end of file\n+in [places, transitions]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629280547033,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,21 +5,6 @@\n     , capacity = 2\n   }\n ]\n \n-let transitions : List Transition = [\n-   {\n-      id = 2 \n-    , name = \"testTransition\"\n-    , service = {\n-          packageName = \"packageName1\"\n-        , name = \"serviceName1\"   \n-        , rpcs = [\n-          {name = \"rpc1\"\n-          , input = \"in1\"\n-          , output = \"out1\"\n-          }\n-        ]  \n-    }\n-  }\n-]\n+\n in [places, transitions]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629280552371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,5 +6,5 @@\n   }\n ]\n \n \n-in [places, transitions]\n\\ No newline at end of file\n+in [places\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629280564049,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,7 +4,5 @@\n     , name = \"place1\"\n     , capacity = 2\n   }\n ]\n-\n-\n-in [places\n\\ No newline at end of file\n+in places\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629282594551,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let places: List Place = [\n+let list: List Place = [\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629283076046,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,6 +3,5 @@\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n-]\n-in places\n\\ No newline at end of file\n+]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629283081703,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let list: List Place = [\n+[\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629284154479,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-[\n+let [\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629284169557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let [\n+let petri[\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629284177454,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let petri[\n+let petrinet = [\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629284186060,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,6 @@\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n-]\n\\ No newline at end of file\n+]\n+in petrinet\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629285070125,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let petrinet = [\n+{let petrinet =} [\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629285075318,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-{let petrinet =} [\n+let petrinet = [\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629285081919,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n-let petrinet = [\n+{\n+  let petrinet = [\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629285087966,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n {\n-  let petrinet = [\n+  petrinet = [\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629285099119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n {\n-  petrinet = [\n+  places = [\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n ]\n\\ No newline at end of file\n-in petrinet\n"
+                },
+                {
+                    "date": 1629285116242,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n-{\n-  places = [\n+{places = [\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n\\ No newline at end of file\n-]\n+]\n+}\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629285121465,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,6 +3,6 @@\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n-]\n+  ]\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629285127300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n-{places = [\n+{\n+  places = [\n    {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629285137366,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n {\n   places = [\n-   {\n+  {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n"
+                },
+                {
+                    "date": 1629285142509,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n {\n   places = [\n-  {\n-    id = 1 \n-    , name = \"place1\"\n-    , capacity = 2\n-  }\n+    {\n+      id = 1 \n+      , name = \"place1\"\n+      , capacity = 2\n+    }\n   ]\n }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629285177191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n {\n-  places = [\n+  petri = [\n     {\n       id = 1 \n       , name = \"place1\"\n       , capacity = 2\n"
+                },
+                {
+                    "date": 1629285598856,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n-{\n-  petri = [\n+[\n     {\n       id = 1 \n       , name = \"place1\"\n       , capacity = 2\n"
+                },
+                {
+                    "date": 1629285626448,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,7 @@\n [\n-    {\n-      id = 1 \n-      , name = \"place1\"\n-      , capacity = 2\n-    }\n-  ]\n-}\n\\ No newline at end of file\n+  {\n+    id = 1 \n+    , name = \"place1\"\n+    , capacity = 2\n+  }\n+]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629288023262,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-[\n+let [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629288028984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let [\n+let places =[\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629288034507,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n-let places =[\n+let places = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n\\ No newline at end of file\n-]\n+]\n+in\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629295902679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n-let places = [\n+let places :  = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n ]\n\\ No newline at end of file\n-in\n+in places\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629295917881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let places :  = [\n+let places : List LinkableElement = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629296159414,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let places : List LinkableElement = [\n+let places : List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629296785784,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,5 @@\n+\n let places : List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629296799919,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-\n+letpetri\n let places : List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629296810021,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-letpetri\n+let petri\n let places : List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629296859960,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let petri\n+let petriNet = ./petri.dhall\n let places : List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629297003636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,5 +5,5 @@\n     , name = \"place1\"\n     , capacity = 2\n   }\n ]\n-in places\n\\ No newline at end of file\n+in places\n"
+                },
+                {
+                    "date": 1629297033080,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let petriNet = ./petri.dhall\n+let petriNet = .modules/client/src/main/resources/petri.dhall\n let places : List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629297083795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let petriNet = .modules/client/src/main/resources/petri.dhall\n+let petriNet = ./petri.dhall\n let places : List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629297270168,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let petriNet = ./petri.dhall\n+--let petriNet = ./petri.dhall\n let places : List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629297279177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n --let petriNet = ./petri.dhall\n-let places : List Place = [\n+ [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629297285229,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n --let petriNet = ./petri.dhall\n- [\n+[\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n-]\n-in places\n+]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629297977229,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n --let petriNet = ./petri.dhall\n+\n [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629297991057,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,49 @@\n --let petriNet = ./petri.dhall\n+let RPC : Type = {\n+  name : Text\n+  , input : Text\n+  ,  output : Text\n+  }\n+let Service : Type = {\n+  packageName : Text \n+  , name : Text\n+  , rpcs: List RPC\n+  } \n+let ProtoItem : Type = <RPC | Service>\n \n+let Place = {\n+  id : Natural\n+  , name : Text\n+  , capacity : Natural\n+  }\n+let Transition = {\n+  id : Natural \n+  , name : Text \n+  , service : Service\n+  , rpc : RPC\n+  }\n+\n+let LinkableElement : Type = <Place | Transition>\n+\n+let Timed : Type = {\n+  from: Natural\n+  , to: Natural\n+  , interval: Natural\n+}\n+  \n+let Weighted : Type = {\n+  from: Natural\n+  , to: Natural\n+  , weight: Natural\n+}\n+\n+let Arc : Type = <Timed | Weighted>\n+\n+let PetriElement : Type = <Arc | LinkableElemnet>\n+\n+let PetriNet : Type = List PetriElement \n+\n [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629297998439,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n let PetriNet : Type = List PetriElement \n-\n+let places \n [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629298016219,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n let PetriNet : Type = List PetriElement \n-let places \n+let places Petri\n [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629298021273,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n let PetriNet : Type = List PetriElement \n-let places Petri\n+let places PetriNet\n [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629298029423,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n let PetriNet : Type = List PetriElement \n-let places PetriNet\n+let places : PetriNet =\n [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629298036878,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,5 +48,5 @@\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n-]\n\\ No newline at end of file\n+]\n"
+                },
+                {
+                    "date": 1629298043987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,4 +49,5 @@\n     , name = \"place1\"\n     , capacity = 2\n   }\n ]\n+in places\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629298081184,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n let Arc : Type = <Timed | Weighted>\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n-let PetriNet : Type = List PetriElement \n+let PetriNet : Type = List LinkableElement \n let places : PetriNet =\n [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298148613,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,10 +41,9 @@\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n let PetriNet : Type = List LinkableElement \n-let places : PetriNet =\n-[\n+let places : PetriNet = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629298194328,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n let Arc : Type = <Timed | Weighted>\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n-let PetriNet : Type = List LinkableElement \n+let  : Type = List LinkableElement \n let places : PetriNet = [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629298220786,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,12 +38,9 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc | LinkableElemnet>\n-\n-let  : Type = List LinkableElement \n-let places : PetriNet = [\n+in\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629298260852,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,12 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-in\n+let PetriElement : Type = <Arc | LinkableElemnet>\n+\n+let  : Type = List LinkableElement \n+let places : PetriNet = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629298273057,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,10 +40,9 @@\n let Arc : Type = <Timed | Weighted>\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n-let  : Type = List LinkableElement \n-let places : PetriNet = [\n+in \n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629298285763,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n let Arc : Type = <Timed | Weighted>\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n-in \n+in List\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629298294823,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n let Arc : Type = <Timed | Weighted>\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n-in List\n+in List Petri\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629298327338,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n let Arc : Type = <Timed | Weighted>\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n-in List Petri\n+in List PetriElement.Linkable\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629298335388,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n let Arc : Type = <Timed | Weighted>\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n-in List PetriElement.Linkable\n+in List PetriElement.LinkableElement.Place\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629298340840,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n let Arc : Type = <Timed | Weighted>\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n-in List PetriElement.LinkableElement.Place\n+in List PetriElement.LinkableElement.Place \n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629298346373,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n let Arc : Type = <Timed | Weighted>\n \n let PetriElement : Type = <Arc | LinkableElemnet>\n \n-in List PetriElement.LinkableElement.Place \n+in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629298356204,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,5 +47,5 @@\n     , name = \"place1\"\n     , capacity = 2\n   }\n ]\n-in places\n\\ No newline at end of file\n+in placs\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629298533483,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,14 +38,13 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc | LinkableElemnet>\n+let PetriElement : Type = <Arc:| LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n-]\n\\ No newline at end of file\n-in placs\n+]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629298539864,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc:| LinkableElemnet>\n+let PetriElement : Type = <Arc: <| LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298563472,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc: <| LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed | Weighted> LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298576962,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc: <Timed | Weighted> LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed :| Weighted> LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298587030,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,13 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc: <Timed :| Weighted> LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {\n+  from: Natural\n+  , to: Natural\n+  , interval: Natural\n+}| Weighted> LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298593814,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,10 +38,10 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc: <Timed : {\n-  from: Natural\n+let PetriElement : Type = <Arc: <Timed : {from: Natural\n+  \n   , to: Natural\n   , interval: Natural\n }| Weighted> LinkableElemnet>\n \n"
+                },
+                {
+                    "date": 1629298600185,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,12 +38,9 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc: <Timed : {from: Natural\n-  \n-  , to: Natural\n-  , interval: Natural\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural\n }| Weighted> LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n"
+                },
+                {
+                    "date": 1629298605253,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,10 +38,9 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural\n-}| Weighted> LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural}| Weighted> LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298615571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural}| Weighted> LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural}>| Weighted> LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298625687,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n }\n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural}>| Weighted> LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | >| Weighted> LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298646252,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n   }\n \n let LinkableElement : Type = <Place | Transition>\n \n-let Timed : Type = {\n+{-let Timed : Type = {\n   from: Natural\n   , to: Natural\n   , interval: Natural\n }\n"
+                },
+                {
+                    "date": 1629298651762,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,8 +35,9 @@\n   from: Natural\n   , to: Natural\n   , weight: Natural\n }\n+-\n \n let Arc : Type = <Timed | Weighted>\n \n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | >| Weighted> LinkableElemnet>\n"
+                },
+                {
+                    "date": 1629298663705,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,10 +35,10 @@\n   from: Natural\n   , to: Natural\n   , weight: Natural\n }\n--\n \n+\n let Arc : Type = <Timed | Weighted>\n \n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | >| Weighted> LinkableElemnet>\n \n"
+                },
+                {
+                    "date": 1629298671618,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n }\n \n \n let Arc : Type = <Timed | Weighted>\n-\n+-}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | >| Weighted> LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n"
+                },
+                {
+                    "date": 1629298705468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | >| Weighted> LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | >| Weighted> :  LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298732422,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | >| Weighted> :  LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted>| Weighted> :  LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298739632,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,12 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted>| Weighted> :  LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural\n+  , to: Natural\n+  , weight: Natural\n+}>| Weighted> :  LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298747577,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,11 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural\n-  , to: Natural\n-  , weight: Natural\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural\n }>| Weighted> :  LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n"
+                },
+                {
+                    "date": 1629298755733,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,10 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural\n-}>| Weighted> :  LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>| Weighted> :  LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298799777,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>| Weighted> :  LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>|  :  LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298806874,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>|  :  LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>|  :LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298828367,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>|  :LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>| LinkableElemnet>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298836877,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>| LinkableElemnet>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>| LinkableElemnet >\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298870425,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,13 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>| LinkableElemnet >\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>| LinkableElemnet : Place = {\n+  id : Natural\n+  , name : Text\n+  , capacity : Natural\n+  }>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298889376,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}>| LinkableElemnet : Place = {\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}> | LinkableElemnet : Place = {\n   id : Natural\n   , name : Text\n   , capacity : Natural\n   }>\n"
+                },
+                {
+                    "date": 1629298913205,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}> | LinkableElemnet : Place = {\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}> | <LinkableElemnet Place = {\n   id : Natural\n   , name : Text\n   , capacity : Natural\n   }>\n"
+                },
+                {
+                    "date": 1629298924853,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}> | <LinkableElemnet Place = {\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}> | <LinkableElemnet : <Place = {\n   id : Natural\n   , name : Text\n   , capacity : Natural\n   }>\n"
+                },
+                {
+                    "date": 1629298946374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural}> | <LinkableElemnet : <Place = {\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place = {\n   id : Natural\n   , name : Text\n   , capacity : Natural\n   }>\n"
+                },
+                {
+                    "date": 1629298958204,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place = {\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {\n   id : Natural\n   , name : Text\n   , capacity : Natural\n   }>\n"
+                },
+                {
+                    "date": 1629298964306,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,10 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {\n-  id : Natural\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural\n   , name : Text\n   , capacity : Natural\n   }>\n \n"
+                },
+                {
+                    "date": 1629298972896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,11 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural\n-  , name : Text\n-  , capacity : Natural\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural\n   }>\n \n in List PetriElement.LinkableElement.Place [\n   {\n"
+                },
+                {
+                    "date": 1629298982791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,9 @@\n \n let Arc : Type = <Timed | Weighted>\n -}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural\n-  }>\n+}>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629298992187,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,10 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural\n-}>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural}>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299004046,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural}>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} >\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299010397,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} >\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | >\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299029487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,14 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | >\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition = {\n+  id : Natural \n+  , name : Text \n+  , service : Service\n+  , rpc : RPC\n+  }>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299044310,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition = {\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {\n   id : Natural \n   , name : Text \n   , service : Service\n   , rpc : RPC\n"
+                },
+                {
+                    "date": 1629299050555,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,10 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {\n-  id : Natural \n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural \n   , name : Text \n   , service : Service\n   , rpc : RPC\n   }>\n"
+                },
+                {
+                    "date": 1629299056586,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,10 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural \n-  , name : Text \n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural  , name : Text \n   , service : Service\n   , rpc : RPC\n   }>\n \n"
+                },
+                {
+                    "date": 1629299064426,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,10 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural  , name : Text \n-  , service : Service\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service\n   , rpc : RPC\n   }>\n \n in List PetriElement.LinkableElement.Place [\n"
+                },
+                {
+                    "date": 1629299070951,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,10 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service\n-  , rpc : RPC\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC\n   }>\n \n in List PetriElement.LinkableElement.Place [\n   {\n"
+                },
+                {
+                    "date": 1629299079411,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,10 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC\n-  }>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299086174,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299112433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299198684,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   packageName : Text \n   , name : Text\n   , rpcs: List RPC\n   } \n-let ProtoItem : Type = <RPC | Service>\n+{- let ProtoItem : Type = <RPC | Service>\n \n let Place = {\n   id : Natural\n   , name : Text\n@@ -23,9 +23,9 @@\n   , rpc : RPC\n   }\n \n let LinkableElement : Type = <Place | Transition>\n-\n+ -}\n {-let Timed : Type = {\n   from: Natural\n   , to: Natural\n   , interval: Natural\n"
+                },
+                {
+                    "date": 1629299338682,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > >| <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299345541,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > >| <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299391476,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > > | <LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299414411,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} >  | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299460604,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} >  | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299485455,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n -}\n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>\n+let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629299534328,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n let Arc : Type = <Timed | Weighted>\n -}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n-in List PetriElement.LinkableElement.Place [\n+in List PetriElement.LinkableElement.Place {[\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629299541381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n let Arc : Type = <Timed | Weighted>\n -}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n-in List PetriElement.LinkableElement.Place {[\n+in List PetriElement.LinkableElement.Place [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629299550807,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n let Arc : Type = <Timed | Weighted>\n -}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n-in List PetriElement.LinkableElement.Place [\n+in List PetriElement.LinkableElement.Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629299644055,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n let Arc : Type = <Timed | Weighted>\n -}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n-in List PetriElement.LinkableElement.Place = [\n+ List PetriElement.LinkableElement.Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629299649504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n let Arc : Type = <Timed | Weighted>\n -}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n- List PetriElement.LinkableElement.Place = [\n+let places =  List PetriElement.LinkableElement.Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629299655997,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,5 +47,7 @@\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n-]\n\\ No newline at end of file\n+]\n+\n+in places\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629299671978,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n let Arc : Type = <Timed | Weighted>\n -}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n-let places =  List PetriElement.LinkableElement.Place = [\n+let places  List PetriElement.LinkableElement.Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629299689239,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n let Arc : Type = <Timed | Weighted>\n -}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n-let places  List PetriElement.LinkableElement.Place = [\n+let places : List PetriElement.LinkableElement.Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629299790860,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n let Arc : Type = <Timed | Weighted>\n -}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n-let places : List PetriElement.LinkableElement.Place = [\n+let places : List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629299803716,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n let Arc : Type = <Timed | Weighted>\n -}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n-let places : List Place = [\n+let places : List PetriElement.LinkableElement.Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629299817137,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n let Arc : Type = <Timed | Weighted>\n -}\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n-let places : List PetriElement.LinkableElement.Place = [\n+let places : List PetriElement = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629355556641,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n   packageName : Text \n   , name : Text\n   , rpcs: List RPC\n   } \n-{- let ProtoItem : Type = <RPC | Service>\n+let ProtoItem : Type = <RPC | Service>\n \n let Place = {\n   id : Natural\n   , name : Text\n"
+                },
+                {
+                    "date": 1629355570099,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n   , rpc : RPC\n   }\n \n let LinkableElement : Type = <Place | Transition>\n- -}\n+\n {-let Timed : Type = {\n   from: Natural\n   , to: Natural\n   , interval: Natural\n@@ -38,9 +38,9 @@\n }\n \n \n let Arc : Type = <Timed | Weighted>\n--}\n+\n let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n let places : List PetriElement = [\n   {\n"
+                },
+                {
+                    "date": 1629355584858,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n   }\n \n let LinkableElement : Type = <Place | Transition>\n \n-{-let Timed : Type = {\n+let Timed : Type = {\n   from: Natural\n   , to: Natural\n   , interval: Natural\n }\n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n \n-let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n+--let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n let places : List PetriElement = [\n   {\n     id = 1 \n"
+                },
+                {
+                    "date": 1629355620478,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,8 +39,10 @@\n \n \n let Arc : Type = <Timed | Weighted>\n \n+\n+\n --let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n let places : List PetriElement = [\n   {\n"
+                },
+                {
+                    "date": 1629355627676,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,10 +39,10 @@\n \n \n let Arc : Type = <Timed | Weighted>\n \n+let places \n \n-\n --let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n let places : List PetriElement = [\n   {\n"
+                },
+                {
+                    "date": 1629355649896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n \n-let places \n+let places = ./places.\n \n --let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n let places : List PetriElement = [\n"
+                },
+                {
+                    "date": 1629355659960,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n \n let Arc : Type = <Timed | Weighted>\n \n-let places = ./places.\n+let places = ./places.dhall\n \n --let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n let places : List PetriElement = [\n"
+                },
+                {
+                    "date": 1629355906543,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -43,9 +43,9 @@\n let places = ./places.dhall\n \n --let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n \n-let places : List PetriElement = [\n+let places : List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629355994193,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n --let petriNet = ./petri.dhall\n-let RPC : Type = {\n+{-let RPC : Type = {\n   name : Text\n   , input : Text\n   ,  output : Text\n   }\n"
+                },
+                {
+                    "date": 1629356001124,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n \n let places = ./places.dhall\n \n --let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n-\n+-\n let places : List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629356122242,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,10 +42,10 @@\n \n let places = ./places.dhall\n \n --let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n--\n-let places : List Place = [\n+-}\n+ [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629356127653,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,7 +49,5 @@\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n-]\n-\n-in places\n\\ No newline at end of file\n+]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629356164244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,50 +1,5 @@\n---let petriNet = ./petri.dhall\n-{-let RPC : Type = {\n-  name : Text\n-  , input : Text\n-  ,  output : Text\n-  }\n-let Service : Type = {\n-  packageName : Text \n-  , name : Text\n-  , rpcs: List RPC\n-  } \n-let ProtoItem : Type = <RPC | Service>\n \n-let Place = {\n-  id : Natural\n-  , name : Text\n-  , capacity : Natural\n-  }\n-let Transition = {\n-  id : Natural \n-  , name : Text \n-  , service : Service\n-  , rpc : RPC\n-  }\n-\n-let LinkableElement : Type = <Place | Transition>\n-\n-let Timed : Type = {\n-  from: Natural\n-  , to: Natural\n-  , interval: Natural\n-}\n-  \n-let Weighted : Type = {\n-  from: Natural\n-  , to: Natural\n-  , weight: Natural\n-}\n-\n-\n-let Arc : Type = <Timed | Weighted>\n-\n-let places = ./places.dhall\n-\n---let PetriElement : Type = <Arc: <Timed : {from: Natural, to: Natural, interval: Natural} | Weighted : {from: Natural, to: Natural, weight: Natural} > | LinkableElemnet : <Place : {id : Natural, name : Text, capacity : Natural} | Transition : {id : Natural , name : Text , service : Service, rpc : RPC}>>\n--}\n  [\n   {\n     id = 1 \n     , name = \"place1\"\n"
+                },
+                {
+                    "date": 1629356169612,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n-\n- [\n+[\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629356714314,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-[\n+let [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629356723236,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let [\n+[\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629358001982,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-[\n+let [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629358007712,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let [\n+let places = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629358019820,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let places = [\n+let places: List Place = [\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629358042094,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-let places: List Place = [\n+[\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629367301708,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-[\n+--[\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n"
+                },
+                {
+                    "date": 1629367307351,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,5 +3,5 @@\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }\n-]\n\\ No newline at end of file\n+--]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629367324053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,6 +2,5 @@\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n-  }\n---]\n\\ No newline at end of file\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629367331206,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,5 @@\n---[\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n-  \n\\ No newline at end of file\n+  }\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629368590432,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n   {\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n-  }\n\\ No newline at end of file\n+  }]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629368596196,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-  {\n+  [{\n     id = 1 \n     , name = \"place1\"\n     , capacity = 2\n   }]\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1629279683228,
+            "name": "Commit-0",
+            "content": "let places: List Place = [\n   {\n    id = 1 \n    , name = \"place1\"\n    , capacity = 2\n  }\n]\n-- Transition(id: NodeId, name: String, service:Service, rpc:RPC)\n{-\ncase class Service(packageName: String = \"\", name: String = \"\", rpcs: List[RPC] = List())\n    extends ProtoItem\ncase class RPC(name: String, input: String, output: String) extends ProtoItem {\n  def toFunction[I, O](): Function1[State[Markers,I], State[Markers,O]] = ???\n}\n-}\nlet transitions : List Transition = [\n   {\n      id = 2 \n    , name = \"testTransition\"\n    , service = {\n          packageName = \"packageName1\"\n        , name = \"serviceName1\"   \n        , rpcs = [\n          {name = \"rpc1\"\n          , input = \"in1\"\n          , output = \"out1\"\n          }\n        ]  \n    }\n  }\n]\nin places, transitions]"
+        }
+    ]
+}

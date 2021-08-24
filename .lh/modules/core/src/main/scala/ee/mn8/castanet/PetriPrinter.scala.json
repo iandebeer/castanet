@@ -1,0 +1,18 @@
+{
+    "sourceFile": "modules/core/src/main/scala/ee/mn8/castanet/PetriPrinter.scala",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1629462883728,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1629462883728,
+            "name": "Commit-0",
+            "content": "package ee.mn8.castanet\n\n import java.io.PrintWriter\n import java.io.File\n import scala.collection.immutable.ListSet\n import scodec.bits.BitVector\n\n \n\n //import scala.lang.PostfixOps\n \ncase class PetriPrinter(path: String = \"/Users/ian/dev/castanet/modules/core/src/test/resource/\", fileName:  String = \"petrinet\", petriNet: ColouredPetriNet) :\n  \n  /**\n   * Creates an output dot file and uses that to create graphviz png output using following command\n   * dot -Tpng <filePrefix>.dot -o <filePrefix>.png\n   * If you want to change the certain format, change below.\n   */\n  def print(markers: Option[Markers] = None, steps: Option[Map[ArcId, Long]] = None) = \n    //the places and \n    val builder: StringBuilder = petriNet.elements.foldLeft(new StringBuilder( \"digraph G {\\n\"))(\n      (b,kv) => b.append(kv._2 match \n          case p:Place => \n            val markerString = markers match\n              case Some(m) => \n                val up = m.state(p.id).populationCount\n                val down = p.capacity - up\n                (\"•\"*up.toInt) + (\"_\"*down.toInt)\n\n              case None => \"°\"* p.capacity\n            s\"\"\"${p.id} [label=\"${p.name}\\\\n${markerString}\\\\n\" shape=circle]\\n\"\"\"\n          case t:Transition => s\"\"\"${t.id} [label=\"${t.name}\" shape=box]\\n\"\"\"\n        ))\n    \n    // the arcs\n    petriNet.graph.foldLeft(builder.append(\"\\n\"))(\n      (b,kv) => b.append(kv._2.toIndexedSeq.reverse.map(l => \n          val stp = if steps.getOrElse(Map[ArcId, BitVector]()).contains(ArcId(kv._1,l.id)) then\n             \",color=red,penwidth=3.0\"\n          else \"\"   \n          s\"\"\"${kv._1} -> ${l.id} [label=\"${petriNet.arcs(ArcId(kv._1,l.id))}\" $stp] \\n\"\"\"\n        ).mkString)\n    )\n    builder.append(\"}\")\n    writeTextToFile(fileName + \".dot\", builder.toString)\n\n    val command = new StringBuilder()\n    command.append(\"dot -Tpng:cairo:gd \").    // output type\n            append(path + fileName).append(\".dot \").   // input dot file\n            append(\"-o \").append(path + fileName).append(\".png\")  // output image\n    executeCommand(command.toString()) \n    \n  def executeCommand(command: String) : Unit = \n    Runtime.getRuntime().exec(command)\n \n  def writeTextToFile(fileName:String, text: String ): Unit =\n    val writer = new PrintWriter(new File(path +fileName))\n    writer.write(text)\n    writer.close()"
+        }
+    ]
+}

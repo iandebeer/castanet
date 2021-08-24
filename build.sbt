@@ -48,15 +48,6 @@ lazy val core = project
       "dev.optics"          %% "monocle-core"        % monocleVersion,
       "org.scodec"          %% "scodec-bits"         % scodecVersion,
       "org.scala-lang"      %% "scala3-staging"      % Scala3,
-      ("us.oyanglul" %% "dhall-generic" % "0.3.47").exclude(
-        "org.typelevel", "cats-kernel_3"
-      ).exclude(
-        "org.typelevel", "cats-core_3"
-      ).exclude(
-        "org.typelevel", "cats-kernel_2.13"
-      ).exclude(
-        "org.typelevel", "cats-core_2.13"
-      ),
       "org.scalameta"       %% "munit"               % munitVersion       % Test,
       "org.scalameta"       %% "munit-scalacheck"    % munitVersion       % Test,
       "org.typelevel"       %% "munit-cats-effect-3" % muniteCEVersion    % Test
@@ -105,16 +96,6 @@ lazy val client = project
       "org.dhallj"           % "dhall-imports-mini"  % dhallVersion,
       "org.dhallj"           % "dhall-yaml"          % dhallVersion,
       "org.dhallj"          %% "dhall-circe"         % dhallVersion, 
-      ("us.oyanglul" %% "dhall-generic" % "0.3.47")
-      .exclude(
-        "org.typelevel", "cats-kernel_3"
-      ).exclude(
-        "org.typelevel", "cats-core_3"
-      ).exclude(
-        "org.typelevel", "cats-kernel_2.13"
-      ).exclude(
-        "org.typelevel", "cats-core_2.13"
-      ),
       "org.scalameta"       %% "munit"               % munitVersion    % Test,
       "org.scalameta"       %% "munit-scalacheck"    % munitVersion    % Test,
       "org.typelevel"       %% "munit-cats-effect-3" % muniteCEVersion % Test,
@@ -142,12 +123,13 @@ lazy val server = project
   .dependsOn(protocol)
   .dependsOn(protocol % "protobuf")
 
-lazy val docs = project // new documentation project
+/*lazy val docs = project // new documentation project
   .in(file("./castanet-docs"))
   .settings(
+    evictionErrorLevel := Level.Info,
     // scalaVersion := Scala3,
     libraryDependencies += ("org.scalameta" %% "mdoc" % "2.2.22")
     //.withDottyCompat(scalaVersion.value)
   )
   .dependsOn(core)
-  .enablePlugins(MdocPlugin)
+  .enablePlugins(MdocPlugin)*/

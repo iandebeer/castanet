@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 40,
+            "activePatchIndex": 73,
             "patches": [
                 {
                     "date": 1629275319970,
@@ -168,6 +168,138 @@
                 {
                     "date": 1629384848923,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,26 +121,9 @@\n   \n case class Step(markers:Markers, show: Boolean = false, count:  Int = 0) :\n     val inits: SortedMap[NodeId, BitVector] = markers.state.filter(m => m._2 > BitVector.empty.padRight(m._2.size))\n \n-/* object PetriDerivation:   \n- import LinkableElement._\n- import Service._   \n- import Arc._\n- given  encodePetriElemnt: Encoder[PetriElement] = Encoder.instance {\n-    case place @ Place(_,_,_) => place.asJson\n-    case transition @ Transition(_,_,_,_) => transition.asJson\n-    case timed @ Timed(_,_,_) => timed.asJson\n-    case weighted @ Weighted(_,_,_) => weighted.asJson\n-  }\n \n-  given decodeEvent: Decoder[PetriElement] =\n-    List[Decoder[PetriElement]](\n-      Decoder[Place].widen,\n-      Decoder[Transition].widen,\n-      Decoder[Timed].widen,\n-      Decoder[Weighted].widen\n-    ).reduceLeft(_ or _) */\n \n trait ColouredPetriNet:\n   import LinkableElement._\n   import cats.data.State\n"
+                },
+                {
+                    "date": 1629461942026,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n enum LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n+  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement \n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n@@ -121,10 +121,8 @@\n   \n case class Step(markers:Markers, show: Boolean = false, count:  Int = 0) :\n     val inits: SortedMap[NodeId, BitVector] = markers.state.filter(m => m._2 > BitVector.empty.padRight(m._2.size))\n \n-\n-\n trait ColouredPetriNet:\n   import LinkableElement._\n   import cats.data.State\n \n"
+                },
+                {
+                    "date": 1629461947885,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n enum LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement \n+  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement:\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n"
+                },
+                {
+                    "date": 1629462278790,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,8 +57,9 @@\n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement:\n+    de\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n"
+                },
+                {
+                    "date": 1629462295040,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,10 +56,10 @@\n enum LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement:\n-    de\n+  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n+    def run \n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n"
+                },
+                {
+                    "date": 1629462316008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n enum LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n+  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement =\n     def run \n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n"
+                },
+                {
+                    "date": 1629462321960,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n enum LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement =\n+  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n     def run \n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n"
+                },
+                {
+                    "date": 1629462330866,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,10 +56,10 @@\n enum LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n-    def run \n+  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n+    def run\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n"
+                },
+                {
+                    "date": 1629462337688,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n-    def run\n+    def run() = ???\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n"
+                },
+                {
+                    "date": 1629462582639,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n enum LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n+  case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n     def run() = ???\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n"
+                },
+                {
+                    "date": 1629462674090,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n enum LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n+  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n     def run() = ???\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n"
+                },
+                {
+                    "date": 1629462683959,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n enum LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n+  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement \n     def run() = ???\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n"
+                },
+                {
+                    "date": 1629462690269,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n enum LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement \n+  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement {\n     def run() = ???\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n"
+                },
+                {
+                    "date": 1629462707629,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,13 +52,13 @@\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n   case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n \n-enum LinkableElement extends PetriElement: \n+trait  LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n   case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement {\n+  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n     def run() = ???\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n"
+                },
+                {
+                    "date": 1629462718812,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,9 @@\n \n trait  LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n-  case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n+case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n   case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n     def run() = ???\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n"
+                },
+                {
+                    "date": 1629462724312,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n trait  LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n+case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n     def run() = ???\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n"
+                },
+                {
+                    "date": 1629462737018,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -55,9 +55,9 @@\n \n trait  LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n-case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n+case class Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n     def run() = ???\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n"
+                },
+                {
+                    "date": 1629462748868,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n trait  LinkableElement extends PetriElement: \n   val id: NodeId\n   val name: String\n case class Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement\n+case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n     def run() = ???\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n"
+                },
+                {
+                    "date": 1629462778205,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n   def apply(cpn: ColouredPetriNet, stateVector: BitVector): Markers =\n     Markers(\n       cpn,\n       cpn.elements.values\n-        .collect { case p: LinkableElement.Place =>\n+        .collect { case p: Place =>\n           (p.id, p.capacity)\n         }\n         .foldLeft((SortedMap[NodeId, BitVector](), stateVector))((ms, kv) =>\n           val t = ms._2.splitAt(kv._2)\n"
+                },
+                {
+                    "date": 1629462793662,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n   def apply(cpn: ColouredPetriNet): Markers =\n     Markers(\n       cpn,\n       cpn.elements.values\n-        .collect { case p: LinkableElement.Place =>\n+        .collect { case p: Place =>\n           (p.id, BitVector.fill(p.capacity)(false))\n         }\n         .to(collection.immutable.SortedMap)\n     )\n"
+                },
+                {
+                    "date": 1629462811783,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -101,9 +101,9 @@\n     Markers(cpn, BitVector.fromValidBase64(markers, Bases.Alphabets.Base64))\n \n end Markers    \n case class Markers(cpn: ColouredPetriNet, state: SortedMap[NodeId, BitVector]):\n-  import LinkableElement._\n+  //import LinkableElement._\n \n   val places = cpn.elements.values.collect { case p: Place => (p.id, p) }.toMap\n   def setMarker(m: Marker) =\n     if state.keySet.contains(m.id) then Markers(cpn, state ++ m.asMap)\n"
+                },
+                {
+                    "date": 1629462823795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,9 +123,9 @@\n case class Step(markers:Markers, show: Boolean = false, count:  Int = 0) :\n     val inits: SortedMap[NodeId, BitVector] = markers.state.filter(m => m._2 > BitVector.empty.padRight(m._2.size))\n \n trait ColouredPetriNet:\n-  import LinkableElement._\n+  //import LinkableElement._\n   import cats.data.State\n \n   val elements: SortedMap[NodeId, LinkableElement]\n   val graph: PetriGraph\n"
+                },
+                {
+                    "date": 1629463917552,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,30 +41,10 @@\n import scala.concurrent.duration.*\n \n \n \n-sealed trait PetriElement \n-sealed trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]\n \n-type NodeId = Int\n \n-enum Arc extends PetriElement : \n-  val from: NodeId\n-  val to: NodeId\n-  case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n-  case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc\n-\n-trait  LinkableElement extends PetriElement: \n-  val id: NodeId\n-  val name: String\n-case class Place(id: NodeId, name: String, capacity: Int) extends LinkableElement\n-case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n-    def run() = ???\n-\n-case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n-\n-type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n-\n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n   override def empty = Marker(id, BitVector.empty)\n   def add(m: Marker) = combine(this, m)\n"
+                },
+                {
+                    "date": 1629463993832,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,8 @@\n import scodec.bits.ByteOrdering\n \n import java.nio.file.Paths\n import scala.collection.immutable.ListSet\n-import scala.collection.immutable.SortedMap\n import scala.collection.mutable\n import scala.concurrent.duration.*\n \n \n"
+                },
+                {
+                    "date": 1629463999738,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,8 +35,9 @@\n import scodec.bits.ByteOrdering\n \n import java.nio.file.Paths\n import scala.collection.immutable.ListSet\n+import scala.collection.immutable.SortedMap\n import scala.collection.mutable\n import scala.concurrent.duration.*\n \n \n"
+                },
+                {
+                    "date": 1629464044596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,12 +39,8 @@\n import scala.collection.immutable.SortedMap\n import scala.collection.mutable\n import scala.concurrent.duration.*\n \n-\n-\n-\n-\n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n   val asMap          = Map(id -> bits)\n   override def empty = Marker(id, BitVector.empty)\n   def add(m: Marker) = combine(this, m)\n"
+                },
+                {
+                    "date": 1629723122511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,26 +18,23 @@\n package castanet\n \n import cats.*\n import cats.effect.*\n-import cats.implicits.*\n-import cats.instances.all.*\n-import cats.syntax.all.*\n+import cats.cats.cats.implicits.*\n+import cats.cats.cats.instances.all.*\n+import cats.cats.cats.syntax.all.*\n import ee.mn8.castanet.PetriElement\n import io.circe.*\n-import io.circe.generic.auto.*\n-import io.circe.parser.*\n-import io.circe.syntax.*\n-import io.circe.yaml.*\n+import io.circe.io.circe.io.circe.generic.auto.*\n+import io.circe.io.circe.io.circe.parser.*\n+import io.circe.io.circe.io.circe.syntax.*\n+import io.circe.io.circe.io.circe.yaml.*\n import monocle.Lens\n import monocle.syntax.all.*\n-import scodec.bits.Bases\n-import scodec.bits.BitVector\n-import scodec.bits.ByteOrdering\n+import scodec.bits.{Bases, BitVector, ByteOrdering}\n \n import java.nio.file.Paths\n-import scala.collection.immutable.ListSet\n-import scala.collection.immutable.SortedMap\n+import scala.collection.immutable.{ListSet, SortedMap}\n import scala.collection.mutable\n import scala.concurrent.duration.*\n \n case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:\n@@ -147,9 +144,9 @@\n     )\n end ColouredPetriNet\n \n case class PetriNetBuilder(nodes: ListSet[PetriElement] = ListSet()) extends ConcatenableProcess:\n-  import Arc._\n+  import Arc.*\n // Set is a Semigroup but not ListSet - add monoid behaviour\n   given [T]: Semigroup[ListSet[T]] = Semigroup.instance[ListSet[T]](_ ++ _)\n \n   def empty = PetriNetBuilder()\n"
+                },
+                {
+                    "date": 1629723128097,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n package castanet\n \n import cats.*\n import cats.effect.*\n-import cats.cats.cats.implicits.*\n+import cats.implicits.*\n import cats.cats.cats.instances.all.*\n import cats.cats.cats.syntax.all.*\n import ee.mn8.castanet.PetriElement\n import io.circe.*\n"
+                },
+                {
+                    "date": 1629723138300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,10 +19,10 @@\n \n import cats.*\n import cats.effect.*\n import cats.implicits.*\n-import cats.cats.cats.instances.all.*\n-import cats.cats.cats.syntax.all.*\n+import cats.instances.all.*\n+import cats.syntax.all.*\n import ee.mn8.castanet.PetriElement\n import io.circe.*\n import io.circe.io.circe.io.circe.generic.auto.*\n import io.circe.io.circe.io.circe.parser.*\n"
+                },
+                {
+                    "date": 1629723150314,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,9 +23,9 @@\n import cats.instances.all.*\n import cats.syntax.all.*\n import ee.mn8.castanet.PetriElement\n import io.circe.*\n-import io.circe.io.circe.io.circe.generic.auto.*\n+import io.circe.generic.auto.*\n import io.circe.io.circe.io.circe.parser.*\n import io.circe.io.circe.io.circe.syntax.*\n import io.circe.io.circe.io.circe.yaml.*\n import monocle.Lens\n"
+                },
+                {
+                    "date": 1629723155480,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n import cats.syntax.all.*\n import ee.mn8.castanet.PetriElement\n import io.circe.*\n import io.circe.generic.auto.*\n-import io.circe.io.circe.io.circe.parser.*\n+import io.circe.parser.*\n import io.circe.io.circe.io.circe.syntax.*\n import io.circe.io.circe.io.circe.yaml.*\n import monocle.Lens\n import monocle.syntax.all.*\n"
+                },
+                {
+                    "date": 1629723163343,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,10 +25,10 @@\n import ee.mn8.castanet.PetriElement\n import io.circe.*\n import io.circe.generic.auto.*\n import io.circe.parser.*\n-import io.circe.io.circe.io.circe.syntax.*\n-import io.circe.io.circe.io.circe.yaml.*\n+import io.circe.syntax.*\n+import io.circe.yaml.*\n import monocle.Lens\n import monocle.syntax.all.*\n import scodec.bits.{Bases, BitVector, ByteOrdering}\n \n"
+                },
+                {
+                    "date": 1629806016729,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,12 +88,9 @@\n   )\n   def serialize = toStateVector.toBase64\n end Markers\n \n-case class ArcId(from: Int, to: Int):\n-  import scala.math.Ordered.orderingToOrdered \n-  def compare(that: ArcId): Int = (this.from, this.to) compare (that.from, that.to)\n-  \n+\n case class Step(markers:Markers, show: Boolean = false, count:  Int = 0) :\n     val inits: SortedMap[NodeId, BitVector] = markers.state.filter(m => m._2 > BitVector.empty.padRight(m._2.size))\n \n trait ColouredPetriNet:\n"
+                },
+                {
+                    "date": 1629806043399,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,9 +88,8 @@\n   )\n   def serialize = toStateVector.toBase64\n end Markers\n \n-\n case class Step(markers:Markers, show: Boolean = false, count:  Int = 0) :\n     val inits: SortedMap[NodeId, BitVector] = markers.state.filter(m => m._2 > BitVector.empty.padRight(m._2.size))\n \n trait ColouredPetriNet:\n"
                 }
             ],
             "date": 1629275319969,

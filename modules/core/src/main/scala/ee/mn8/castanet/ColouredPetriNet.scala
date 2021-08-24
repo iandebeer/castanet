@@ -30,38 +30,12 @@ import io.circe.syntax.*
 import io.circe.yaml.*
 import monocle.Lens
 import monocle.syntax.all.*
-import scodec.bits.Bases
-import scodec.bits.BitVector
-import scodec.bits.ByteOrdering
+import scodec.bits.{Bases, BitVector, ByteOrdering}
 
 import java.nio.file.Paths
-import scala.collection.immutable.ListSet
-import scala.collection.immutable.SortedMap
+import scala.collection.immutable.{ListSet, SortedMap}
 import scala.collection.mutable
 import scala.concurrent.duration.*
-
-
-
-sealed trait PetriElement 
-sealed trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]
-
-type NodeId = Int
-
-enum Arc extends PetriElement : 
-  val from: NodeId
-  val to: NodeId
-  case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc
-  case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc
-
-enum LinkableElement extends PetriElement: 
-  val id: NodeId
-  val name: String
-  case Place(id: NodeId, name: String, capacity: Int) extends LinkableElement
-  case Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement
-
-case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) 
-
-type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]
 
 case class Marker(id: NodeId, bits: BitVector) extends Monoid[Marker]:
   val asMap          = Map(id -> bits)
@@ -76,7 +50,7 @@ object Markers:
     Markers(
       cpn,
       cpn.elements.values
-        .collect { case p: LinkableElement.Place =>
+        .collect { case p: Place =>
           (p.id, BitVector.fill(p.capacity)(false))
         }
         .to(collection.immutable.SortedMap)
@@ -86,7 +60,7 @@ object Markers:
     Markers(
       cpn,
       cpn.elements.values
-        .collect { case p: LinkableElement.Place =>
+        .collect { case p: Place =>
           (p.id, p.capacity)
         }
         .foldLeft((SortedMap[NodeId, BitVector](), stateVector))((ms, kv) =>
@@ -101,7 +75,7 @@ object Markers:
 
 end Markers    
 case class Markers(cpn: ColouredPetriNet, state: SortedMap[NodeId, BitVector]):
-  import LinkableElement._
+  //import LinkableElement._
 
   val places = cpn.elements.values.collect { case p: Place => (p.id, p) }.toMap
   def setMarker(m: Marker) =
@@ -115,15 +89,11 @@ case class Markers(cpn: ColouredPetriNet, state: SortedMap[NodeId, BitVector]):
   def serialize = toStateVector.toBase64
 end Markers
 
-case class ArcId(from: Int, to: Int):
-  import scala.math.Ordered.orderingToOrdered 
-  def compare(that: ArcId): Int = (this.from, this.to) compare (that.from, that.to)
-  
 case class Step(markers:Markers, show: Boolean = false, count:  Int = 0) :
     val inits: SortedMap[NodeId, BitVector] = markers.state.filter(m => m._2 > BitVector.empty.padRight(m._2.size))
 
 trait ColouredPetriNet:
-  import LinkableElement._
+  //import LinkableElement._
   import cats.data.State
 
   val elements: SortedMap[NodeId, LinkableElement]
@@ -171,7 +141,7 @@ trait ColouredPetriNet:
 end ColouredPetriNet
 
 case class PetriNetBuilder(nodes: ListSet[PetriElement] = ListSet()) extends ConcatenableProcess:
-  import Arc._
+  import Arc.*
 // Set is a Semigroup but not ListSet - add monoid behaviour
   given [T]: Semigroup[ListSet[T]] = Semigroup.instance[ListSet[T]](_ ++ _)
 

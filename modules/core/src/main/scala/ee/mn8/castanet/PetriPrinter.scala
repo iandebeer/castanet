@@ -2,14 +2,9 @@ package ee.mn8.castanet
 
  import java.io.PrintWriter
  import java.io.File
- import LinkableElement._
  import scala.collection.immutable.ListSet
  import scodec.bits.BitVector
 
- 
-
- //import scala.lang.PostfixOps
- 
 case class PetriPrinter(path: String = "/Users/ian/dev/castanet/modules/core/src/test/resource/", fileName:  String = "petrinet", petriNet: ColouredPetriNet) :
   
   /**

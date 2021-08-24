@@ -13,28 +13,29 @@ import fs2.grpc.client.ClientOptions
 import _root_.io.grpc.ClientInterceptor
 
 import cats.effect.IO
-case class JwtCredentials() extends CallCredentials:
-  import Constants._
-  override def thisUsesUnstableApi(): Unit = {}
-  override def applyRequestMetadata(
-      requestInfo: CallCredentials.RequestInfo,
-      appExecutor: Executor,
-      applier: CallCredentials.MetadataApplier
-  ): Unit =
-    val headers = new Metadata()
-    headers.put[String](AuthorizationMetadataKey, "test")
-    applier.apply(headers)
-
-case class KeycloakInterceptor(s: String) extends ClientInterceptor:
-  override def interceptCall[Req, Res](
-      methodDescriptor: MethodDescriptor[Req, Res],
-      callOptions: CallOptions,
-      channel: Channel
-  ) =
-    println("hello from the client")
-    channel.newCall[Req, Res](methodDescriptor, callOptions.withCallCredentials(JwtCredentials()))
 
 object Main extends IOApp:
+
+  case class JwtCredentials() extends CallCredentials:
+    override def thisUsesUnstableApi(): Unit = {}
+    override def applyRequestMetadata(
+        requestInfo: CallCredentials.RequestInfo,
+        appExecutor: Executor,
+        applier: CallCredentials.MetadataApplier
+    ): Unit =
+      val headers = new Metadata()
+      headers.put[String](AuthorizationMetadataKey, "test")
+      applier.apply(headers)
+
+
+  case class KeycloakInterceptor(s: String) extends ClientInterceptor:
+    override def interceptCall[Req, Res](
+        methodDescriptor: MethodDescriptor[Req, Res],
+        callOptions: CallOptions,
+        channel: Channel
+    ) =
+      println("hello from the client")
+      channel.newCall[Req, Res](methodDescriptor, callOptions.withCallCredentials(JwtCredentials()))
 
   val managedChannelStream: Stream[IO, ManagedChannel] =
     ManagedChannelBuilder

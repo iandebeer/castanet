@@ -5,10 +5,10 @@ import cats.effect._
 import io.grpc._
 
 import fs2.grpc.syntax.all._
-//import _root_.io.grpc.BindableService
 import fs2.grpc.server.ServerOptions
 import _root_.io.grpc.ForwardingServerCall.SimpleForwardingServerCall
 import Constants._
+
 case class AuthInterceptor(msg: String = "hello") extends ServerInterceptor:
   override def interceptCall[Req,Res] (
       call: ServerCall[Req, Res],

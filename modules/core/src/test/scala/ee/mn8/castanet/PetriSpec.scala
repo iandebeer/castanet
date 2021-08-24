@@ -54,7 +54,6 @@ class PetriSpec extends FunSuite {
   }
 
   test("build petri net") {
-    import LinkableElement._
     import Arc._
     val jp1 = """{"id":1,"name":"start","capacity":1}"""
 

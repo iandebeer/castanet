@@ -1,11 +1,6 @@
 package ee.mn8.castanet
 
-/* import io.grpc.CallCredentials
-import java.util.concurrent.Executor
-import io.grpc.CallOptions
-import io.grpc.Channel
-import io.grpc.MethodDescriptor
-import io.grpc.ClientInterceptor */
+
 import _root_.io.grpc.*
 import java.util.concurrent.Executor
 

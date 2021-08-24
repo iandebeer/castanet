@@ -67,3 +67,44 @@ The resulting state changes can be visualized with a PetriPrinter.
 ```
 
 ![alt text](modules/core/src/test/resource/animate.gif "Petri Net Animation")
+
+We derive Transitions from ProtoBuf files that indicates the RPC's we use in the business flow.
+The Transitions are described using a Dhall format list:
+
+```dhall
+[
+  {
+      id = 2 
+    , name = "testTransition"
+    , service = {
+          packageName = "packageName1"
+        , name = "serviceName1"   
+        , rpcs = [
+          {name = "rpc1"
+          , input = "in1"
+          , output = "out1"
+          }
+        ]  
+    }
+    , rpc = {name = "rpc1"
+          , input = "in1"
+          , output = "out1"
+          }
+  }
+]
+```
+
+Transitions change the States of the Workflow as described by a list of Places:
+
+```dhall
+  [{
+    id = 1 
+    , name = "place1"
+    , capacity = 2
+  }]
+  ```
+
+A business analyst can join the Places (States) and Transitions by drawing Arcs 
+
+![alt text](docs/place_transitions.png "Arcs")
+

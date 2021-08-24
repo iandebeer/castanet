@@ -25,6 +25,10 @@ trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]
 
 type NodeId = Int
 
+case class ArcId(from: Int, to: Int):
+  import scala.math.Ordered.orderingToOrdered 
+  def compare(that: ArcId): Int = (this.from, this.to) compare (that.from, that.to)
+
 enum Arc extends PetriElement : 
   val from: NodeId
   val to: NodeId

@@ -20,6 +20,7 @@ let Arc = <T: Timed | W: Weighted>
 let PetriElement = < A : Arc | L : LinkableElement >
 let PetriElements : Type = List LinkableElement
 
+let nextNumber = \(i : Natural) -> i + 1
 let linkablePlace = List/map Place LinkableElement (\(p : Place) -> LinkableElement.P p)
 let linkableTransition = List/map Transition LinkableElement (\(t : Transition) -> LinkableElement.T t)
 let petriElements = List/concat LinkableElement [linkablePlace ./modules/client/src/main/resources/places.dhall, linkableTransition ./modules/client/src/main/resources/transitions.dhall]

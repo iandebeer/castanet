@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 62,
+            "activePatchIndex": 63,
             "patches": [
                 {
                     "date": 1629463928427,
@@ -256,6 +256,10 @@
                 {
                     "date": 1629471748086,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n   val name: String\n   def run():Unit\n \n case class Place(id: NodeId, name: String, capacity: Int) extends LinkableElement:\n-  def run() = assert(true, println(s\"P$name\"))\n+  def run() = assert(true, println(s\"Place: $name\"))\n \n case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n   \n   val managedChannelStream: Stream[IO, ManagedChannel] =\n@@ -48,9 +48,9 @@\n       .forAddress(\"127.0.0.1\", 9999)\n       .usePlaintext()\n       .intercept(KeycloakInterceptor(\"hi\"))\n       .stream[IO]\n-  def run() = assert(true, println(s\"$name\"))\n+  def run() = assert(true, println(s\"Transition: $name\"))\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1629806024517,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,9 @@\n trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]\n \n type NodeId = Int\n \n+\n enum Arc extends PetriElement : \n   val from: NodeId\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n"
                 }
             ],
             "date": 1629463928427,

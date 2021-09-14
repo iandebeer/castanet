@@ -1,0 +1,154 @@
+{
+    "sourceFile": "modules/client/src/test/scala/ee/mn8/castanet/MyMacro.scala",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 34,
+            "patches": [
+                {
+                    "date": 1631005764673,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1631005773319,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,6 @@\n package ee.mn8.castanet\n+imop\n \n object MyMacro :\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n"
+                },
+                {
+                    "date": 1631005780764,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n package ee.mn8.castanet\n-imop\n+import scala.qu\n \n object MyMacro :\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n"
+                },
+                {
+                    "date": 1631005920539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,10 @@\n package ee.mn8.castanet\n-import scala.qu\n+import scala.quoted.*\n \n object MyMacro :\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n+    \n     Expr(sym.isClassDef && sym.flags.is(Flags.Case))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631005928432,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,6 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    \n+    println(s\"\")\n     Expr(sym.isClassDef && sym.flags.is(Flags.Case))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631005940233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,6 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    println(s\"\")\n+    println(s\"$sym\")\n     Expr(sym.isClassDef && sym.flags.is(Flags.Case))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631005957839,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,6 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    println(s\"$sym\")\n+    println(s\"$sym.flags\")\n     Expr(sym.isClassDef && sym.flags.is(Flags.Case))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631005965693,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,6 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    println(s\"$sym.flags\")\n+    println(s\"${sym.flags}\")\n     Expr(sym.isClassDef && sym.flags.is(Flags.Case))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631006013520,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,6 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    println(s\"${sym.flags}\")\n+    println(s\"flags${sym.flags}\")\n     Expr(sym.isClassDef && sym.flags.is(Flags.Case))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631006299510,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,5 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    println(s\"flags${sym.flags}\")\n     Expr(sym.isClassDef && sym.flags.is(Flags.Case))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631006882827,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,5 +5,6 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n+    \n     Expr(sym.isClassDef && sym.flags.is(Flags.Case))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631006888202,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,6 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    \n+    println()\n     Expr(sym.isClassDef && sym.flags.is(Flags.Case))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631007006100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,6 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    println()\n-    Expr(sym.isClassDef && sym.flags.is(Flags.Case))\n\\ No newline at end of file\n+    println(sym)\n+    Expr(sym.isClassDef && sym.flags.is(Flags. ))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631007018792,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,5 +6,5 @@\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n     println(sym)\n-    Expr(sym.isClassDef && sym.flags.is(Flags. ))\n\\ No newline at end of file\n+    Expr(sym.isClassDef && sym.flags.is(Flags.))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631007024177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,5 +6,5 @@\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n     println(sym)\n-    Expr(sym.isClassDef && sym.flags.is(Flags.))\n\\ No newline at end of file\n+    Expr(sym.isClassDef && sym.flags.is(Flags.T))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631007196852,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,6 +5,5 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    println(sym)\n-    Expr(sym.isClassDef && sym.flags.is(Flags.T))\n\\ No newline at end of file\n+    Expr(sym.isClassDef && sym.flags.is(Flags.Trait))\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631007635216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,5 +5,10 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    Expr(sym.isClassDef && sym.flags.is(Flags.Trait))\n\\ No newline at end of file\n+    Expr(sym.isClassDef && sym.flags.is(Flags.Trait))\n+    inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n+\n+    def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n+      import quotes.reflect.*\n+      Expr(a.asTerm.show)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631007648584,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n     Expr(sym.isClassDef && sym.flags.is(Flags.Trait))\n-    inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n+  inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n \n-    def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n-      import quotes.reflect.*\n\\ No newline at end of file\n-      Expr(a.asTerm.show)\n+  def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n+    import quotes.reflect.*\n+    Expr(a.asTerm.show)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631008303569,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,6 @@\n   inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n-    Expr(a.asTerm.show)\n\\ No newline at end of file\n+    Expr(a.asTerm.show)\n+    \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631008315956,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,6 @@\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(a.asTerm.show)\n-    \n\\ No newline at end of file\n+\n+  val \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631008321809,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,5 @@\n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(a.asTerm.show)\n \n-  val \n\\ No newline at end of file\n+  val x = 1\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631008328674,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,6 @@\n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(a.asTerm.show)\n \n-  val x = 1\n\\ No newline at end of file\n+  val x = 1\n+  Expr()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631008352444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,5 @@\n     import quotes.reflect.*\n     Expr(a.asTerm.show)\n \n   val x = 1\n-  Expr()\n\\ No newline at end of file\n+  Expr(x + 1)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631008363178,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,5 @@\n     import quotes.reflect.*\n     Expr(a.asTerm.show)\n \n   val x = 1\n-  Expr(x + 1)\n\\ No newline at end of file\n+  Expr(x + 1)(using )\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631008380475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,5 @@\n     import quotes.reflect.*\n     Expr(a.asTerm.show)\n \n   val x = 1\n-  Expr(x + 1)(using )\n\\ No newline at end of file\n+  Expr(x + 1)(using qQuotes)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631008422695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,6 +12,4 @@\n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(a.asTerm.show)\n \n-  val x = 1\n-  Expr(x + 1)(using qQuotes)\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1631008714760,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,7 @@\n   inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n+    Expr(Printer.TreeStructure.show(a.asTerm))\n     Expr(a.asTerm.show)\n \n"
+                },
+                {
+                    "date": 1631008723377,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,5 @@\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm))\n-    Expr(a.asTerm.show)\n \n"
+                },
+                {
+                    "date": 1631009608118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,6 @@\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm))\n+            Expr(Printer.TreeStructure.show(a.asTerm))\n \n"
+                },
+                {
+                    "date": 1631009626343,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm))\n-            Expr(Printer.TreeStructure.show(a.asTerm))\n+    Expr(Printer.)\n \n"
+                },
+                {
+                    "date": 1631009698717,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,5 @@\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm))\n-    Expr(Printer.)\n \n"
+                },
+                {
+                    "date": 1631009704251,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,7 @@\n   inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n+    Oru\n     Expr(Printer.TreeStructure.show(a.asTerm))\n \n"
+                },
+                {
+                    "date": 1631009709341,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,7 +10,7 @@\n   inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n-    Oru\n+    Printer\n     Expr(Printer.TreeStructure.show(a.asTerm))\n \n"
+                },
+                {
+                    "date": 1631009802937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,7 +10,6 @@\n   inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n-    Printer\n     Expr(Printer.TreeStructure.show(a.asTerm))\n \n"
+                },
+                {
+                    "date": 1631090908369,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,4 @@\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm))\n-\n"
+                }
+            ],
+            "date": 1631005764673,
+            "name": "Commit-0",
+            "content": "package ee.mn8.castanet\n\nobject MyMacro :\n  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n  private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n    import qctx.reflect.*\n    val sym = TypeRepr.of[A].typeSymbol\n    Expr(sym.isClassDef && sym.flags.is(Flags.Case))"
+        }
+    ]
+}

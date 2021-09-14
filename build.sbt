@@ -1,17 +1,17 @@
-val Scala3   = "3.0.1"
+val Scala3   = "3.0.2"
 val Scala213 = "2.13.6"
 
 val catsVersion          = "2.6.1"
-val ceVersion            = "3.2.3"
-val fs2Version           = "3.1.0"
-val munitVersion         = "0.7.28"
+val ceVersion            = "3.2.7"
+val fs2Version           = "3.1.1"
+val munitVersion         = "0.7.29"
 val muniteCEVersion      = "1.0.5"
 val munitCheckEffVersion = "0.7.1"
-val grpcVersion          = "1.39.0"
+val grpcVersion          = "1.40.1"
 val googleProtoVersion   = "3.17.3"
 val circeVersion         = "0.14.1"
-val monocleVersion       = "3.0.0"
-val scodecVersion        = "1.1.27"
+val monocleVersion       = "3.1.0"
+val scodecVersion        = "1.1.28"
 val junitVersion         = "0.11"
 val refinedVersion       = "0.9.27"
 val dhallVersion          = "0.10.0-M2"
@@ -29,7 +29,7 @@ ThisBuild / initialCommands := """
 
 lazy val root = project
   .in(file("."))
-  .aggregate(core, protocol, stt_compiler, server, client) //, docs)
+  .aggregate(core, protocol, server, client)
 
 lazy val core = project
   .in(file("modules/core"))
@@ -44,6 +44,7 @@ lazy val core = project
       "org.typelevel"       %% "cats-effect"         % ceVersion,
       "com.google.protobuf"  % "protobuf-java"       % googleProtoVersion % "protobuf",
       "io.grpc"              % "grpc-netty"          % grpcVersion,
+      "io.grpc"              % "grpc-core"           % grpcVersion,
       "io.grpc"              % "grpc-services"       % grpcVersion,
       "dev.optics"          %% "monocle-core"        % monocleVersion,
       "org.scodec"          %% "scodec-bits"         % scodecVersion,
@@ -60,19 +61,6 @@ lazy val core = project
     ).map(_ % circeVersion)
   ).dependsOn(protocol)
   .dependsOn(protocol % "protobuf")
-
-lazy val stt_compiler = project
-  .in(file("modules/stt-compiler"))
-  .settings(
-    name        := "stt-compiler",
-    description := "State Transnition Table Compiler",
-    libraryDependencies ++= Seq(
-      "org.scalameta" %% "munit"               % munitVersion    % Test,
-      "org.scalameta" %% "munit-scalacheck"    % munitVersion    % Test,
-      "org.typelevel" %% "munit-cats-effect-3" % muniteCEVersion % Test,
-      "com.novocode"   % "junit-interface"     % junitVersion    % Test
-    )
-  )
 
 lazy val protocol = project
   .in(file("modules/protocol"))
@@ -99,6 +87,7 @@ lazy val client = project
       "org.scalameta"       %% "munit"               % munitVersion    % Test,
       "org.scalameta"       %% "munit-scalacheck"    % munitVersion    % Test,
       "org.typelevel"       %% "munit-cats-effect-3" % muniteCEVersion % Test,
+      "io.grpc"              % "grpc-core"           % grpcVersion,
       "io.grpc"              % "grpc-netty-shaded"   % grpcVersion
     ),
     scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage
@@ -115,6 +104,7 @@ lazy val server = project
     description  := "Protobuf Server",
     libraryDependencies ++= List(
       "io.grpc" % "grpc-netty-shaded" % grpcVersion,
+      "io.grpc" % "grpc-core"         % grpcVersion,
       "io.grpc" % "grpc-services"     % grpcVersion
     ),
     scalapbCodeGeneratorOptions += CodeGeneratorOption.FlatPackage
@@ -122,14 +112,3 @@ lazy val server = project
   .enablePlugins(Fs2Grpc)
   .dependsOn(protocol)
   .dependsOn(protocol % "protobuf")
-
-/*lazy val docs = project // new documentation project
-  .in(file("./castanet-docs"))
-  .settings(
-    evictionErrorLevel := Level.Info,
-    // scalaVersion := Scala3,
-    libraryDependencies += ("org.scalameta" %% "mdoc" % "2.2.22")
-    //.withDottyCompat(scalaVersion.value)
-  )
-  .dependsOn(core)
-  .enablePlugins(MdocPlugin)*/

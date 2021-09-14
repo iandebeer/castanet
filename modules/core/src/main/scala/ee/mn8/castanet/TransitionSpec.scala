@@ -125,9 +125,10 @@ object TransitionSpec extends App:
         .mkString("\n")
 
     println(serviceClasses)
-//scala.quoted.staging.run(code)
-//Debug.debugSingle(x)
-//scala.quoted.staging.run(debugSingle(x))
+    //scala.quoted.staging.run(code)
+    //Debug.debugSingle(x)
+    //scala.quoted.staging.run(debugSingle(x))
+    
     val interfaces =
       serviceCalls
         .map(s =>

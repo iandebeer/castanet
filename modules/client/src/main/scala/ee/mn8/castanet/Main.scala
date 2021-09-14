@@ -46,7 +46,7 @@ object Main extends IOApp:
 
   
   //def getStub(fqn:String):fs2.grpc.GeneratedCompanion = ???
-  def func1(stub:GreeterFs2Grpc[cats.effect.IO, Metadata],s:String)(f: Function1[String,String]):String = f(s)
+  //def func1(stub:GreeterFs2Grpc[cats.effect.IO, Metadata],s:String)(f: Function1[String,String]):String = f(s)
   override def run(args: List[String]): IO[ExitCode] = {
     for {
       dispatcher     <- Stream.resource(Dispatcher[IO])

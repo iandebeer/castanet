@@ -1,7 +1,15 @@
-# Castanet is a Colored Petri Net for GRPC/HTTP orchestration (e.g. FS2-GRPC or HTTP4S)
+# Castanet, a Colored Petri Net for GRPC/HTTP orchestration and testing
+
+## e.g. FS2-GRPC or HTTP4S
+
+(For now, the Coloured Petri Net is like a Model T Ford - you can have any colour as long as it is black).
 
 Formally, a Petri Net is a state transition graph that maps Places (circles) to Transitions (rectangles) and Transitions to Places via Arcs (arrows).
 It is well suited for describing the flow of concurrent processes.
+
+Petri Nets are more concise than other process flow descriptions (like UML or BPMN) in that they have an exact mathematical definition of their execution semantics, with a well-developed mathematical theory for process analysis. Bounded Petri Nets exhibits Categorical Semantics in the way that **concatenable processes as strict Monoidal categories** model Net computations [[1]](#1) [[2]](#2)
+
+Because of its Markov property - states depend only on the current marking -  Stochastic Petri Nets are also used for validating and testing the Liveness, Boundedness and Reachability of distributed networks.
 
 From the Castanet perspective, Petri Nets are directed graphs consisting of Places(States), Transitions(Services) and Arcs(Guards). It models state-transitions of (concurrent) processes.
 It is easy to see (if you are that way inclined) that Petri Nets form a Category of Petri  
@@ -35,7 +43,7 @@ val b3 = n2
 val petrinet = b3.build()
 ```
 
-State is attributed to the Petri Net through Markers that associate a BitVectors(scodec.bits) with a specific Place
+State is attributed to the Petri Net through Markers that associate a BitVector (scodec.bits) with a specific Place.
 
 ```scala
 val m1 = Markers(pn)
@@ -104,7 +112,12 @@ Transitions change the States of the Workflow as described by a list of Places:
   }]
   ```
 
-A business analyst can join the Places (States) and Transitions by drawing Arcs 
+A business engineer can create a workflow by joining Places (States) and Transitions with Arcs 
 
 ![alt text](docs/place_transitions.png "Arcs")
+## References
+<a id="1">[1]</a> 
+Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. 
 
+<a id="2">[2]</a>
+Ermel, Claudia & Martini, Alfio. (1996). A Taste of Categorical Petri Nets. 

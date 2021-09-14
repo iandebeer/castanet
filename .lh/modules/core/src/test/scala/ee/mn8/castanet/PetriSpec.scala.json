@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1629462613091,
@@ -12,6 +12,18 @@
                 {
                     "date": 1629462918826,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,8 @@\n     //println(c2.as[Json].getOrElse(Json.Null))\n   }\n \n   test(\"build petri net\") {\n-    import LinkableElement._\n     import Arc._\n     val jp1 = \"\"\"{\"id\":1,\"name\":\"start\",\"capacity\":1}\"\"\"\n \n     val p1: Place = decode[Place](jp1).getOrElse(Place(999, \"Error\", 0))\n"
+                },
+                {
+                    "date": 1629883937682,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,21 @@\n package ee.mn8.castanet\n-import munit._\n+import cats.data.State\n import cats.syntax.functor._\n-import io.circe._, io.circe.parser._\n-import io.circe.generic.auto._\n-import io.circe.syntax._\n+import io.circe.Decoder\n+import io.circe.Encoder\n+import io.circe._\n+import io.circe.generic.auto.*\n+import io.circe.generic.auto.*\n+import io.circe.parser.*\n import io.circe.parser.decode\n-import io.circe.{Decoder, Encoder}\n-import io.circe.syntax._\n-import io.circe.generic.auto._\n+import io.circe.syntax.*\n+import io.circe.syntax.*\n+import munit.*\n+import scodec.bits.*\n+\n+import scala.collection.immutable.ListSet\n import scala.io.Source\n-import scala.collection.immutable.ListSet\n-import scodec.bits._\n-import cats.data.State\n import scala.quoted.*\n \n class PetriSpec extends FunSuite {\n   val t = Source\n"
+                },
+                {
+                    "date": 1629883955371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n package ee.mn8.castanet\n import cats.data.State\n-import cats.syntax.functor._\n+import cats.syntax.functor.*\n import io.circe.Decoder\n import io.circe.Encoder\n import io.circe._\n import io.circe.generic.auto.*\n"
+                },
+                {
+                    "date": 1629883963177,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import cats.data.State\n import cats.syntax.functor.*\n import io.circe.Decoder\n import io.circe.Encoder\n-import io.circe._\n+import io.circe.*\n import io.circe.generic.auto.*\n import io.circe.generic.auto.*\n import io.circe.parser.*\n import io.circe.parser.decode\n"
                 }
             ],
             "date": 1629462613091,

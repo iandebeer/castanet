@@ -1,0 +1,122 @@
+{
+    "sourceFile": "modules/client/src/test/scala/ee/mn8/castanet/InvokeSpec.scala",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 26,
+            "patches": [
+                {
+                    "date": 1629890647216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1629890655541,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n package ee.mn8.castanet\n \n-class InvokeSpec {\n+class InvokeSpec extends FunSuite{\n   \n }\n"
+                },
+                {
+                    "date": 1629890676128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,8 @@\n package ee.mn8.castanet\n \n+import munit.FunSuite\n+\n class InvokeSpec extends FunSuite{\n+  test(\"extract path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890685101,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,7 +2,7 @@\n \n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n-  test(\"extract path\") {\n+  test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890739053,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,7 +2,8 @@\n \n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n+  inline de\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890746450,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,8 @@\n \n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n-  inline de\n+  inline def func\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890752991,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,8 @@\n \n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n-  inline def func\n+  inline def rpcall\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890761256,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,8 @@\n \n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n-  inline def rpcall\n+  inline def rpcalls[]\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890770726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,8 @@\n \n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n-  inline def rpcalls[]\n+  inline def rpcalls[T]()\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890794784,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,8 @@\n \n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n-  inline def rpcalls[T]()\n+  inline def rpcalls[T](): List\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890802273,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,8 @@\n \n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n-  inline def rpcalls[T](): List\n+  inline def rpcalls[T](): List[String]\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890808736,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,8 @@\n \n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n-  inline def rpcalls[T](): List[String]\n+  inline def rpcalls[T](): List[String] = \n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890814135,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,7 +3,8 @@\n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n+      \n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890819903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,8 @@\n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n-      \n+      summonFrom\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890826870,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,10 @@\n import munit.FunSuite\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n-      summonFrom\n+      summonFrom {\n+        \n+      }\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890840821,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n       summonFrom {\n-        \n+        case\n       }\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890846197,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n       summonFrom {\n-        case\n+        case m \n       }\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890855358,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n       summonFrom {\n-        case m \n+        case m\" Product.\n       }\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890863458,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n       summonFrom {\n-        case m\" Product.\n+        case m\" Product.Mirro\n       }\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890870724,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n       summonFrom {\n-        case m\" Product.Mirro\n+        case m:  Product.Mirro\n       }\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890915977,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n       summonFrom {\n-        case m:  Product.Mirro\n+        case m:  Product.MirrorOf[]\n       }\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890923883,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n       summonFrom {\n-        case m:  Product.MirrorOf[]\n+        case m:  Product.MirrorOf[T] =\n       }\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890935686,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,13 @@\n package ee.mn8.castanet\n \n import munit.FunSuite\n+import scala\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n       summonFrom {\n-        case m:  Product.MirrorOf[T] =\n+        case m:  Product.MirrorOf[T] => \n       }\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890941264,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n package ee.mn8.castanet\n \n import munit.FunSuite\n-import scala\n+import scala.deriving\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n       summonFrom {\n"
+                },
+                {
+                    "date": 1629890978037,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,13 @@\n package ee.mn8.castanet\n \n import munit.FunSuite\n-import scala.deriving\n+import scala.deriving._\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n       summonFrom {\n-        case m:  Product.MirrorOf[T] => \n+        case m:  Product.MirrorOf[T] => Li\n       }\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1629890984680,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n \n class InvokeSpec extends FunSuite{\n   inline def rpcalls[T](): List[String] = \n       summonFrom {\n-        case m:  Product.MirrorOf[T] => Litterak=\n+        case m:  Product.MirrorOf[T] => Litterak\n       }\n   test(\"inspect path\") {\n   \n }\n"
+                },
+                {
+                    "date": 1630926856726,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,10 +44,9 @@\n   val managedChannelStream: Stream[IO, ManagedChannel] =\n     ManagedChannelBuilder\n       .forAddress(\"127.0.0.1\", 9999)\n       .usePlaintext()\n-            .intercept(KeycloakInterceptor(\"hi\"))\n-\n+      .intercept(KeycloakInterceptor(\"hi\"))\n       .stream[IO]\n \n   test(\"invoke\") {\n     val t = classOf[Test1[Int]]\n"
+                }
+            ],
+            "date": 1629890647216,
+            "name": "Commit-0",
+            "content": "package ee.mn8.castanet\n\nclass InvokeSpec {\n  \n}\n"
+        }
+    ]
+}

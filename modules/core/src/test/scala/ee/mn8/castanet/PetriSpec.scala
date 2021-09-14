@@ -1,17 +1,20 @@
 package ee.mn8.castanet
-import munit._
-import cats.syntax.functor._
-import io.circe._, io.circe.parser._
-import io.circe.generic.auto._
-import io.circe.syntax._
-import io.circe.parser.decode
-import io.circe.{Decoder, Encoder}
-import io.circe.syntax._
-import io.circe.generic.auto._
-import scala.io.Source
-import scala.collection.immutable.ListSet
-import scodec.bits._
 import cats.data.State
+import cats.syntax.functor.*
+import io.circe.Decoder
+import io.circe.Encoder
+import io.circe.*
+import io.circe.generic.auto.*
+import io.circe.generic.auto.*
+import io.circe.parser.*
+import io.circe.parser.decode
+import io.circe.syntax.*
+import io.circe.syntax.*
+import munit.*
+import scodec.bits.*
+
+import scala.collection.immutable.ListSet
+import scala.io.Source
 import scala.quoted.*
 
 class PetriSpec extends FunSuite {

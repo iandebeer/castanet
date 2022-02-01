@@ -4,4 +4,4 @@ resolvers += Resolver.mavenLocal
 
 addSbtPlugin("org.scalameta" % "sbt-mdoc" % "2.2.21")
 
-addSbtPlugin("org.typelevel" % "sbt-fs2-grpc" % "2.1.4")
+addSbtPlugin("org.scalameta" % "sbt-native-image" % "0.3.1")

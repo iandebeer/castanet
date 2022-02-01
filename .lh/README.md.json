@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 159,
+            "activePatchIndex": 262,
             "patches": [
                 {
                     "date": 1629811248156,
@@ -644,6 +644,418 @@
                 {
                     "date": 1631609930121,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,5 +1,5 @@\n-# Castanet, a Colored Petri Net for GRPC/HTTP orchestration and \n+# Castanet, a Colored Petri Net for GRPC/HTTP orchestration and testing\n \n ## e.g. FS2-GRPC or HTTP4S\n \n (For now, the Coloured Petri Net is like a Model T Ford - you can have any colour as long as it is black).\n@@ -114,9 +114,8 @@\n \n A business engineer can create a workflow by joining Places (States) and Transitions with Arcs \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n-\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n \n"
+                },
+                {
+                    "date": 1643273896731,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,24 +1,25 @@\n-# Castanet, a Colored Petri Net for GRPC/HTTP orchestration and testing\n+# ErgoHack III Proposal: Using a Colored Petri Net for Smart Contract orchestration and testing\n \n-## e.g. FS2-GRPC or HTTP4S\n+## Implemention of Smart Contract Protocol specifications (EIP-0006)\n \n-(For now, the Coloured Petri Net is like a Model T Ford - you can have any colour as long as it is black).\n+I am proposing a project that uses Petri Nets as a tool to define and validate Smart Contract Protocol specifications (EIP-0006), for creation of headless dApps.\n \n Formally, a Petri Net is a state transition graph that maps Places (circles) to Transitions (rectangles) and Transitions to Places via Arcs (arrows).\n-It is well suited for describing the flow of concurrent processes.\n+It is well suited for describing the flow of concurrent processes. This maps perfectly to the of Stages (Places) and Actions (Transitions)\n \n Petri Nets are more concise than other process flow descriptions (like UML or BPMN) in that they have an exact mathematical definition of their execution semantics, with a well-developed mathematical theory for process analysis. Bounded Petri Nets exhibits Categorical Semantics in the way that **concatenable processes as strict Monoidal categories** model Net computations [[1]](#1) [[2]](#2)\n \n Because of its Markov property - states depend only on the current marking -  Stochastic Petri Nets are also used for validating and testing the Liveness, Boundedness and Reachability of distributed networks.\n \n-From the Castanet perspective, Petri Nets are directed graphs consisting of Places(States), Transitions(Services) and Arcs(Guards). It models state-transitions of (concurrent) processes.\n+From the proposal perspective, Petri Nets are directed graphs consisting of Places(Stages), Transitions(Actions) and Arcs(Transaction). It models state-transitions of (concurrent) processes.\n It is easy to see (if you are that way inclined) that Petri Nets form a Category of Petri  \n-Protobuf definitions specify the service and message format for GRPC services.\n-An GRPC/HTTP call is assumed to be stateless, yet often there is a need to have service calls handled within the context of a state machine (FSM)\n \n-Castanet constructs a PetriNet using a builder-pattern\n \n+I contetnd that there is a need to handle consecutive Smart Contract invocations (the dApp Protoocol) within the context of a encapsualting state machine (FSM) as expressed by a Petri Net and executed by an off-chain dApp-container\n+\n+An example of how to construct a PetriNet using a builder-pattern in Scala ( Using a Petri Net library (Castanet))\n+\n ```scala\n val p1 = Place(1, \"start\", 1)\n val p2 = Place(2, \"left\", 3)\n val p3 = Place(3, \"right\", 1)\n@@ -75,9 +76,9 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive Transitions from ProtoBuf files that indicates the RPC's we use in the business flow.\n+We derive Transitions from the  files that indicates the RPC's we use in the business flow.\n The Transitions are described using a Dhall format list:\n \n ```dhall\n [\n"
+                },
+                {
+                    "date": 1643273905410,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive Transitions from the  files that indicates the RPC's we use in the business flow.\n+We derive Transitions from the ErgoScript files that indicates the RPC's we use in the business flow.\n The Transitions are described using a Dhall format list:\n \n ```dhall\n [\n"
+                },
+                {
+                    "date": 1643284369145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n From the proposal perspective, Petri Nets are directed graphs consisting of Places(Stages), Transitions(Actions) and Arcs(Transaction). It models state-transitions of (concurrent) processes.\n It is easy to see (if you are that way inclined) that Petri Nets form a Category of Petri  \n \n \n-I contetnd that there is a need to handle consecutive Smart Contract invocations (the dApp Protoocol) within the context of a encapsualting state machine (FSM) as expressed by a Petri Net and executed by an off-chain dApp-container\n+We contetnd that there is a need to handle consecutive Smart Contract invocations (the dApp Protoocol) within the context of a encapsualting state machine (FSM) as expressed by a Petri Net and executed by an off-chain dApp-container\n \n An example of how to construct a PetriNet using a builder-pattern in Scala ( Using a Petri Net library (Castanet))\n \n ```scala\n@@ -44,8 +44,9 @@\n val petrinet = b3.build()\n ```\n \n State is attributed to the Petri Net through Markers that associate a BitVector (scodec.bits) with a specific Place.\n+The setting of a bit is in turn determined by the success of the ErgoScript execution.\n \n ```scala\n val m1 = Markers(pn)\n val m2 = m1.setMarker(Marker(1, bin\"1\"))\n@@ -112,9 +113,10 @@\n     , capacity = 2\n   }]\n   ```\n \n-A business engineer can create a workflow by joining Places (States) and Transitions with Arcs \n+### Outcomes:\n+1. A business analyst should  create a dApp  by joining Places (States) and Transitions with Arcs \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643284413118,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -114,10 +114,11 @@\n   }]\n   ```\n \n ### Outcomes:\n-1. A business analyst should  create a dApp  by joining Places (States) and Transitions with Arcs \n \n+1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs \n+\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643284419812,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -114,9 +114,8 @@\n   }]\n   ```\n \n ### Outcomes:\n-\n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n"
+                },
+                {
+                    "date": 1643284434883,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -113,9 +113,10 @@\n     , capacity = 2\n   }]\n   ```\n \n-### Outcomes:\n+### Outcomes\n+\n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n"
+                },
+                {
+                    "date": 1643284456347,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -113,9 +113,9 @@\n     , capacity = 2\n   }]\n   ```\n \n-### Outcomes\n+### Desired Outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n"
+                },
+                {
+                    "date": 1643284462044,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -113,9 +113,9 @@\n     , capacity = 2\n   }]\n   ```\n \n-### Desired Outcomes\n+### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n"
+                },
+                {
+                    "date": 1643284475130,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -115,9 +115,9 @@\n   ```\n \n ### Desired outcomes\n \n-1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs \n+1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643284540108,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive Transitions from the ErgoScript files that indicates the RPC's we use in the business flow.\n+We derive Transitions (Actoiioins) from the ErgoScript files that indicates the RPC's we use in the business flow.\n The Transitions are described using a Dhall format list:\n \n ```dhall\n [\n"
+                },
+                {
+                    "date": 1643284546443,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive Transitions (Actoiioins) from the ErgoScript files that indicates the RPC's we use in the business flow.\n+We derive Transitions (Actoins) from the ErgoScript files that indicates the RPC's we use in the business flow.\n The Transitions are described using a Dhall format list:\n \n ```dhall\n [\n"
+                },
+                {
+                    "date": 1643284559911,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive Transitions (Actoins) from the ErgoScript files that indicates the RPC's we use in the business flow.\n+We derive the set Transitions (Actions) from the ErgoScript files that indicates the RPC's we use in the business flow.\n The Transitions are described using a Dhall format list:\n \n ```dhall\n [\n"
+                },
+                {
+                    "date": 1643284644507,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n-          , input = \"in1\"\n+          , input = box\n           , output = \"out1\"\n           }\n         ]  \n     }\n"
+                },
+                {
+                    "date": 1643284659123,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n-          , input = box\n+          , input = input boxes\n           , output = \"out1\"\n           }\n         ]  \n     }\n"
+                },
+                {
+                    "date": 1643284680925,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n-          , input = input boxes\n+          , input = [input boxes\n           , output = \"out1\"\n           }\n         ]  \n     }\n"
+                },
+                {
+                    "date": 1643284686958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n-          , input = [input boxes\n+          , input = [boxes\n           , output = \"out1\"\n           }\n         ]  \n     }\n"
+                },
+                {
+                    "date": 1643284695076,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n-          , input = [boxes\n+          , input = [inbox\n           , output = \"out1\"\n           }\n         ]  \n     }\n"
+                },
+                {
+                    "date": 1643284701075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n-          , input = [inbox\n+          , input = [inbox,1\n           , output = \"out1\"\n           }\n         ]  \n     }\n"
+                },
+                {
+                    "date": 1643284709236,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n-          , input = [inbox,1\n+          , input = [inbox1, inbox2,...\n           , output = \"out1\"\n           }\n         ]  \n     }\n"
+                },
+                {
+                    "date": 1643284715902,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n-          , input = [inbox1, inbox2,...\n+          , input = [inbox1, inbox2...\n           , output = \"out1\"\n           }\n         ]  \n     }\n"
+                },
+                {
+                    "date": 1643284724243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,10 +90,10 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n-          , input = [inbox1, inbox2...\n-          , output = \"out1\"\n+          , input = [inbox1, inbox2...]\n+          , output = [out1\"\n           }\n         ]  \n     }\n     , rpc = {name = \"rpc1\"\n"
+                },
+                {
+                    "date": 1643284731783,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -91,9 +91,9 @@\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n           , input = [inbox1, inbox2...]\n-          , output = [out1\"\n+          , output = [outbox1\"\n           }\n         ]  \n     }\n     , rpc = {name = \"rpc1\"\n"
+                },
+                {
+                    "date": 1643284741871,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -91,9 +91,9 @@\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n           , input = [inbox1, inbox2...]\n-          , output = [outbox1\"\n+          , output = [outbox1, outbox\n           }\n         ]  \n     }\n     , rpc = {name = \"rpc1\"\n"
+                },
+                {
+                    "date": 1643284747414,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -91,9 +91,9 @@\n         , name = \"serviceName1\"   \n         , rpcs = [\n           {name = \"rpc1\"\n           , input = [inbox1, inbox2...]\n-          , output = [outbox1, outbox\n+          , output = [outbox1, outbox2...\n           }\n         ]  \n     }\n     , rpc = {name = \"rpc1\"\n"
+                },
+                {
+                    "date": 1643284783303,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,12 +88,12 @@\n     , name = \"testTransition\"\n     , service = {\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n-        , rpcs = [\n+        , contracts = [\n           {name = \"rpc1\"\n           , input = [inbox1, inbox2...]\n-          , output = [outbox1, outbox2...\n+          , output = [outbox1, outbox2...]\n           }\n         ]  \n     }\n     , rpc = {name = \"rpc1\"\n"
+                },
+                {
+                    "date": 1643284797997,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -85,9 +85,9 @@\n [\n   {\n       id = 2 \n     , name = \"testTransition\"\n-    , service = {\n+    , action = {\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , contracts = [\n           {name = \"rpc1\"\n"
+                },
+                {
+                    "date": 1643284832071,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,9 +88,9 @@\n     , name = \"testTransition\"\n     , action = {\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n-        , contracts = [\n+        , contracts = \n           {name = \"rpc1\"\n           , input = [inbox1, inbox2...]\n           , output = [outbox1, outbox2...]\n           }\n"
+                },
+                {
+                    "date": 1643284845353,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -93,9 +93,9 @@\n           {name = \"rpc1\"\n           , input = [inbox1, inbox2...]\n           , output = [outbox1, outbox2...]\n           }\n-        ]  \n+     \n     }\n     , rpc = {name = \"rpc1\"\n           , input = \"in1\"\n           , output = \"out1\"\n"
+                },
+                {
+                    "date": 1643284870167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -89,13 +89,13 @@\n     , action = {\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , contracts = \n-          {name = \"rpc1\"\n+          {\n+            name = \"rpc1\"\n           , input = [inbox1, inbox2...]\n           , output = [outbox1, outbox2...]\n-          }\n-     \n+          } \n     }\n     , rpc = {name = \"rpc1\"\n           , input = \"in1\"\n           , output = \"out1\"\n"
+                },
+                {
+                    "date": 1643284877944,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , contracts = \n           {\n-            name = \"rpc1\"\n+            name = \"smart\"\n           , input = [inbox1, inbox2...]\n           , output = [outbox1, outbox2...]\n           } \n     }\n"
+                },
+                {
+                    "date": 1643284883084,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , contracts = \n           {\n-            name = \"smart\"\n+            name = \"\"\n           , input = [inbox1, inbox2...]\n           , output = [outbox1, outbox2...]\n           } \n     }\n"
+                },
+                {
+                    "date": 1643284890363,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , contracts = \n           {\n-            name = \"\"\n+            name = \"ergoScropt\"\n           , input = [inbox1, inbox2...]\n           , output = [outbox1, outbox2...]\n           } \n     }\n"
+                },
+                {
+                    "date": 1643284896527,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -90,9 +90,9 @@\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n         , contracts = \n           {\n-            name = \"ergoScropt\"\n+            name = \"ergoScript\"\n           , input = [inbox1, inbox2...]\n           , output = [outbox1, outbox2...]\n           } \n     }\n"
+                },
+                {
+                    "date": 1643284938783,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,11 +88,11 @@\n     , name = \"testTransition\"\n     , action = {\n           packageName = \"packageName1\"\n         , name = \"serviceName1\"   \n-        , contracts = \n+        , contract = \n           {\n-            name = \"ergoScript\"\n+            name = \"ergoScript1\"\n           , input = [inbox1, inbox2...]\n           , output = [outbox1, outbox2...]\n           } \n     }\n"
+                },
+                {
+                    "date": 1643284967690,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -87,9 +87,9 @@\n       id = 2 \n     , name = \"testTransition\"\n     , action = {\n           packageName = \"packageName1\"\n-        , name = \"serviceName1\"   \n+        , name = \"Name1\"   \n         , contract = \n           {\n             name = \"ergoScript1\"\n           , input = [inbox1, inbox2...]\n"
+                },
+                {
+                    "date": 1643284995961,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,18 +78,18 @@\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n We derive the set Transitions (Actions) from the ErgoScript files that indicates the RPC's we use in the business flow.\n-The Transitions are described using a Dhall format list:\n+The Transitions are described using a Dhall/ format list:\n \n ```dhall\n [\n   {\n       id = 2 \n     , name = \"testTransition\"\n     , action = {\n           packageName = \"packageName1\"\n-        , name = \"Name1\"   \n+        , name = \"contractName1\"   \n         , contract = \n           {\n             name = \"ergoScript1\"\n           , input = [inbox1, inbox2...]\n"
+                },
+                {
+                    "date": 1643285007156,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,10 +77,10 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive the set Transitions (Actions) from the ErgoScript files that indicates the RPC's we use in the business flow.\n-The Transitions are described using a Dhall/ format list:\n+We derive the set of Transitions (Actions) from the ErgoScript files that indicates the RPC's we use in the business flow.\n+The Transitions are described using a Dhall/JSON format list:\n \n ```dhall\n [\n   {\n"
+                },
+                {
+                    "date": 1643285029054,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive the set of Transitions (Actions) from the ErgoScript files that indicates the RPC's we use in the business flow.\n+We derive the set of Transitions (Actions) from the ErgoScript files that indicates th business flow.\n The Transitions are described using a Dhall/JSON format list:\n \n ```dhall\n [\n"
+                },
+                {
+                    "date": 1643285038569,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive the set of Transitions (Actions) from the ErgoScript files that indicates th business flow.\n+We derive the set of Transitions (Actions) from the ErgoScript files that indicates that detrminnes  business flow.\n The Transitions are described using a Dhall/JSON format list:\n \n ```dhall\n [\n"
+                },
+                {
+                    "date": 1643285045335,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive the set of Transitions (Actions) from the ErgoScript files that indicates that detrminnes  business flow.\n+We derive the set of Transitions (Actions) from the ErgoScript files that indicates that determines  business flow.\n The Transitions are described using a Dhall/JSON format list:\n \n ```dhall\n [\n"
+                },
+                {
+                    "date": 1643285091698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive the set of Transitions (Actions) from the ErgoScript files that indicates that determines  business flow.\n+We derive the set of Transitions (Actions) from the ErgoScript files that indicates that determines  the business flow.\n The Transitions are described using a Dhall/JSON format list:\n \n ```dhall\n [\n@@ -95,9 +95,9 @@\n           , input = [inbox1, inbox2...]\n           , output = [outbox1, outbox2...]\n           } \n     }\n-    , rpc = {name = \"rpc1\"\n+    , rpc = {name = \"contractName1\"\n           , input = \"in1\"\n           , output = \"out1\"\n           }\n   }\n"
+                },
+                {
+                    "date": 1643285109339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -96,9 +96,9 @@\n           , output = [outbox1, outbox2...]\n           } \n     }\n     , rpc = {name = \"contractName1\"\n-          , input = \"in1\"\n+          , input = \"in1box\"\n           , output = \"out1\"\n           }\n   }\n ]\n"
+                },
+                {
+                    "date": 1643285117849,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -96,10 +96,10 @@\n           , output = [outbox1, outbox2...]\n           } \n     }\n     , rpc = {name = \"contractName1\"\n-          , input = \"in1box\"\n-          , output = \"out1\"\n+          , input = \"inbox3\"\n+          , output = \"out\"\n           }\n   }\n ]\n ```\n"
+                },
+                {
+                    "date": 1643285128627,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,11 +95,11 @@\n           , input = [inbox1, inbox2...]\n           , output = [outbox1, outbox2...]\n           } \n     }\n-    , rpc = {name = \"contractName1\"\n+    , action = {name = \"contractName1\"\n           , input = \"inbox3\"\n-          , output = \"out\"\n+          , output = \"outbox3\"\n           }\n   }\n ]\n ```\n"
+                },
+                {
+                    "date": 1643285192446,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive the set of Transitions (Actions) from the ErgoScript files that indicates that determines  the business flow.\n+We derive the set of Transitions (Actions) from the ErgoScript files that indicates   the business flow.\n The Transitions are described using a Dhall/JSON format list:\n \n ```dhall\n [\n"
+                },
+                {
+                    "date": 1643285200570,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,9 +77,9 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive the set of Transitions (Actions) from the ErgoScript files that indicates   the business flow.\n+We derive the set of Transitions (Actions) from the ErgoScript files that controls  the business flow.\n The Transitions are described using a Dhall/JSON format list:\n \n ```dhall\n [\n"
+                },
+                {
+                    "date": 1643285209362,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n We derive the set of Transitions (Actions) from the ErgoScript files that controls  the business flow.\n-The Transitions are described using a Dhall/JSON format list:\n+Theses Transitions are described using a Dhall/JSON format list:\n \n ```dhall\n [\n   {\n"
+                },
+                {
+                    "date": 1643285222194,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -77,10 +77,10 @@\n ```\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n-We derive the set of Transitions (Actions) from the ErgoScript files that controls  the business flow.\n-Theses Transitions are described using a Dhall/JSON format list:\n+We derive the set of Transitions (Actions) from  ErgoScript files that controls  the business flow.\n+These Transitions are described using a Dhall/JSON format list:\n \n ```dhall\n [\n   {\n"
+                },
+                {
+                    "date": 1643285232173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,9 +78,9 @@\n \n ![alt text](modules/core/src/test/resource/animate.gif \"Petri Net Animation\")\n \n We derive the set of Transitions (Actions) from  ErgoScript files that controls  the business flow.\n-These Transitions are described using a Dhall/JSON format list:\n+These Transitions are specified using a Dhall/JSON format list:\n \n ```dhall\n [\n   {\n"
+                },
+                {
+                    "date": 1643285249417,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -103,9 +103,9 @@\n   }\n ]\n ```\n \n-Transitions change the States of the Workflow as described by a list of Places:\n+Transitions change the States of the Workflow as described by a list of Places ():\n \n ```dhall\n   [{\n     id = 1 \n"
+                },
+                {
+                    "date": 1643285266795,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -103,9 +103,9 @@\n   }\n ]\n ```\n \n-Transitions change the States of the Workflow as described by a list of Places ():\n+Transitions change the States of the Workflow as described by a list of Places (Stages):\n \n ```dhall\n   [{\n     id = 1 \n"
+                },
+                {
+                    "date": 1643285322604,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,8 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n+2. \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285371365,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \n Because of its Markov property - states depend only on the current marking -  Stochastic Petri Nets are also used for validating and testing the Liveness, Boundedness and Reachability of distributed networks.\n \n From the proposal perspective, Petri Nets are directed graphs consisting of Places(Stages), Transitions(Actions) and Arcs(Transaction). It models state-transitions of (concurrent) processes.\n-It is easy to see (if you are that way inclined) that Petri Nets form a Category of Petri  \n+It is easy to see (if you are that way inclined) that Petri Nets form a Category of Petri.  \n \n \n We contetnd that there is a need to handle consecutive Smart Contract invocations (the dApp Protoocol) within the context of a encapsualting state machine (FSM) as expressed by a Petri Net and executed by an off-chain dApp-container\n \n"
+                },
+                {
+                    "date": 1643285376947,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n From the proposal perspective, Petri Nets are directed graphs consisting of Places(Stages), Transitions(Actions) and Arcs(Transaction). It models state-transitions of (concurrent) processes.\n It is easy to see (if you are that way inclined) that Petri Nets form a Category of Petri.  \n \n \n-We contetnd that there is a need to handle consecutive Smart Contract invocations (the dApp Protoocol) within the context of a encapsualting state machine (FSM) as expressed by a Petri Net and executed by an off-chain dApp-container\n+We contend that there is a need to handle consecutive Smart Contract invocations (the dApp Protoocol) within the context of a encapsualting state machine (FSM) as expressed by a Petri Net and executed by an off-chain dApp-container\n \n An example of how to construct a PetriNet using a builder-pattern in Scala ( Using a Petri Net library (Castanet))\n \n ```scala\n"
+                },
+                {
+                    "date": 1643285389092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n From the proposal perspective, Petri Nets are directed graphs consisting of Places(Stages), Transitions(Actions) and Arcs(Transaction). It models state-transitions of (concurrent) processes.\n It is easy to see (if you are that way inclined) that Petri Nets form a Category of Petri.  \n \n \n-We contend that there is a need to handle consecutive Smart Contract invocations (the dApp Protoocol) within the context of a encapsualting state machine (FSM) as expressed by a Petri Net and executed by an off-chain dApp-container\n+We contend that there is a need to handle consecutive Smart Contract invocations (the dApp Protocol) within the context of a encapsulting state machine (FSM) as expressed by a Petri Net and executed by an off-chain dApp-container\n \n An example of how to construct a PetriNet using a builder-pattern in Scala ( Using a Petri Net library (Castanet))\n \n ```scala\n"
+                },
+                {
+                    "date": 1643285394616,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n From the proposal perspective, Petri Nets are directed graphs consisting of Places(Stages), Transitions(Actions) and Arcs(Transaction). It models state-transitions of (concurrent) processes.\n It is easy to see (if you are that way inclined) that Petri Nets form a Category of Petri.  \n \n \n-We contend that there is a need to handle consecutive Smart Contract invocations (the dApp Protocol) within the context of a encapsulting state machine (FSM) as expressed by a Petri Net and executed by an off-chain dApp-container\n+We contend that there is a need to handle consecutive Smart Contract invocations (the dApp Protocol) within the context of a encapsulating state machine (FSM) as expressed by a Petri Net and executed by an off-chain dApp-container\n \n An example of how to construct a PetriNet using a builder-pattern in Scala ( Using a Petri Net library (Castanet))\n \n ```scala\n"
+                },
+                {
+                    "date": 1643285494800,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. \n+2. Configuration of a specific \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285503076,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific \n+2. Configuration of a specific instance \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285510265,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance \n+2. Configuration of a specific instance of a dApp\n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285518723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance of a dApp\n+2. Configuration of a specific instance of a dApp \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285632654,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance of a dApp \n+2. Configuration of a specific instance of a dApp can be \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285641325,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance of a dApp can be \n+2. Configuration of a specific instance of a dApp can be prgrammaticaslly created\n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285652066,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance of a dApp can be prgrammaticaslly created\n+2. Configuration of a specific instance of a dApp can be programmatically created\n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285700451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance of a dApp can be programmatically created\n+2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285712994,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI \n+2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the \n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285718682,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the \n+2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless\n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285724818,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless\n+2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp\n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285752830,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp\n+2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GR\n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285766339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GR\n+2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP\n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285771526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,9 +116,9 @@\n \n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n-2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP\n+2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643285833621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -95,9 +95,9 @@\n           , input = [inbox1, inbox2...]\n           , output = [outbox1, outbox2...]\n           } \n     }\n-    , action = {name = \"contractName1\"\n+    , action = {name = \"contractName2\"\n           , input = \"inbox3\"\n           , output = \"outbox3\"\n           }\n   }\n"
+                },
+                {
+                    "date": 1643285883259,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-\n+3. \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643285901766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. \n+3. Design patterns \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643285936679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Design patterns \n+3. Design patterns can be encoded \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643285965633,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Design patterns can be encoded \n+3. Design patterns can be encoded in \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643286006766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Design patterns can be encoded in \n+3. Design patterns \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643286033048,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Design patterns \n+3. Design patterns that will be supported by the \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643286045964,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Design patterns that will be supported by the \n+3. Design patterns that will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643286059940,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,10 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Design patterns that will be supported by the Petri Net:\n+3. \n+4. Design patterns that will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643286106057,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. \n+3. The \n 4. Design patterns that will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286117980,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. The \n+3. The State Engine will decoupled from the \n 4. Design patterns that will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286142051,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. The State Engine will decoupled from the \n+3. \n 4. Design patterns that will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286168951,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. \n-4. Design patterns that will be supported by the Petri Net:\n+4. Design patterns  will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643286217948,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,10 +117,10 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. \n-4. Design patterns  will be supported by the Petri Net:\n+3. Smart Contract templates\n+4. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643286223892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Smart Contract templates\n+3. Smart Contract templates will \n 4. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286230219,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Smart Contract templates will \n+3. Smart Contract templates will allow reuse of \n 4. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286256673,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,10 @@\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. Smart Contract templates will allow reuse of \n-4. Design patterns will be supported by the Petri Net:\n+4. \n+5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643286300456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. Smart Contract templates will allow reuse of \n-4. \n+4. The \n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286315904,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. Smart Contract templates will allow reuse of \n-4. The \n+4. \n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286322585,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. Smart Contract templates will allow reuse of \n-4. \n+4. Validation and \n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286331407,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. Smart Contract templates will allow reuse of \n-4. Validation and \n+4. Validation and Completeness\n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286376370,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. Smart Contract templates will allow reuse of \n-4. Validation and Completeness\n+4. Validation of dApp\n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286381459,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. Smart Contract templates will allow reuse of \n-4. Validation of dApp\n+4. Validation of dApp can be \n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286394682,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. Smart Contract templates will allow reuse of \n-4. Validation of dApp can be \n+4. Validation of dApp can be done in terms of Liveness, Boundedness and Reachability \n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286400262,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -118,9 +118,9 @@\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. Smart Contract templates will allow reuse of \n-4. Validation of dApp can be done in terms of Liveness, Boundedness and Reachability \n+4. Validation of dApp can be done in terms of Liveness, Boundedness and Reachability\n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n"
+                },
+                {
+                    "date": 1643286435704,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Smart Contract templates will allow reuse of \n+3. Smart Contract templates will allow reuse \n 4. Validation of dApp can be done in terms of Liveness, Boundedness and Reachability\n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n"
+                },
+                {
+                    "date": 1643286443718,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Smart Contract templates will allow reuse \n+3. Smart Contract templates will allow reuse annd create a possible m\n 4. Validation of dApp can be done in terms of Liveness, Boundedness and Reachability\n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n"
+                },
+                {
+                    "date": 1643286449847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Smart Contract templates will allow reuse annd create a possible m\n+3. Smart Contract templates will allow reuse annd create a possible market place of tested \n 4. Validation of dApp can be done in terms of Liveness, Boundedness and Reachability\n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n"
+                },
+                {
+                    "date": 1643286457360,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Smart Contract templates will allow reuse annd create a possible market place of tested \n+3. Smart Contract templates will allow reuse annd create a possible market place of tested Contracts\n 4. Validation of dApp can be done in terms of Liveness, Boundedness and Reachability\n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n"
+                },
+                {
+                    "date": 1643286466984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -117,9 +117,9 @@\n ### Desired outcomes\n \n 1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n-3. Smart Contract templates will allow reuse annd create a possible market place of tested Contracts\n+3. Smart Contract templates will allow reuse and create a possible market place of tested Contracts\n 4. Validation of dApp can be done in terms of Liveness, Boundedness and Reachability\n 5. Design patterns will be supported by the Petri Net:\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n"
+                },
+                {
+                    "date": 1643286473380,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,8 +120,9 @@\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. Smart Contract templates will allow reuse and create a possible market place of tested Contracts\n 4. Validation of dApp can be done in terms of Liveness, Boundedness and Reachability\n 5. Design patterns will be supported by the Petri Net:\n+6. \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n"
+                },
+                {
+                    "date": 1643286484592,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -120,11 +120,12 @@\n 2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API\n 3. Smart Contract templates will allow reuse and create a possible market place of tested Contracts\n 4. Validation of dApp can be done in terms of Liveness, Boundedness and Reachability\n 5. Design patterns will be supported by the Petri Net:\n-6. \n+\n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n+\n <a id=\"1\">[1]</a> \n Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n \n <a id=\"2\">[2]</a>\n"
+                },
+                {
+                    "date": 1643286495181,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -124,9 +124,9 @@\n \n ![alt text](docs/place_transitions.png \"Arcs\")\n ## References\n \n-<a id=\"1\">[1]</a> \n-Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. \n+<a id=\"1\">[1]</a>\n+Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205\n \n <a id=\"2\">[2]</a>\n Ermel, Claudia & Martini, Alfio. (1996). A Taste of Categorical Petri Nets. \n\\ No newline at end of file\n"
                 }
             ],
             "date": 1629811248156,

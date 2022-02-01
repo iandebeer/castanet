@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1629462613091,
@@ -24,6 +24,10 @@
                 {
                     "date": 1629883963177,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n import cats.data.State\n import cats.syntax.functor.*\n import io.circe.Decoder\n import io.circe.Encoder\n-import io.circe._\n+import io.circe.*\n import io.circe.generic.auto.*\n import io.circe.generic.auto.*\n import io.circe.parser.*\n import io.circe.parser.decode\n"
+                },
+                {
+                    "date": 1643723842120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,46 +17,9 @@\n import scala.io.Source\n import scala.quoted.*\n \n class PetriSpec extends FunSuite {\n-  val t = Source\n-    .fromFile(\n-      \"/Users/ian/dev/castanet/modules/protocol/src/main/workflow/workflow.json\"\n-    )\n-    .mkString\n-  val j               = parse(t).getOrElse(Json.Null)\n-  val k               = parse(\"error\").getOrElse(Json.Null)\n-  val cursor: HCursor = j.hcursor\n-\n-  // val c = cursor.downField(\"spec\").downField(\"templates\")\n-  test(\"extract path\") {\n-    println(j)\n-    println(\"_\" * 10)\n-\n-    println(j.as[Json])\n-    val c1 = j.hcursor.downField(\"spec\").downField(\"templates\").downArray\n-    println(\"_\" * 10)\n-    println(c1.as[Json])\n-    val c2 = cursor\n-      .downField(\"spec\")\n-      .downField(\"templates\")\n-      .downN(1)\n-      .downField(\"dag\") //.downField(\"tasks\").downArray\n-    //val x = c2.focus\n-    val y = decode[Dag](c2.focus.get.toString)\n-    println(\"_\" * 10)\n-\n-    println(c2.focus.get)\n-    println(\"_\" * 10)\n-\n-    println(y)\n-    println(\"_\" * 10)\n-\n-    //val z = decode[Workflow](j.toString)\n-\n-    //println(c2.as[Json].getOrElse(Json.Null))\n-  }\n-\n+  \n   test(\"build petri net\") {\n     import Arc._\n     val jp1 = \"\"\"{\"id\":1,\"name\":\"start\",\"capacity\":1}\"\"\"\n \n@@ -83,9 +46,11 @@\n     // def func(serviceName: String, rpcName: String): Function1[String, Unit] = ???\n     // '{(l: String) => println(l)}\n \n     val t1: Transition = Transition(6, \"splitter\", s1, r1)\n-    // val tt1       = t1.asJson.noSpaces\n+/*\n+    val tt1       = t1.asJson.noSpaces\n+*/\n \n     val t2: Transition = Transition(7, \"joiner\", s1, r1)\n     val t3: Transition = Transition(8, \"continuer\", s1, r1)\n \n"
                 }
             ],
             "date": 1629462613091,

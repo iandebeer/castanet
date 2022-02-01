@@ -18,44 +18,7 @@ import scala.io.Source
 import scala.quoted.*
 
 class PetriSpec extends FunSuite {
-  val t = Source
-    .fromFile(
-      "/Users/ian/dev/castanet/modules/protocol/src/main/workflow/workflow.json"
-    )
-    .mkString
-  val j               = parse(t).getOrElse(Json.Null)
-  val k               = parse("error").getOrElse(Json.Null)
-  val cursor: HCursor = j.hcursor
-
-  // val c = cursor.downField("spec").downField("templates")
-  test("extract path") {
-    println(j)
-    println("_" * 10)
-
-    println(j.as[Json])
-    val c1 = j.hcursor.downField("spec").downField("templates").downArray
-    println("_" * 10)
-    println(c1.as[Json])
-    val c2 = cursor
-      .downField("spec")
-      .downField("templates")
-      .downN(1)
-      .downField("dag") //.downField("tasks").downArray
-    //val x = c2.focus
-    val y = decode[Dag](c2.focus.get.toString)
-    println("_" * 10)
-
-    println(c2.focus.get)
-    println("_" * 10)
-
-    println(y)
-    println("_" * 10)
-
-    //val z = decode[Workflow](j.toString)
-
-    //println(c2.as[Json].getOrElse(Json.Null))
-  }
-
+  
   test("build petri net") {
     import Arc._
     val jp1 = """{"id":1,"name":"start","capacity":1}"""
@@ -84,7 +47,9 @@ class PetriSpec extends FunSuite {
     // '{(l: String) => println(l)}
 
     val t1: Transition = Transition(6, "splitter", s1, r1)
-    // val tt1       = t1.asJson.noSpaces
+/*
+    val tt1       = t1.asJson.noSpaces
+*/
 
     val t2: Transition = Transition(7, "joiner", s1, r1)
     val t3: Transition = Transition(8, "continuer", s1, r1)

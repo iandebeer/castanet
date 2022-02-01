@@ -1,7 +1,5 @@
 package ee.mn8.castanet
 
-import java.nio.file.Paths
-
 import scala.concurrent.duration.*
 
 import cats.*
@@ -50,8 +48,8 @@ object PetriGen extends IOApp.Simple:
 
   val converter: Stream[IO, Unit] =
     Files[IO]
-      .readAll(Paths.get("modules/protocol/src/main/workflow/workflow.yaml"), 4096)
-      .through(text.utf8Decode)
+      .readAll(Path("modules/protocol/src/main/workflow/workflow.yaml"))
+      .through(text.utf8.decode)
       .map(fileString => fromYaml(fileString))
       .map({
         case Right(json)        => json
@@ -61,9 +59,9 @@ object PetriGen extends IOApp.Simple:
       //.through(stringArrayParser)
       //.through(decoder[IO,Workflow])
       .map(w => w.toString)
-      .through(text.utf8Encode)
+      .through(text.utf8.encode)
       .through(
-        Files[IO].writeAll(Paths.get("modules/protocol/src/main/workflow/workflow.txt"))
+        Files[IO].writeAll(Path("modules/protocol/src/main/workflow/workflow.txt"))
       )
 
   def run: IO[Unit] =

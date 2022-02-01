@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 63,
+            "activePatchIndex": 70,
             "patches": [
                 {
                     "date": 1629463928427,
@@ -260,6 +260,34 @@
                 {
                     "date": 1629806024517,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,8 +24,9 @@\n trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]\n \n type NodeId = Int\n \n+\n enum Arc extends PetriElement : \n   val from: NodeId\n   val to: NodeId\n   case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc\n"
+                },
+                {
+                    "date": 1643723508812,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,8 @@\n import java.util.concurrent.Executor\n import Constants.*\n \n import scala.concurrent.ExecutionContext.Implicits.global\n-import fs2.grpc.client.ClientOptions\n import _root_.io.grpc.ClientInterceptor\n \n import cats.effect.IO\n \n@@ -24,8 +23,11 @@\n trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]\n \n type NodeId = Int\n \n+case class ArcId(from: Int, to: Int):\n+  import scala.math.Ordered.orderingToOrdered \n+  def compare(that: ArcId): Int = (this.from, this.to) compare (that.from, that.to)\n \n enum Arc extends PetriElement : \n   val from: NodeId\n   val to: NodeId\n"
+                },
+                {
+                    "date": 1643723521226,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,8 @@\n import fs2.*\n import _root_.io.grpc.*\n import fs2.grpc.syntax.all.*\n import java.util.concurrent.Executor\n-import Constants.*\n \n import scala.concurrent.ExecutionContext.Implicits.global\n import _root_.io.grpc.ClientInterceptor\n \n"
+                },
+                {
+                    "date": 1643723550744,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,15 +44,9 @@\n   def run() = assert(true, println(s\"Place: $name\"))\n \n case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n   \n-  val managedChannelStream: Stream[IO, ManagedChannel] =\n-    ManagedChannelBuilder\n-      .forAddress(\"127.0.0.1\", 9999)\n-      .usePlaintext()\n-      .intercept(KeycloakInterceptor(\"hi\"))\n-      .stream[IO]\n-  def run() = assert(true, println(s\"Transition: $name\"))\n+    def run() = assert(true, println(s\"Transition: $name\"))\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1643723558391,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,11 +42,9 @@\n \n case class Place(id: NodeId, name: String, capacity: Int) extends LinkableElement:\n   def run() = assert(true, println(s\"Place: $name\"))\n \n-case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n-  \n-    def run() = assert(true, println(s\"Transition: $name\"))\n+case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :  def run() = assert(true, println(s\"Transition: $name\"))\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1643723737061,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,10 +7,9 @@\n \n import cats.effect.*\n import cats.effect.std.Dispatcher\n import fs2.*\n-import _root_.io.grpc.*\n-import fs2.grpc.syntax.all.*\n+\n import java.util.concurrent.Executor\n \n import scala.concurrent.ExecutionContext.Implicits.global\n import _root_.io.grpc.ClientInterceptor\n@@ -42,9 +41,10 @@\n \n case class Place(id: NodeId, name: String, capacity: Int) extends LinkableElement:\n   def run() = assert(true, println(s\"Place: $name\"))\n \n-case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :  def run() = assert(true, println(s\"Transition: $name\"))\n+case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :\n+    def run() = assert(true, println(s\"Transition: $name\"))\n \n case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) \n \n type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1643723767059,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,8 @@\n \n import java.util.concurrent.Executor\n \n import scala.concurrent.ExecutionContext.Implicits.global\n-import _root_.io.grpc.ClientInterceptor\n \n import cats.effect.IO\n \n trait PetriElement \n"
+                },
+                {
+                    "date": 1643723774394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,8 @@\n \n import cats.kernel.Monoid\n import scala.collection.immutable.SortedMap\n import scala.collection.immutable.ListSet\n-import io.grpc.ManagedChannelBuilder\n \n import cats.effect.*\n import cats.effect.std.Dispatcher\n import fs2.*\n"
                 }
             ],
             "date": 1629463928427,

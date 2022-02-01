@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1629464404694,
@@ -48,6 +48,30 @@
                 {
                     "date": 1630926986162,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n       .stream[IO]\n \n   \n   //def getStub(fqn:String):fs2.grpc.GeneratedCompanion = ???\n-  def func1(stub:GreeterFs2Grpc[cats.effect.IO, Metadata],s:String)(f: Function1[String,String]):String = f(s)\n+  //def func1(stub:GreeterFs2Grpc[cats.effect.IO, Metadata],s:String)(f: Function1[String,String]):String = f(s)\n   override def run(args: List[String]): IO[ExitCode] = {\n     for {\n       dispatcher     <- Stream.resource(Dispatcher[IO])\n       managedChannel <- managedChannelStream\n"
+                },
+                {
+                    "date": 1634560544792,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -62,4 +62,6 @@\n       )\n \n     } yield ()\n   }.compile.drain.as(ExitCode.Success)\n+\n+  \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1634560557007,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,5 +63,5 @@\n \n     } yield ()\n   }.compile.drain.as(ExitCode.Success)\n \n-  \n\\ No newline at end of file\n+  case c lass \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1634560570189,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,5 +63,5 @@\n \n     } yield ()\n   }.compile.drain.as(ExitCode.Success)\n \n-  case c lass \n\\ No newline at end of file\n+  case class Step\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1634560596897,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,5 +63,5 @@\n \n     } yield ()\n   }.compile.drain.as(ExitCode.Success)\n \n-  case class Step\n\\ No newline at end of file\n+  case class \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1634560606214,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,5 +63,5 @@\n \n     } yield ()\n   }.compile.drain.as(ExitCode.Success)\n \n-  case class \n\\ No newline at end of file\n+  case class StepTask()\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1634564592303,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -63,5 +63,4 @@\n \n     } yield ()\n   }.compile.drain.as(ExitCode.Success)\n \n-  case class StepTask()\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1629464404694,

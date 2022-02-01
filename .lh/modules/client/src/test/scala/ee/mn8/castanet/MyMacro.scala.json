@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 34,
+            "activePatchIndex": 100,
             "patches": [
                 {
                     "date": 1631005764673,
@@ -144,6 +144,270 @@
                 {
                     "date": 1631090908369,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,4 @@\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm))\n-\n"
+                },
+                {
+                    "date": 1633526908462,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,4 +11,5 @@\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm))\n+    \n"
+                },
+                {
+                    "date": 1633526916897,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,4 +12,11 @@\n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm))\n     \n+  given Compiler = Compiler.make(getClass.getClassLoader)\n+\n+  val f: Array[Int] => Int = staging.run {\n+    val stagedSum: Expr[Array[Int] => Int] = '{ (arr: Array[Int]) => ${sum('arr)}}\n+    println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n+    stagedSum\n+  }\n"
+                },
+                {
+                    "date": 1633526924183,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,19 +1,19 @@\n package ee.mn8.castanet\n import scala.quoted.*\n \n object MyMacro :\n-  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n+  i/* nline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n     Expr(sym.isClassDef && sym.flags.is(Flags.Trait))\n   inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n-    Expr(Printer.TreeStructure.show(a.asTerm))\n-    \n+    Expr(Printer.TreeStructure.show(a.asTerm)) */\n+\n   given Compiler = Compiler.make(getClass.getClassLoader)\n \n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = '{ (arr: Array[Int]) => ${sum('arr)}}\n"
+                },
+                {
+                    "date": 1633526932863,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n package ee.mn8.castanet\n import scala.quoted.*\n \n object MyMacro :\n-  i/* nline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n+ /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n     Expr(sym.isClassDef && sym.flags.is(Flags.Trait))\n@@ -11,9 +11,9 @@\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n-\n+    \n   given Compiler = Compiler.make(getClass.getClassLoader)\n \n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = '{ (arr: Array[Int]) => ${sum('arr)}}\n"
+                },
+                {
+                    "date": 1633526942659,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n package ee.mn8.castanet\n import scala.quoted.*\n \n+\n object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n"
+                },
+                {
+                    "date": 1633526948414,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n package ee.mn8.castanet\n import scala.quoted.*\n+import scala\n \n-\n object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n"
+                },
+                {
+                    "date": 1633526955319,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n package ee.mn8.castanet\n import scala.quoted.*\n-import scala\n+import scala.quoted.st\n \n object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n"
+                },
+                {
+                    "date": 1633526961783,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n package ee.mn8.castanet\n import scala.quoted.*\n-import scala.quoted.st\n+import scala.quoted.staging.*\n \n object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n"
+                },
+                {
+                    "date": 1633526982723,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n \n   val f: Array[Int] => Int = staging.run {\n-    val stagedSum: Expr[Array[Int] => Int] = '{ (arr: Array[Int]) => ${sum('arr)}}\n+    val stagedSum: Expr[Array[Int] => Int] = \n+      '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633529567039,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n-\n+  \n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633529586750,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n-  \n+  given \n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633529595576,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n-  given \n+  given Quotes = \n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633529610710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n-  given Quotes = \n+  given Quotes = Quotes\n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633529615926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n-  given Quotes = Quotes\n+  given uotes = Quotes\n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633529640727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n-  given uotes = Quotes\n+  given quotes = quotes.Quotes\n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633529669088,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n-  given quotes = quotes.Quotes\n+  given Quotes = quotes.Quotes\n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633529709056,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n-  given Quotes = quotes.Quotes\n+  given Quotes = quotesd.Quotes\n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633529733223,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n-  given Quotes = quotesd.Quotes\n+  using Quotes = quoted.Quotes\n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633529823050,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n-  using Quotes = quoted.Quotes\n+  \n   val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633529829944,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n-  val f: Array[Int] => Int = staging.run {\n+  val f: Array[Int] => Int = staging.run() {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n"
+                },
+                {
+                    "date": 1633529837955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n-  val f: Array[Int] => Int = staging.run() {\n+  val f: Array[Int] => Int = staging.run(using Quotes) {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n"
+                },
+                {
+                    "date": 1633529848574,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n-  val f: Array[Int] => Int = staging.run(using Quotes) {\n+  val f: Array[Int] => Int = staging.run {\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n"
+                },
+                {
+                    "date": 1633593106823,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n   val f: Array[Int] => Int = staging.run {\n-    val stagedSum: Expr[Array[Int] => Int] = \n+    def stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633593146998,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n   val f: Array[Int] => Int = staging.run {\n-    def stagedSum: Expr[Array[Int] => Int] = \n+    def stagedSum(): Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633593152141,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n   val f: Array[Int] => Int = staging.run {\n-    def stagedSum(): Expr[Array[Int] => Int] = \n+    def stagedSum(uisng Quotes): Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633593203888,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n   val f: Array[Int] => Int = staging.run {\n-    def stagedSum(uisng Quotes): Expr[Array[Int] => Int] = \n+    def stagedSum(ung Quotes): Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633593286444,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n   val f: Array[Int] => Int = staging.run {\n-    def stagedSum(ung Quotes): Expr[Array[Int] => Int] = \n+    val stagedSum(using Quotes): Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633593294030,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n   val f: Array[Int] => Int = staging.run {\n-    val stagedSum(using Quotes): Expr[Array[Int] => Int] = \n+    val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633593300802,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n   val f: Array[Int] => Int = staging.run {\n+    using \n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n"
+                },
+                {
+                    "date": 1633598055209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n   val f: Array[Int] => Int = staging.run {\n-    using \n+    using qctQuotes\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n"
+                },
+                {
+                    "date": 1633598149933,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n   val f: Array[Int] => Int = staging.run {\n-    using qctQuotes\n+    \n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n"
+                },
+                {
+                    "date": 1633598157034,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n package ee.mn8.castanet\n import scala.quoted.*\n import scala.quoted.staging.*\n \n-object MyMacro :\n+object MyMacro using qctx:Quotes:\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n"
+                },
+                {
+                    "date": 1633598164848,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n package ee.mn8.castanet\n import scala.quoted.*\n import scala.quoted.staging.*\n \n-object MyMacro using qctx:Quotes:\n+object MyMacro (using qctx:Quotes):\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n"
+                },
+                {
+                    "date": 1633598173547,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n package ee.mn8.castanet\n import scala.quoted.*\n import scala.quoted.staging.*\n \n-object MyMacro (using qctx:Quotes):\n+object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n"
+                },
+                {
+                    "date": 1633598404722,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n-  val f: Array[Int] => Int = staging.run {\n+  val f: Array[Int] => (Int = staging.run {\n     \n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633598424794,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n-  val f: Array[Int] => (Int = staging.run {\n+  val f: (Array[Int] => Int = staging.run {\n     \n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633598475810,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n-  val f: (Array[Int] => Int = staging.run {\n+  val f: (Array[Int]) => Int = run {\n     \n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n"
+                },
+                {
+                    "date": 1633598502961,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n   \n   val f: (Array[Int]) => Int = run {\n-    \n+  \n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n"
+                },
+                {
+                    "date": 1633598589769,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n   \n   val f: (Array[Int]) => Int = run {\n   \n     val stagedSum: Expr[Array[Int] => Int] = \n-      '{ (arr: Array[Int]) => ${sum('arr)}}\n+      '{ \n+      (arr: Array[Int]) => ${sum('arr)}}\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633598604516,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n   val f: (Array[Int]) => Int = run {\n   \n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ \n-      (arr: Array[Int]) => ${sum('arr)}}\n+      (arr: Array[Int]) => ${sum('arr)}\n+    }\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633598615727,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   val f: (Array[Int]) => Int = run {\n   \n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ \n-      (arr: Array[Int]) => ${sum('arr)}\n+        (arr: Array[Int]) => ${sum('arr)}\n     }\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633598621260,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,8 @@\n   \n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ \n         (arr: Array[Int]) => ${sum('arr)}\n-    }\n+      }\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633598732937,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n   val f: (Array[Int]) => Int = run {\n   \n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ \n-        (arr: Array[Int]) => ${sum('arr)}\n+        (arr: Array[Int]) => ${ sum('arr)}\n       }\n     println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633609030009,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,25 @@\n     import quotes.reflect.*\n     Expr(Printer.TreeStructure.show(a.asTerm)) */\n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n+\n+  def map[T](arr: Expr[Array[T]], f: Expr[T] => Expr[Unit])\n+            (using Type[T], Quotes): Expr[Unit] = '{\n+    var i: Int = 0\n+    while i < ($arr).length do\n+      val element: T = ($arr)(i)\n+      ${f('element)}\n+      i += 1\n+  }\n+\n+  def sum(arr: Expr[Array[Int]])(using Quotes): Expr[Int] = '{\n+    var sum = 0\n+    ${ map(arr, x => '{sum += $x}) }\n+    sum\n+  }\n+\n+  inline def sum_m(arr: Array[Int]): Int = ${sum('arr)}\n   \n   val f: (Array[Int]) => Int = run {\n   \n     val stagedSum: Expr[Array[Int] => Int] = \n"
+                },
+                {
+                    "date": 1633614907798,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n     ${ map(arr, x => '{sum += $x}) }\n     sum\n   }\n \n-  inline def sum_m(arr: Array[Int]): Int = ${sum('arr)}\n+  //inline def sum_m(arr: Array[Int]): Int = ${sum('arr)}\n   \n   val f: (Array[Int]) => Int = run {\n   \n     val stagedSum: Expr[Array[Int] => Int] = \n"
+                },
+                {
+                    "date": 1633615940733,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,7 +38,7 @@\n     val stagedSum: Expr[Array[Int] => Int] = \n       '{ \n         (arr: Array[Int]) => ${ sum('arr)}\n       }\n-    println(stagedSum.show) // Prints \"(arr: Array[Int]) => { var sum = 0; ... }\"\n+    println(stagedSum.show) \n     stagedSum\n   }\n"
+                },
+                {
+                    "date": 1633615955300,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n     ${ map(arr, x => '{sum += $x}) }\n     sum\n   }\n \n-  //inline def sum_m(arr: Array[Int]): Int = ${sum('arr)}\n+  /%\n   \n   val f: (Array[Int]) => Int = run {\n   \n     val stagedSum: Expr[Array[Int] => Int] = \n"
+                },
+                {
+                    "date": 1633615960371,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n     ${ map(arr, x => '{sum += $x}) }\n     sum\n   }\n \n-  /%\n+  /*#::\n   \n   val f: (Array[Int]) => Int = run {\n   \n     val stagedSum: Expr[Array[Int] => Int] = \n"
+                },
+                {
+                    "date": 1633615965516,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,10 @@\n     ${ map(arr, x => '{sum += $x}) }\n     sum\n   }\n \n-  /*#::\n+  /*\n+  */\n   \n   val f: (Array[Int]) => Int = run {\n   \n     val stagedSum: Expr[Array[Int] => Int] = \n"
+                },
+                {
+                    "date": 1633615976624,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,8 +31,20 @@\n     sum\n   }\n \n   /*\n+\n+  ((arr: scala.Array[scala.Int]) => {\n+  var sum: scala.Int = 0\n+  var i: scala.Int = 0\n+  while (i.<(arr.length)) {\n+    val element: scala.Int = arr.apply(i)\n+    sum = sum.+(element)\n+    i = i.+(1)\n+  }\n+\n+  (sum: scala.Int)\n+}  )\n   */\n   \n   val f: (Array[Int]) => Int = run {\n   \n"
+                },
+                {
+                    "date": 1633615982847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n     i = i.+(1)\n   }\n \n   (sum: scala.Int)\n-}  )\n+  })\n   */\n   \n   val f: (Array[Int]) => Int = run {\n   \n"
+                },
+                {
+                    "date": 1633679212915,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,7 @@\n package ee.mn8.castanet\n import scala.quoted.*\n-import scala.quoted.staging.*\n-\n+v\n object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n"
+                },
+                {
+                    "date": 1633947067061,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n package ee.mn8.castanet\n import scala.quoted.*\n-v\n+\n object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n"
+                },
+                {
+                    "date": 1633947159719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n package ee.mn8.castanet\n import scala.quoted.*\n-\n+v\n object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n"
+                },
+                {
+                    "date": 1633947171635,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n package ee.mn8.castanet\n import scala.quoted.*\n-v\n+import \n object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n"
+                },
+                {
+                    "date": 1633947185331,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n package ee.mn8.castanet\n import scala.quoted.*\n-import \n+import sa\n object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n"
+                },
+                {
+                    "date": 1633947193535,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n package ee.mn8.castanet\n import scala.quoted.*\n-import sa\n+import staged.*\n object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n"
+                },
+                {
+                    "date": 1633947202476,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n package ee.mn8.castanet\n import scala.quoted.*\n-import staged.*\n+import stage.*\n object MyMacro :\n  /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n"
+                },
+                {
+                    "date": 1634197328100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n package ee.mn8.castanet\n import scala.quoted.*\n-import stage.*\n+import staging.*\n object MyMacro :\n- /*  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n+   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n     Expr(sym.isClassDef && sym.flags.is(Flags.Trait))\n"
+                },
+                {
+                    "date": 1634197334927,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,18 +1,18 @@\n package ee.mn8.castanet\n import scala.quoted.*\n import staging.*\n object MyMacro :\n-   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n+  inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n     Expr(sym.isClassDef && sym.flags.is(Flags.Trait))\n   inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n-    Expr(Printer.TreeStructure.show(a.asTerm)) */\n+    Expr(Printer.TreeStructure.show(a.asTerm)) \n     \n   given Compiler = Compiler.make(getClass.getClassLoader)\n \n   def map[T](arr: Expr[Array[T]], f: Expr[T] => Expr[Unit])\n"
+                },
+                {
+                    "date": 1634197405075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,8 +29,10 @@\n     ${ map(arr, x => '{sum += $x}) }\n     sum\n   }\n \n+  val \n+\n   /*\n \n   ((arr: scala.Array[scala.Int]) => {\n   var sum: scala.Int = 0\n"
+                },
+                {
+                    "date": 1634197413936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n     ${ map(arr, x => '{sum += $x}) }\n     sum\n   }\n \n-  val \n+  val x = isCaseClass\n \n   /*\n \n   ((arr: scala.Array[scala.Int]) => {\n"
+                },
+                {
+                    "date": 1634197425635,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n     ${ map(arr, x => '{sum += $x}) }\n     sum\n   }\n \n-  val x = isCaseClass\n+  val x = isCaseClass[Int]\n \n   /*\n \n   ((arr: scala.Array[scala.Int]) => {\n"
+                },
+                {
+                    "date": 1634197439424,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,8 @@\n     ${ map(arr, x => '{sum += $x}) }\n     sum\n   }\n \n-  val x = isCaseClass[Int]\n \n   /*\n \n   ((arr: scala.Array[scala.Int]) => {\n"
+                },
+                {
+                    "date": 1634200428763,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    Expr(sym.isClassDef && sym.flags.is(Flags.Trait))\n+    Expr(sym.isClassDef && sym.flags.is(Flags))\n   inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n"
+                },
+                {
+                    "date": 1634200442459,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,9 +5,9 @@\n   inline def isCaseClass[A]: Boolean = ${ isCaseClassImpl[A] }\n   private def isCaseClassImpl[A: Type](using qctx: Quotes) : Expr[Boolean] =\n     import qctx.reflect.*\n     val sym = TypeRepr.of[A].typeSymbol\n-    Expr(sym.isClassDef && sym.flags.is(Flags))\n+    Expr(sym.isClassDef && sym.flags.is(Flags.Case))\n   inline def showTree[A](inline a: A): String = ${showTreeImpl[A]('{ a })}\n \n   def showTreeImpl[A: Type](a: Expr[A])(using Quotes): Expr[String] =\n     import quotes.reflect.*\n"
                 }
             ],
             "date": 1631005764673,

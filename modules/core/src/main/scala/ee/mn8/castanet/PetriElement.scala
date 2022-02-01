@@ -3,19 +3,14 @@ package ee.mn8.castanet
 import cats.kernel.Monoid
 import scala.collection.immutable.SortedMap
 import scala.collection.immutable.ListSet
-import io.grpc.ManagedChannelBuilder
 
 import cats.effect.*
 import cats.effect.std.Dispatcher
 import fs2.*
-import _root_.io.grpc.*
-import fs2.grpc.syntax.all.*
+
 import java.util.concurrent.Executor
-import Constants.*
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import fs2.grpc.client.ClientOptions
-import _root_.io.grpc.ClientInterceptor
 
 import cats.effect.IO
 
@@ -46,14 +41,7 @@ case class Place(id: NodeId, name: String, capacity: Int) extends LinkableElemen
   def run() = assert(true, println(s"Place: $name"))
 
 case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :
-  
-  val managedChannelStream: Stream[IO, ManagedChannel] =
-    ManagedChannelBuilder
-      .forAddress("127.0.0.1", 9999)
-      .usePlaintext()
-      .intercept(KeycloakInterceptor("hi"))
-      .stream[IO]
-  def run() = assert(true, println(s"Transition: $name"))
+    def run() = assert(true, println(s"Transition: $name"))
 
 case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) 
 

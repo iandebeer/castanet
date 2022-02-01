@@ -1,22 +1,23 @@
-# Castanet, a Colored Petri Net for GRPC/HTTP orchestration and testing
+# ErgoHack III Proposal: Using a Colored Petri Net for Smart Contract orchestration and testing
 
-## e.g. FS2-GRPC or HTTP4S
+## Implemention of Smart Contract Protocol specifications (EIP-0006)
 
-(For now, the Coloured Petri Net is like a Model T Ford - you can have any colour as long as it is black).
+I am proposing a project that uses Petri Nets as a tool to define and validate Smart Contract Protocol specifications (EIP-0006), for creation of headless dApps.
 
 Formally, a Petri Net is a state transition graph that maps Places (circles) to Transitions (rectangles) and Transitions to Places via Arcs (arrows).
-It is well suited for describing the flow of concurrent processes.
+It is well suited for describing the flow of concurrent processes. This maps perfectly to the of Stages (Places) and Actions (Transitions)
 
 Petri Nets are more concise than other process flow descriptions (like UML or BPMN) in that they have an exact mathematical definition of their execution semantics, with a well-developed mathematical theory for process analysis. Bounded Petri Nets exhibits Categorical Semantics in the way that **concatenable processes as strict Monoidal categories** model Net computations [[1]](#1) [[2]](#2)
 
 Because of its Markov property - states depend only on the current marking -  Stochastic Petri Nets are also used for validating and testing the Liveness, Boundedness and Reachability of distributed networks.
 
-From the Castanet perspective, Petri Nets are directed graphs consisting of Places(States), Transitions(Services) and Arcs(Guards). It models state-transitions of (concurrent) processes.
-It is easy to see (if you are that way inclined) that Petri Nets form a Category of Petri  
-Protobuf definitions specify the service and message format for GRPC services.
-An GRPC/HTTP call is assumed to be stateless, yet often there is a need to have service calls handled within the context of a state machine (FSM)
+From the proposal perspective, Petri Nets are directed graphs consisting of Places(Stages), Transitions(Actions) and Arcs(Transaction). It models state-transitions of (concurrent) processes.
+It is easy to see (if you are that way inclined) that Petri Nets form a Category of Petri.  
 
-Castanet constructs a PetriNet using a builder-pattern
+
+We contend that there is a need to handle consecutive Smart Contract invocations (the dApp Protocol) within the context of a encapsulating state machine (FSM) as expressed by a Petri Net and executed by an off-chain dApp-container
+
+An example of how to construct a PetriNet using a builder-pattern in Scala ( Using a Petri Net library (Castanet))
 
 ```scala
 val p1 = Place(1, "start", 1)
@@ -44,6 +45,7 @@ val petrinet = b3.build()
 ```
 
 State is attributed to the Petri Net through Markers that associate a BitVector (scodec.bits) with a specific Place.
+The setting of a bit is in turn determined by the success of the ErgoScript execution.
 
 ```scala
 val m1 = Markers(pn)
@@ -76,33 +78,33 @@ The resulting state changes can be visualized with a PetriPrinter.
 
 ![alt text](modules/core/src/test/resource/animate.gif "Petri Net Animation")
 
-We derive Transitions from ProtoBuf files that indicates the RPC's we use in the business flow.
-The Transitions are described using a Dhall format list:
+We derive the set of Transitions (Actions) from  ErgoScript files that controls  the business flow.
+These Transitions are specified using a Dhall/JSON format list:
 
 ```dhall
 [
   {
       id = 2 
     , name = "testTransition"
-    , service = {
+    , action = {
           packageName = "packageName1"
-        , name = "serviceName1"   
-        , rpcs = [
-          {name = "rpc1"
-          , input = "in1"
-          , output = "out1"
-          }
-        ]  
+        , name = "contractName1"   
+        , contract = 
+          {
+            name = "ergoScript1"
+          , input = [inbox1, inbox2...]
+          , output = [outbox1, outbox2...]
+          } 
     }
-    , rpc = {name = "rpc1"
-          , input = "in1"
-          , output = "out1"
+    , action = {name = "contractName2"
+          , input = "inbox3"
+          , output = "outbox3"
           }
   }
 ]
 ```
 
-Transitions change the States of the Workflow as described by a list of Places:
+Transitions change the States of the Workflow as described by a list of Places (Stages):
 
 ```dhall
   [{
@@ -112,12 +114,19 @@ Transitions change the States of the Workflow as described by a list of Places:
   }]
   ```
 
-A business engineer can create a workflow by joining Places (States) and Transitions with Arcs 
+### Desired outcomes
+
+1. A business analyst should  create a dApp Protocol by joining Places (States) and Transitions with Arcs
+2. Configuration of a specific instance of a dApp can be programmatically created or be informed by the UI connecting to the headless dApp through a GRPC/HTTP API
+3. Smart Contract templates will allow reuse and create a possible market place of tested Contracts
+4. Validation of dApp can be done in terms of Liveness, Boundedness and Reachability
+5. Design patterns will be supported by the Petri Net:
 
 ![alt text](docs/place_transitions.png "Arcs")
 ## References
-<a id="1">[1]</a> 
-Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. 
+
+<a id="1">[1]</a>
+Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205
 
 <a id="2">[2]</a>
 Ermel, Claudia & Martini, Alfio. (1996). A Taste of Categorical Petri Nets. 

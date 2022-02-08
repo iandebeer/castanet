@@ -1,6 +1,12 @@
 # Castanet, a Colored Petri Net for GRPC/HTTP orchestration and testing
 
-## e.g. FS2-GRPC or HTTP4S
+## SBT configuration
+
+```sbt
+libraryDependencies += "ee.mn8" %% "castanet" % "0.1.4"
+```
+
+## Getting Started
 
 (For now, the Coloured Petri Net is like a Model T Ford - you can have any colour as long as it is black).
 

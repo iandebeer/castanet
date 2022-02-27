@@ -57,7 +57,7 @@ val m2 = m1.setMarker(Marker(1, bin"1"))
 val m3 = m2.setMarker(Marker(2, bin"1")).setMarker(Marker(4, bin"11"))
 ```
 
-![alt text](modules/core/src/test/resource/petrinet1.png "Petri Net 1")
+resources/Heads-Tails-Net.png
 
 For a given set of Markers (current state) the PetriNet can be asked to step through to the next state (set of markers) as indicated by the guards placed on the Arcs that join Places and Transitions.
 

@@ -17,7 +17,7 @@ val dhallVersion          = "0.10.0-M2"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 ThisBuild / scalaVersion         := Scala3
-ThisBuild / version := "0.1.4"
+ThisBuild / version := "0.1.5"
 
 ThisBuild / organization := "ee.mn8"
 ThisBuild / organizationName := "MN8 Technology (Pty) Ltd"

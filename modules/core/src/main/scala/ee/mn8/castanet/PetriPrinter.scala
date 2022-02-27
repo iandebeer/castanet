@@ -5,7 +5,7 @@ package ee.mn8.castanet
  import scala.collection.immutable.ListSet
  import scodec.bits.BitVector
 
-case class PetriPrinter(path: String = "/Users/ian/dev/castanet/modules/core/src/test/resource/", fileName:  String = "petrinet", petriNet: ColouredPetriNet) :
+case class PetriPrinter(path: String = "./", fileName:  String = "petrinet", petriNet: ColouredPetriNet) :
   
   /**
    * Creates an output dot file and uses that to create graphviz png output using following command

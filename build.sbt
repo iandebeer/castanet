@@ -13,14 +13,14 @@ val monocleVersion       = "3.1.0"
 val scodecVersion        = "1.1.30"
 val junitVersion         = "0.11"
 val refinedVersion       = "0.9.27"
-val dhallVersion          = "0.10.0-M2"
+val dhallVersion         = "0.10.0-M2"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
-ThisBuild / scalaVersion         := Scala3
-ThisBuild / version := "0.1.5"
+ThisBuild / scalaVersion      := Scala213
+ThisBuild / version           := "0.1.5"
 
-ThisBuild / organization := "ee.mn8"
-ThisBuild / organizationName := "MN8 Technology (Pty) Ltd"
+ThisBuild / organization         := "ee.mn8"
+ThisBuild / organizationName     := "MN8 Technology (Pty) Ltd"
 ThisBuild / organizationHomepage := Some(url("https://mn8.tech"))
 
 ThisBuild / scmInfo := Some(
@@ -32,15 +32,17 @@ ThisBuild / scmInfo := Some(
 
 ThisBuild / developers := List(
   Developer(
-    id    = "iandebeer",
-    name  = "Ian de Beer",
+    id = "iandebeer",
+    name = "Ian de Beer",
     email = "ian@mn8.ee",
-    url   = url("https://mn8.tech")
+    url = url("https://mn8.tech")
   )
 )
 
 ThisBuild / description := "Coloured Petri fo Scala 3"
-ThisBuild / licenses := List("MIT License" -> new URL("https://tldrlegal.com/license/mit-license#summary"))
+ThisBuild / licenses := List(
+  "MIT License" -> new URL("https://tldrlegal.com/license/mit-license#summary")
+)
 ThisBuild / homepage := Some(url("https://github.com/username/project"))
 
 // Remove all additional repository other than Maven Central from POM
@@ -69,16 +71,16 @@ lazy val core = project
     name := "castanet",
     resolvers += "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository",
     libraryDependencies ++= Seq(
-      "org.typelevel"       %% "cats-core"           % catsVersion,
-      "co.fs2"              %% "fs2-core"            % fs2Version,
-      "co.fs2"              %% "fs2-io"              % fs2Version,
-      "org.typelevel"       %% "cats-effect"         % ceVersion,
-      "dev.optics"          %% "monocle-core"        % monocleVersion,
-      "org.scodec"          %% "scodec-bits"         % scodecVersion,
-      "org.scala-lang"      %% "scala3-staging"      % Scala3,
-      "org.scalameta"       %% "munit"               % munitVersion       % Test,
-      "org.scalameta"       %% "munit-scalacheck"    % munitVersion       % Test,
-      "org.typelevel"       %% "munit-cats-effect-3" % munitCEVersion    % Test
+      "org.typelevel" %% "cats-core"    % catsVersion,
+      "co.fs2"        %% "fs2-core"     % fs2Version,
+      "co.fs2"        %% "fs2-io"       % fs2Version,
+      "org.typelevel" %% "cats-effect"  % ceVersion,
+      "dev.optics"    %% "monocle-core" % monocleVersion,
+      "org.scodec"    %% "scodec-bits"  % scodecVersion,
+      //"org.scala-lang"      %% "scala3-staging"      % Scala213,
+      "org.scalameta" %% "munit"               % munitVersion   % Test,
+      "org.scalameta" %% "munit-scalacheck"    % munitVersion   % Test,
+      "org.typelevel" %% "munit-cats-effect-3" % munitCEVersion % Test
     ),
     libraryDependencies ++= Seq(
       "io.circe" %% "circe-yaml",
@@ -86,6 +88,7 @@ lazy val core = project
       "io.circe" %% "circe-generic",
       "io.circe" %% "circe-parser"
     ).map(_ % circeVersion)
+    //scalacOptions += "-old-syntax",
+    //scalacOptions += "-rewrite",
+    //scalacOptions += "*.scala"
   )
-
-

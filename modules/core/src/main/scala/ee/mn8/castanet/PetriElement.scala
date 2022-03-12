@@ -1,48 +1,47 @@
 package ee.mn8.castanet
 
 import cats.kernel.Monoid
-import scala.collection.immutable.SortedMap
-import scala.collection.immutable.ListSet
 
-import cats.effect.*
-import cats.effect.std.Dispatcher
-import fs2.*
+import scala.collection.immutable.{ListSet, SortedMap}
 
-import java.util.concurrent.Executor
+trait PetriElement
 
-import scala.concurrent.ExecutionContext.Implicits.global
+object PetriElement {
+  type NodeId = Int
 
-import cats.effect.IO
+  trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]
 
-trait PetriElement 
+  abstract class Arc extends PetriElement {
+    val from: NodeId
+    val to: NodeId
+  }
 
-trait ConcatenableProcess extends PetriElement with Monoid[PetriElement]
+  case class Timed(from: NodeId, to: NodeId, interval: Long) extends Arc
+  case class Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc
 
-type NodeId = Int
+  case class ArcId(from: Int, to: Int) {
+    import scala.math.Ordered.orderingToOrdered
+    def compare(that: ArcId): Int = (this.from, this.to) compare (that.from, that.to)
+  }
 
-case class ArcId(from: Int, to: Int):
-  import scala.math.Ordered.orderingToOrdered 
-  def compare(that: ArcId): Int = (this.from, this.to) compare (that.from, that.to)
+  trait LinkableElement extends PetriElement {
+    val id: NodeId
+    val name: String
+    /*inline*/
+    def assert[T](condition: Boolean, expr: T): Any = if (condition) expr else ()
+    def run(): Unit
+  }
 
-enum Arc extends PetriElement : 
-  val from: NodeId
-  val to: NodeId
-  case Timed(from: NodeId, to: NodeId, interval: Long) extends Arc
-  case Weighted(from: NodeId, to: NodeId, weight: Int) extends Arc
+  case class Place(id: NodeId, name: String, capacity: Int) extends LinkableElement {
+    def run(): Unit = assert(condition = true, println(s"Place: $name"))
+  }
 
-trait  LinkableElement extends PetriElement: 
-  inline def assert[T](condition:Boolean, expr:T)  = 
-    if condition then expr else ()
-  val id: NodeId
-  val name: String
-  def run():Unit
+  case class Transition(id: NodeId, name: String, service: Service, rpc: RPC)
+      extends LinkableElement {
+    def run(): Unit = assert(condition = true, println(s"Transition: $name"))
+  }
 
-case class Place(id: NodeId, name: String, capacity: Int) extends LinkableElement:
-  def run() = assert(true, println(s"Place: $name"))
 
-case class Transition(id: NodeId, name: String, service:Service, rpc:RPC) extends LinkableElement :
-    def run() = assert(true, println(s"Transition: $name"))
+  type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]
 
-case class PetriElements(l: List[LinkableElement] = List[LinkableElement]()) 
-
-type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]
+}

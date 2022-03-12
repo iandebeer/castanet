@@ -1,7 +1,7 @@
 package ee.mn8.castanet
 
 import scala.io.Source
-import scala.quoted.*
+/*import scala.quoted._*/
 import cats.data.State
 
 sealed trait ProtoItem
@@ -29,7 +29,7 @@ case class RPC(name: String, input: String, output: String) extends ProtoItem {
     ${callsImpl(expr)} 
   
   def callsImpl(using qtcx: Quotes)(expr: Expr[Seq[Service]]) = 
-    import quotes.reflect.*
+    import quotes.reflect._
     val detail = "testing"
     println(detail)
 

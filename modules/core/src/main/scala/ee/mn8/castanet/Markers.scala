@@ -30,9 +30,7 @@ object Markers {
     Markers(
       cpn,
       cpn.elements.values
-        .collect { case p: Place =>
-          (p.id, BitVector.fill(p.capacity)(false))
-        }
+        .collect { case p: Place => (p.id, BitVector.fill(p.capacity)(false)) }
         .to(collection.immutable.SortedMap)
     )
 

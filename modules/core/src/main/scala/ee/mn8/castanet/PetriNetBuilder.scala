@@ -14,7 +14,8 @@ case class PetriNetBuilder(nodes: ListSet[PetriElement] = ListSet()) extends Con
 
   def empty: PetriNetBuilder = PetriNetBuilder()
 
-  override def combine(n: PetriElement, a: PetriElement): ConcatenableProcess = PetriNetBuilder().add(n).add(a)
+  override def combine(n: PetriElement, a: PetriElement): ConcatenableProcess =
+    PetriNetBuilder().add(n).add(a)
 
   def add[P <: PetriElement](p: P): PetriNetBuilder             = copy(nodes = nodes + p)
   def addAll[P <: PetriElement](p: ListSet[P]): PetriNetBuilder = copy(nodes = nodes ++ p)
@@ -25,11 +26,11 @@ case class PetriNetBuilder(nodes: ListSet[PetriElement] = ListSet()) extends Con
         case (n: LinkableElement, m) => m + (n.id -> n)
         case (_, m)                  => m
       }
+
     override val graph: PetriGraph =
       nodes.foldRight(SortedMap[NodeId, ListSet[LinkableElement]]()) {
-        case (n: Arc, m) =>
-          m |+| SortedMap[NodeId, ListSet[LinkableElement]](n.from -> ListSet(elements(n.to)))
-        case (_, m) => m
+        case (n: Arc, m) => m |+| SortedMap[NodeId, ListSet[LinkableElement]](n.from -> ListSet(elements(n.to)))
+        case (_, m)      => m
       }
 
     override val arcs: Map[ArcId, Long] =

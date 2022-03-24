@@ -46,6 +46,7 @@ object PetriGen extends IOApp.Simple {
 
   case class Workflow(apiVersion: String, kind: String, metadata: Metadata, spec: Spec)
   case class Spec(entrypoint: String, templates: List[Template])
+  
   sealed trait Template
   case class Server(name: String, inputs: Arguments, container: Container) extends Template
   case class Service(name: String, dag: Dag)                               extends Template

@@ -41,7 +41,6 @@ object PetriElement {
     def run(): Unit = assert(condition = true, println(s"Transition: $name"))
   }
 
-
   type PetriGraph = SortedMap[NodeId, ListSet[LinkableElement]]
 
 }

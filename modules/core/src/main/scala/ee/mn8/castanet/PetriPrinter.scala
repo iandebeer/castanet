@@ -1,55 +1,59 @@
 package ee.mn8.castanet
 
- import ee.mn8.castanet.PetriElement._
+import ee.mn8.castanet.PetriElement._
 
- import java.io.PrintWriter
- import java.io.File
- import scala.collection.immutable.ListSet
- import scodec.bits.BitVector
+import java.io.{File, PrintWriter}
 
-case class PetriPrinter(path: String = "./", fileName:  String = "petrinet", petriNet: ColouredPetriNet) {
+case class PetriPrinter(
+    path: String = "./",
+    fileName: String = "petrinet",
+    petriNet: ColouredPetriNet
+) {
 
-  /**
-   * Creates an output dot file and uses that to create graphviz png output using following command
-   * dot -Tpng <filePrefix>.dot -o <filePrefix>.png
-   * If you want to change the certain format, change below.
-   */
-  def print(markers: Option[Markers] = None, steps: Option[Map[ArcId, Long]] = None) = {
-    //the places and
-    val builder: StringBuilder = petriNet.elements.foldLeft(new StringBuilder("digraph G {\n"))(
-      (b, kv) => b.append(kv._2 match {
-        case p: Place =>
-          val markerString = markers match {
-            case Some(m) =>
-              val up = m.state(p.id).populationCount
-              val down = p.capacity - up
-              ("•" * up.toInt) + ("_" * down.toInt)
+  import PetriPrinter.LinkableElementElementPrinter
 
-            case None => "°" * p.capacity
-          }
-          s"""${p.id} [label="${p.name}\\n${markerString}\\n" shape=circle]\n"""
-        case t: Transition => s"""${t.id} [label="${t.name}" shape=box]\n"""
-      }
-      ))
-
-    // the arcs
-    petriNet.graph.foldLeft(builder.append("\n")) {
-      (b, kv) =>
-        b.append(kv._2.toIndexedSeq.reverse.map { l =>
-          val stp = if (steps.getOrElse(Map[ArcId, BitVector]()).contains(ArcId(kv._1, l.id)))
-            ",color=red,penwidth=3.0"
-          else ""
-          s"""${kv._1} -> ${l.id} [label="${petriNet.arcs(ArcId(kv._1, l.id))}" $stp] \n"""
-        }.mkString)
-    }
-    builder.append("}")
+  /** Creates an output dot file and uses that to create graphviz png output using following command
+    * dot -Tpng <filePrefix>.dot -o <filePrefix>.png If you want to change the certain format,
+    * change below.
+    */
+  def print(markers: Option[Markers] = None, steps: Option[Map[ArcId, Long]] = None): Unit = {
+    val builder = new StringBuilder("digraph G {\n")
+      .append(printElements(markers))
+      .append("\n")
+      .append(arcString(steps))
+      .append("}")
     writeTextToFile(fileName + ".dot", builder.toString)
+    executeCommand(dotCommand)
+  }
 
-    val command = new StringBuilder()
-    command.append("dot -Tpng:cairo:gd "). // output type
-      append(path + fileName).append(".dot "). // input dot file
-      append("-o ").append(path + fileName).append(".png") // output image
-    executeCommand(command.toString())
+  private def dotCommand: String = {
+    new StringBuilder()
+      .append("dot -Tpng:cairo:gd ")
+      .append(path + fileName)
+      .append(".dot ") // output type
+      .append("-o ")   // input dot file
+      .append(path + fileName)
+      .append(".png") // output image
+      .toString
+  }
+
+  private def printElements(markersOpt: Option[Markers]): String = {
+    petriNet.elements.foldLeft("") { case (acc, (_, elem)) =>
+      acc + elem.printString(markersOpt)
+    }
+  }
+
+  private def arcString(steps: Option[Map[ArcId, Long]]): String = {
+    petriNet.graph.foldLeft("") { case (acc, (nodeId, linkableSet)) =>
+      val linkableSetString: String =
+        linkableSet.toIndexedSeq.reverse.map { l =>
+          val stepsString = if (steps.contains(ArcId(nodeId, l.id))) { ",color=red,penwidth=3.0" }
+          else { "" }
+          s"""$nodeId -> ${l.id} [label="${petriNet.arcs(ArcId(nodeId, l.id))}" $stepsString] \n"""
+        }.mkString
+
+      acc + linkableSetString
+    }
   }
 
   def executeCommand(command: String): Unit =
@@ -60,4 +64,32 @@ case class PetriPrinter(path: String = "./", fileName:  String = "petrinet", pet
     writer.write(text)
     writer.close()
   }
+}
+
+object PetriPrinter {
+
+  implicit class LinkableElementElementPrinter(e: LinkableElement) {
+
+    def printString(markersOpt: Option[Markers]): String = {
+      e match {
+        case Place(id, name, capacity) =>
+          val markerString = markersOpt match {
+            case Some(m) =>
+              val up   = m.state(id).populationCount
+              val down = capacity - up
+
+              ("•" * up.toInt) + ("_" * down.toInt)
+
+            case None => "°" * capacity
+          }
+
+          s"""$id [label="$name\\n$markerString\\n" shape=circle]\n"""
+
+        case Transition(id, name, _, _) =>
+          s"""$id [label="$name" shape=box]\n"""
+
+      }
+    }
+  }
+
 }

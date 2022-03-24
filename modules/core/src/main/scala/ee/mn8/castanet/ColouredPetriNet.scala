@@ -40,19 +40,30 @@ trait ColouredPetriNet {
       val steps: Map[ArcId, Long] = flows.filter(f => f._2 <= step.inits(f._1.from).populationCount)
 
       // all arcs from allowable transitions (steps) and their weights
-      val nextFlows: Map[ArcId, Long] = for {
-        s <- steps
-        n <- graph(s._1.to)
-      } yield {
-        (ArcId(s._1.to, n.id), arcs(ArcId(s._1.to, n.id)))
-      }
+      val nextFlows: Map[ArcId, Long] =
+        for {
+          s <- steps
+          n <- graph(s._1.to)
+        } yield {
+          (ArcId(s._1.to, n.id), arcs(ArcId(s._1.to, n.id)))
+        }
 
       // all arcs that have a wight that is less than the capacity allowed by the destination place
-      val nextSteps = nextFlows.filter(f =>
-        f._2 <= elements(f._1.to)
-          .asInstanceOf[Place]
-          .capacity - step.markers.state(f._1.to).populationCount
-      )
+      val nextSteps =
+        nextFlows.filter { case (arcId, weight) =>
+          val res =
+            for {
+              linkable <- elements.get(arcId.to)
+              bitVec   <- step.markers.state.get(arcId.to)
+            } yield {
+              linkable match {
+                case Place(_, _, capacity) => weight <= capacity - bitVec.populationCount
+                case _                     => false //@todo throw error? false?
+              }
+            }
+
+          res.getOrElse(false) // or throw error?
+        }
 
       // remove markers from the origin place of allowed steps
       val m1 = steps.foldLeft(step.markers)((m, s) =>

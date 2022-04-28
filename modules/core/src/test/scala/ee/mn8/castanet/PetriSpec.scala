@@ -23,19 +23,19 @@ class PetriSpec extends FunSuite {
     import Arc._
     val jp1 = """{"id":1,"name":"start","capacity":1}"""
 
-    val p1: Place = decode[Place](jp1).getOrElse(Place(999, "Error", 0))
+    val p1: Place = decode[Place](jp1).getOrElse(Place("Error", 0))
     val pp1       = p1.asJson.noSpaces
 
     println(s"\nPlace:\n$pp1\n")
 
-    val p2: Place = Place(2, "left", 3)
-    val p3: Place = Place(3, "right", 1)
-    val p4: Place = Place(4, "joint", 3)
-    val p5: Place = Place(5, "end", 1)
+    val p2: Place = Place( "left", 3)
+    val p3: Place = Place( "right", 1)
+    val p4: Place = Place("joint", 3)
+    val p5: Place = Place("end", 1)
 
     // val rpc =
 
-    val jt1 = """{"id":6,"name":"splitter","capacity":1}""""""
+    val jt1 = """{"name":"splitter","capacity":1}""""""
     val l   = (l: String) => println(l)
     val s1 = Service(
       "ee.mn8.castanet",
@@ -46,13 +46,13 @@ class PetriSpec extends FunSuite {
     // def func(serviceName: String, rpcName: String): Function1[String, Unit] = ???
     // '{(l: String) => println(l)}
 
-    val t1: Transition = Transition(6, "splitter", s1, r1)
+    val t1: Transition = Transition("splitter", s1, r1)
 /*
     val tt1       = t1.asJson.noSpaces
 */
 
-    val t2: Transition = Transition(7, "joiner", s1, r1)
-    val t3: Transition = Transition(8, "continuer", s1, r1)
+    val t2: Transition = Transition("joiner", s1, r1)
+    val t3: Transition = Transition("continuer", s1, r1)
 
     val n    = PetriNetBuilder().addAll(ListSet(p1, p2, p3, p4, p5))
     val json = List(p1, p2, p3, p4, p5).asJson.spaces2
@@ -68,14 +68,14 @@ class PetriSpec extends FunSuite {
     //arcs = ListSet(Arc.Weighted(from = 1l,to = 2l,weight = 1)), places = ListSet[Place](p1), transitions = ListSet[Transition](Transition(id = 2l, name = "test", fn = t)))
     val n2 = n.addAll(ListSet(t1, t2, t3))
     val n3 = n2
-      .add(Weighted(1, 6, 1))
-      .add(Weighted(6, 2, 1))
-      .add(Weighted(6, 3, 1))
-      .add(Weighted(2, 7, 2))
-      .add(Weighted(3, 7, 1))
-      .add(Weighted(7, 4, 1))
-      .add(Weighted(4, 8, 3))
-      .add(Weighted(8, 5, 1))
+      .add(Weighted(1, 6, Weight(Colour.LIGHT_BLUE,1)))
+      .add(Weighted(6, 2, Weight(Colour.LIGHT_BLUE,1)))
+      .add(Weighted(6, 3, Weight(Colour.LIGHT_BLUE,1)))
+      .add(Weighted(2, 7, Weight(Colour.LIGHT_BLUE,2)))
+      .add(Weighted(3, 7, Weight(Colour.LIGHT_BLUE,1)))
+      .add(Weighted(7, 4, Weight(Colour.LIGHT_BLUE,1)))
+      .add(Weighted(4, 8, Weight(Colour.LIGHT_BLUE,3)))
+      .add(Weighted(8, 5, Weight(Colour.LIGHT_BLUE,1)))
     //val x = n3.ColouredPetriNet(Map[NodeId,ListSet[LinkableElement]]())
     println("_" * 10)
     println(s"Net 3: $n3")

@@ -1,9 +1,9 @@
-val Scala3   = "3.1.1"
+val Scala3   = "3.1.2"
 val Scala213 = "2.13.8"
 
 val catsVersion          = "2.7.0"
-val ceVersion            = "3.3.5"
-val fs2Version           = "3.2.4"
+val ceVersion            = "3.3.11"
+val fs2Version           = "3.2.7"
 val munitVersion         = "0.7.29"
 val munitCEVersion       = "1.0.7"
 val munitCheckEffVersion = "0.7.1"
@@ -13,7 +13,6 @@ val monocleVersion       = "3.1.0"
 val scodecVersion        = "1.1.30"
 val junitVersion         = "0.11"
 val refinedVersion       = "0.9.27"
-val dhallVersion          = "0.10.0-M2"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 ThisBuild / scalaVersion         := Scala3

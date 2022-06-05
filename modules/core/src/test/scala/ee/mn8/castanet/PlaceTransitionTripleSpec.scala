@@ -24,8 +24,8 @@ class PlaceTransitionTripleSpec extends FunSuite {
     val t1: Transition = Transition("splitter", s1, r1)
     val t2: Transition = Transition("joiner", s1, r1)
     val t3: Transition = Transition("continuer", s1, r1)
-    val a1             = Weighted(p1.id, t1.id, Weight(Colour.LIGHT_BLUE, 1))
-    val a2             = Weighted(t1.id, p2.id, Weight(Colour.LIGHT_BLUE, 1))
+    val w1             = Weight(Colour.LIGHT_BLUE, 1)
+    val w2             = Weight(Colour.LIGHT_BLUE, 1)
     /*     val a3             = Weighted("6", "3", Weight(Colour.LIGHT_BLUE, 1))
     val a4             = Weighted("2", "7", Weight(Colour.LIGHT_BLUE, 2))
     val a5             = Weighted("3", "7", Weight(Colour.LIGHT_BLUE, 1))
@@ -33,7 +33,7 @@ class PlaceTransitionTripleSpec extends FunSuite {
     val a7             = Weighted("4", "8", Weight(Colour.LIGHT_BLUE, 3))
     val a8             = Weighted("8", "5", Weight(Colour.LIGHT_BLUE, 1)) */
 
-    val ptt1 = PlaceTransitionTriple(p1, ListSet(a1), t1, ListSet(a2), p2)
+    val ptt1 = PlaceTransitionTriple(p1, ListSet(w1), t1, ListSet(w2), p2)
     /* val ptt2 = PlaceTransitionTriple(p1, ListSet(a1), t1, ListSet(a2), p2)
     val ptt3 = PlaceTransitionTriple(p1, ListSet(a1), t1, ListSet(a2), p2)
     val ptt4 = PlaceTransitionTriple(p1, ListSet(a1), t1, ListSet(a2), p2)

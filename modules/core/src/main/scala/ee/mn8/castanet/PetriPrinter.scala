@@ -14,6 +14,7 @@ case class PetriPrinter(path: String = "./", fileName:  String = "petrinet", pet
    */
   def print(markers: Option[Markers] = None, steps: Option[Map[ArcId, Long]] = None) = 
     //the places and 
+    val index = petriNet.elements.keySet.toList
     val builder: StringBuilder = petriNet.elements.foldLeft(new StringBuilder( "digraph G {\n"))(
       (b,kv) => b.append(kv._2 match 
           case p:Place => 
@@ -24,8 +25,8 @@ case class PetriPrinter(path: String = "./", fileName:  String = "petrinet", pet
                 ("•"*up.toInt) + ("_"*down.toInt)
 
               case None => "°"* p.capacity
-            s"""${p.id} [label="${p.name}\\n${markerString}\\n" shape=circle]\n"""
-          case t:Transition => s"""${t.id} [label="${t.name}" shape=box]\n"""
+            s"""${index.indexOf(p.id)} [label="${p.name}\\n${markerString}\\n" shape=circle]\n"""
+          case t:Transition => s"""${index.indexOf(t.id)} [label="${t.name}" shape=box]\n"""
         ))
     
     // the arcs
@@ -34,7 +35,7 @@ case class PetriPrinter(path: String = "./", fileName:  String = "petrinet", pet
           val stp = if steps.getOrElse(Map[ArcId, BitVector]()).contains(ArcId(kv._1,l.id)) then
              ",color=red,penwidth=3.0"
           else ""   
-          s"""${kv._1} -> ${l.id} [label="${petriNet.arcs(ArcId(kv._1,l.id))}" $stp] \n"""
+          s"""${index.indexOf(kv._1)} -> ${index.indexOf(l.id)} [label="${petriNet.arcs(ArcId(kv._1,l.id))}" $stp] \n"""
         ).mkString)
     )
     builder.append("}")

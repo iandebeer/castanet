@@ -3,7 +3,7 @@ package ee.mn8.castanet
 import munit.*
 
 class ColourSpec extends FunSuite {
-  
+
   test("get colour") {
     val black = Colour.get(0)
     val white = (Colour.get(15))

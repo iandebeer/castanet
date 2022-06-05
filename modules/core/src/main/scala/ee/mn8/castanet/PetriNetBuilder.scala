@@ -5,9 +5,10 @@ import cats.implicits._
 import monocle.Lens
 import monocle.syntax.all.*
 import scala.collection.immutable.{ListSet, SortedMap}
+import java.util.UUID
 
-case class PetriNetBuilder(nodes: ListSet[PetriElement] = ListSet()) extends ConcatenableProcess :
-
+case class PetriNetBuilder(id: NodeId = UUID.randomUUID().toString, nodes: ListSet[PetriElement] = ListSet()) extends Monoid[PetriNetBuilder] :
+  
   import Arc.*
 
   // Set is a Semigroup but not ListSet - add monoid behaviour
@@ -15,14 +16,17 @@ case class PetriNetBuilder(nodes: ListSet[PetriElement] = ListSet()) extends Con
 
   def empty = PetriNetBuilder()
 
-  override def combine(n: PetriElement, a: PetriElement): ConcatenableProcess =
-    PetriNetBuilder().add(n).add(a)
+  override def combine(n: PetriNetBuilder, a: PetriNetBuilder): PetriNetBuilder =
+    PetriNetBuilder(UUID.randomUUID().toString, n.nodes ++ a.nodes) 
 
-  def add[P <: PetriElement](p: P): PetriNetBuilder =
-    this.focus(_.nodes).replace(nodes + p)
+  def add(p: PlaceTransitionTriple): PetriNetBuilder =
+    PetriNetBuilder(UUID.randomUUID().toString, this.nodes ++ p.graph) 
 
-  def addAll[P <: PetriElement](p: ListSet[P]): PetriNetBuilder =
-    this.focus(_.nodes).replace(nodes ++ p)
+  // def addAll[P <: PetriElement](p: ListSet[P]): PetriNetBuilder = copy(nodes = nodes ++ p)
+  
+    //this.focus(_.nodes).replace(nodes + p)
+
+
 
   def build() = new ColouredPetriNet :
     override val elements = nodes.foldRight(SortedMap[NodeId, LinkableElement]())((n, m) =>

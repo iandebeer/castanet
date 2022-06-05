@@ -18,71 +18,44 @@ import scala.io.Source
 import scala.quoted.*
 
 class PetriSpec extends FunSuite {
-  
+
   test("build petri net") {
     import Arc._
-    val jp1 = """{"id":1,"name":"start","capacity":1}"""
 
-    val p1: Place = decode[Place](jp1).getOrElse(Place("Error", 0))
-    val pp1       = p1.asJson.noSpaces
-
-    println(s"\nPlace:\n$pp1\n")
-
-    val p2: Place = Place( "left", 3)
-    val p3: Place = Place( "right", 1)
-    val p4: Place = Place("joint", 3)
-    val p5: Place = Place("end", 1)
-
-    // val rpc =
-
-    val jt1 = """{"name":"splitter","capacity":1}""""""
-    val l   = (l: String) => println(l)
+    val start: Place = Place("start", 1)
+    val left: Place  = Place("left", 3)
+    val right: Place = Place("right", 1)
+    val joint: Place = Place("joint", 3)
+    val end: Place   = Place("end", 1)
     val s1 = Service(
       "ee.mn8.castanet",
       "HelloFs2Grpc",
       List[RPC](RPC(name = "sayHello", input = "", output = ""))
     )
     val r1 = s1.rpcs.head
-    // def func(serviceName: String, rpcName: String): Function1[String, Unit] = ???
-    // '{(l: String) => println(l)}
 
-    val t1: Transition = Transition("splitter", s1, r1)
-/*
-    val tt1       = t1.asJson.noSpaces
-*/
+    val splitter: Transition  = Transition("splitter", s1, r1)
+    val joiner: Transition    = Transition("joiner", s1, r1)
+    val continuer: Transition = Transition("continuer", s1, r1)
 
-    val t2: Transition = Transition("joiner", s1, r1)
-    val t3: Transition = Transition("continuer", s1, r1)
+    val w1   = Weight(Colour.LIGHT_BLUE, 1)
+    val w2   = Weight(Colour.LIGHT_BLUE, 1)
+    val w3   = Weight(Colour.LIGHT_BLUE, 1)
+    val w4   = Weight(Colour.LIGHT_BLUE, 2)
+    val w5   = Weight(Colour.LIGHT_BLUE, 1)
+    val w6   = Weight(Colour.LIGHT_BLUE, 1)
+    val w7   = Weight(Colour.LIGHT_BLUE, 3)
+    val w8   = Weight(Colour.LIGHT_BLUE, 1)
+    val ptt1 = PlaceTransitionTriple(start, ListSet(w1), splitter, ListSet(w2), left)
+    val ptt2 = PlaceTransitionTriple(start, ListSet(w2), splitter, ListSet(w3), right)
+    val ptt3 = PlaceTransitionTriple(left, ListSet(w4), joiner, ListSet(w6), joint)
+    val ptt4 = PlaceTransitionTriple(right, ListSet(w5), joiner, ListSet(w6), joint)
+    val ptt5 = PlaceTransitionTriple(joint, ListSet(w7), continuer, ListSet(w8), end)
 
-    val n    = PetriNetBuilder().addAll(ListSet(p1, p2, p3, p4, p5))
-    val json = List(p1, p2, p3, p4, p5).asJson.spaces2
-    println(s"\n\nJSON LIST:\n $json")
-    val ps = decode[List[Place]](json)
-    println(s"\n\nJSON decoded: $ps")
+    val pn = PetriNetBuilder().add(ptt1).add(ptt2).add(ptt3).add(ptt4).add(ptt5).build()
 
-    val json2 = List(t1, t2, t3).asJson.spaces2
-    println(s"\n\nJSON LIST:\n $json2")
-    val ts = decode[List[Transition]](json2)
-    println(s"\n\nJSON decoded: $ts")
-
-    //arcs = ListSet(Arc.Weighted(from = 1l,to = 2l,weight = 1)), places = ListSet[Place](p1), transitions = ListSet[Transition](Transition(id = 2l, name = "test", fn = t)))
-    val n2 = n.addAll(ListSet(t1, t2, t3))
-    val n3 = n2
-      .add(Weighted(1, 6, Weight(Colour.LIGHT_BLUE,1)))
-      .add(Weighted(6, 2, Weight(Colour.LIGHT_BLUE,1)))
-      .add(Weighted(6, 3, Weight(Colour.LIGHT_BLUE,1)))
-      .add(Weighted(2, 7, Weight(Colour.LIGHT_BLUE,2)))
-      .add(Weighted(3, 7, Weight(Colour.LIGHT_BLUE,1)))
-      .add(Weighted(7, 4, Weight(Colour.LIGHT_BLUE,1)))
-      .add(Weighted(4, 8, Weight(Colour.LIGHT_BLUE,3)))
-      .add(Weighted(8, 5, Weight(Colour.LIGHT_BLUE,1)))
-    //val x = n3.ColouredPetriNet(Map[NodeId,ListSet[LinkableElement]]())
     println("_" * 10)
-    println(s"Net 3: $n3")
-    println("_" * 10)
-    println(s"Linkables: ${n3.build()}")
-    println("_" * 10)
-    val pn = n3.build()
+    // val pn = n3.build()
     val places = pn.elements.values.collect { case p: Place =>
       p
     }
@@ -92,10 +65,10 @@ class PetriSpec extends FunSuite {
     val m1 = Markers(pn)
     println(s"${m1}\n${m1.toStateVector}")
 
-    val m2 = m1.setMarker(Marker(1, bin"1"))
+    val m2 = m1.setMarker(Marker("1", bin"1"))
     println(s"${m2}\n${m2.toStateVector}")
 
-    val m3 = m2.setMarker(Marker(2, bin"1")).setMarker(Marker(4, bin"11"))
+    val m3 = m2.setMarker(Marker("2", bin"1")).setMarker(Marker("4", bin"11"))
     println(s"${m3}\n${m3.toStateVector}")
 
     val m4 = Markers(pn, m3.toStateVector)

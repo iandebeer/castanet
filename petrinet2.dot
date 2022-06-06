@@ -1,12 +1,12 @@
 digraph G {
-0 [label="right\n_\n" shape=circle]
-1 [label="left\n___\n" shape=circle]
+0 [label="right\n•\n" shape=circle]
+1 [label="left\n••_\n" shape=circle]
 2 [label="end\n_\n" shape=circle]
 3 [label="continuer" shape=box]
 4 [label="joiner" shape=box]
 5 [label="start\n_\n" shape=circle]
 6 [label="splitter" shape=box]
-7 [label="joint\n___\n" shape=circle]
+7 [label="joint\n••_\n" shape=circle]
 
 0 -> 4 [label="1" ] 
 1 -> 4 [label="2" ] 

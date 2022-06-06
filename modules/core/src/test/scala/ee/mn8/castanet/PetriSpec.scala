@@ -65,10 +65,10 @@ class PetriSpec extends FunSuite {
     val m1 = Markers(pn)
     println(s"${m1}\n${m1.toStateVector}")
 
-    val m2 = m1.setMarker(Marker("1", bin"1"))
+    val m2 = m1.setMarker(Marker(start.id, bin"1"))
     println(s"${m2}\n${m2.toStateVector}")
 
-    val m3 = m2.setMarker(Marker("2", bin"1")).setMarker(Marker("4", bin"11"))
+    val m3 = m2.setMarker(Marker(left.id, bin"1")).setMarker(Marker(joint.id, bin"11"))
     println(s"${m3}\n${m3.toStateVector}")
 
     val m4 = Markers(pn, m3.toStateVector)

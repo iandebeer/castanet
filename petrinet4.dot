@@ -1,7 +1,7 @@
 digraph G {
 0 [label="right\n_\n" shape=circle]
 1 [label="left\n___\n" shape=circle]
-2 [label="end\n_\n" shape=circle]
+2 [label="end\n•\n" shape=circle]
 3 [label="continuer" shape=box]
 4 [label="joiner" shape=box]
 5 [label="start\n_\n" shape=circle]

@@ -8,8 +8,6 @@ libraryDependencies += "ee.mn8" %% "castanet" % "0.1.4"
 
 ## Getting Started
 
-(For now, the Coloured Petri Net is like a Model T Ford - you can have any colour as long as it is black).
-
 Formally, a Petri Net is a state transition graph that maps Places (circles) to Transitions (rectangles) and Transitions to Places via Arcs (arrows).
 It is well suited for describing the flow of concurrent processes.
 
@@ -25,36 +23,47 @@ An GRPC/HTTP call is assumed to be stateless, yet often there is a need to have 
 Castanet constructs a PetriNet using a builder-pattern
 
 ```scala
-val p1 = Place(1, "start", 1)
-val p2 = Place(2, "left", 3)
-val p3 = Place(3, "right", 1)
-val p4 = Place(4, "joint", 3)
-val p5 = Place(5, "end", 1)
+    val start: Place = Place("start", 1)
+    val left: Place  = Place("left", 3)
+    val right: Place = Place("right", 1)
+    val joint: Place = Place("joint", 3)
+    val end: Place   = Place("end", 1)
+    val s1 = Service(
+      "ee.mn8.castanet",
+      "HelloFs2Grpc",
+      List[RPC](RPC(name = "sayHello", input = "", output = ""))
+    )
+    val r1 = s1.rpcs.head
 
-val t1 = Transition(6, "splitter", (l: LinkableElement) => println(l))
-val t2 = Transition(7, "joiner", (l: LinkableElement) => println(l))
-val t3 = Transition(8, "continuer", (l: LinkableElement) => println(l))
+    val splitter: Transition  = Transition("splitter", s1, r1)
+    val joiner: Transition    = Transition("joiner", s1, r1)
+    val continuer: Transition = Transition("continuer", s1, r1)
 
-val b1 = PetriNetBuilder().addAll(ListSet(p1, p2, p3, p4, p5))
-val b2 = n.addAll(ListSet(t1, t2, t3))
-val b3 = n2
-  .add(Weighted(1, 6, 1))
-  .add(Weighted(6, 2, 1))
-  .add(Weighted(6, 3, 1))
-  .add(Weighted(2, 7, 2))
-  .add(Weighted(3, 7, 1))
-  .add(Weighted(7, 4, 1))
-  .add(Weighted(4, 8, 3))
-  .add(Weighted(8, 5, 1))
-val petrinet = b3.build()
+    val w1   = Weight(Colour.LIGHT_BLUE, 1)
+    val w2   = Weight(Colour.LIGHT_BLUE, 1)
+    val w3   = Weight(Colour.LIGHT_BLUE, 1)
+    val w4   = Weight(Colour.LIGHT_BLUE, 2)
+    val w5   = Weight(Colour.LIGHT_BLUE, 1)
+    val w6   = Weight(Colour.LIGHT_BLUE, 1)
+    val w7   = Weight(Colour.LIGHT_BLUE, 3)
+    val w8   = Weight(Colour.LIGHT_BLUE, 1)
+    val ptt1 = PlaceTransitionTriple(start, ListSet(w1), splitter, ListSet(w2), left)
+    val ptt2 = PlaceTransitionTriple(start, ListSet(w2), splitter, ListSet(w3), right)
+    val ptt3 = PlaceTransitionTriple(left, ListSet(w4), joiner, ListSet(w6), joint)
+    val ptt4 = PlaceTransitionTriple(right, ListSet(w5), joiner, ListSet(w6), joint)
+    val ptt5 = PlaceTransitionTriple(joint, ListSet(w7), continuer, ListSet(w8), end)
+
+    val pn = PetriNetBuilder().add(ptt1).add(ptt2).add(ptt3).add(ptt4).add(ptt5).build()
 ```
 
 State is attributed to the Petri Net through Markers that associate a BitVector (scodec.bits) with a specific Place.
 
 ```scala
-val m1 = Markers(pn)
-val m2 = m1.setMarker(Marker(1, bin"1"))
-val m3 = m2.setMarker(Marker(2, bin"1")).setMarker(Marker(4, bin"11"))
+    val m1 = Markers(pn)
+    val m2 = m1.setMarker(Marker(start.id, bin"1"))
+    val m3 = m2.setMarker(Marker(left.id, bin"1")).setMarker(Marker(joint.id, bin"11"))
+    val m4 = Markers(pn, m3.toStateVector)
+    val m5 = Markers(pn, m4.serialize)
 ```
 
 resources/Heads-Tails-Net.png
@@ -66,7 +75,7 @@ A ColouredPetrNet is traversable using a state monad to step from an initial sta
 The resulting state changes can be visualized with a PetriPrinter.
 
 ```scala
-    PetriPrinter(fileName = "petrinet1", petriNet = pn).print(Option(m3))
+   PetriPrinter(fileName = "petrinet1", petriNet = pn).print(Option(m3))
     val steps: State[Step, Unit] =
       for
         p1 <- pn.step
@@ -80,49 +89,13 @@ The resulting state changes can be visualized with a PetriPrinter.
     steps.run(Step(m3, true, 1)).value
 ```
 
-![alt text](modules/core/src/test/resource/animate.gif "Petri Net Animation")
-
-We derive Transitions from ProtoBuf files that indicates the RPC's we use in the business flow.
-The Transitions are described using a Dhall format list:
-
-```dhall
-[
-  {
-      id = 2 
-    , name = "testTransition"
-    , service = {
-          packageName = "packageName1"
-        , name = "serviceName1"   
-        , rpcs = [
-          {name = "rpc1"
-          , input = "in1"
-          , output = "out1"
-          }
-        ]  
-    }
-    , rpc = {name = "rpc1"
-          , input = "in1"
-          , output = "out1"
-          }
-  }
-]
-```
-
-Transitions change the States of the Workflow as described by a list of Places:
-
-```dhall
-  [{
-    id = 1 
-    , name = "place1"
-    , capacity = 2
-  }]
-  ```
-
 A business engineer can create a workflow by joining Places (States) and Transitions with Arcs 
 
 ![alt text](docs/place_transitions.png "Arcs")
+
 ## References
-<a id="1">[1]</a> 
+
+<a id="1">[1]</a>
 Sassone, V.. (2006). On the category of Petri net computation. 10.1007/3-540-59293-8_205. 
 
 <a id="2">[2]</a>

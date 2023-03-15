@@ -3,7 +3,7 @@
 ## SBT configuration
 
 ```sbt
-libraryDependencies += "ee.mn8" %% "castanet" % "0.1.4"
+libraryDependencies += "dev.mn8" %% "castanet" % "0.1.4"
 ```
 
 ## Getting Started
@@ -29,7 +29,7 @@ Castanet constructs a PetriNet using a builder-pattern
     val joint: Place = Place("joint", 3)
     val end: Place   = Place("end", 1)
     val s1 = Service(
-      "ee.mn8.castanet",
+      "dev.mn8.castanet",
       "HelloFs2Grpc",
       List[RPC](RPC(name = "sayHello", input = "", output = ""))
     )
@@ -63,14 +63,14 @@ State is attributed to the Petri Net through Markers that associate a BitVector 
     val m2 = m1.setMarker(Marker(start.id, bin"1"))
     val m3 = m2.setMarker(Marker(left.id, bin"1")).setMarker(Marker(joint.id, bin"11"))
     val m4 = Markers(pn, m3.toStateVector)
-    val m5 = Markers(pn, m4.serialize)
+    val m5 = Markers(pn, m4.serialize)  
 ```
 
-resources/Heads-Tails-Net.png
+![alt text](resources/Heads-Tails-Net.png "Head Tails")
 
 For a given set of Markers (current state) the PetriNet can be asked to step through to the next state (set of markers) as indicated by the guards placed on the Arcs that join Places and Transitions.
 
-A ColouredPetrNet is traversable using a state monad to step from an initial state
+A ColouredPetriNet is traversable using a state monad to step from an initial state
 
 The resulting state changes can be visualized with a PetriPrinter.
 

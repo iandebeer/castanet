@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ee.mn8
+package dev.mn8
 package castanet
 
 import cats.*
@@ -22,7 +22,7 @@ import cats.effect.*
 import cats.implicits.*
 import cats.instances.all.*
 import cats.syntax.all.*
-import ee.mn8.castanet.PetriElement
+import dev.mn8.castanet.PetriElement
 import io.circe.*
 import io.circe.generic.auto.*
 import io.circe.parser.*

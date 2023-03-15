@@ -1,4 +1,4 @@
-package ee.mn8.castanet
+package dev.mn8.castanet
 
 import cats.Semigroup
 

@@ -1,4 +1,4 @@
-package ee.mn8.castanet
+package dev.mn8.castanet
 
 import munit.FunSuite
 
@@ -10,7 +10,7 @@ class PlaceTransitionTripleSpec extends FunSuite {
   test("create a triple") {
 
     val s1 = Service(
-      "ee.mn8.castanet",
+      "dev.mn8.castanet",
       "HelloFs2Grpc",
       List[RPC](RPC(name = "sayHello", input = "", output = ""))
     )

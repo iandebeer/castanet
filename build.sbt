@@ -16,7 +16,7 @@ val refinedVersion       = "0.9.27"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 ThisBuild / scalaVersion      := Scala3
-ThisBuild / version           := "0.1.6"
+ThisBuild / version           := "0.1.7"
 
 ThisBuild / organization         := "dev.mn8"
 ThisBuild / organizationName     := "MN8 Technology ÖU"

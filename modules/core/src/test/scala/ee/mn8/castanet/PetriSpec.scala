@@ -27,16 +27,16 @@ class PetriSpec extends FunSuite {
     val right: Place = Place("right", 1)
     val joint: Place = Place("joint", 3)
     val end: Place   = Place("end", 1)
-    val s1 = Service(
+    val s = Service(
       "dev.mn8.castanet",
       "HelloFs2Grpc",
       List[RPC](RPC(name = "sayHello", input = "", output = ""))
     )
-    val r1 = s1.rpcs.head
+    val r1 = s.rpcs.head
 
-    val splitter: Transition  = Transition("splitter", s1, r1)
-    val joiner: Transition    = Transition("joiner", s1, r1)
-    val continuer: Transition = Transition("continuer", s1, r1)
+    val splitter: Transition  = Transition("splitter", s, r1)
+    val joiner: Transition    = Transition("joiner", s, r1)
+    val continuer: Transition = Transition("continuer", s, r1)
 
     val w1   = Weight(Colour.LIGHT_BLUE, 1)
     val w2   = Weight(Colour.LIGHT_BLUE, 1)
@@ -63,19 +63,31 @@ class PetriSpec extends FunSuite {
     println(dimensions)
 
     val m1 = Markers(pn)
-    println(s"${m1}\n${m1.toStateVector}")
+    println(s"\nm1 = \n${m1}\n${m1.toStateVector} => ${m1.serialize}")
+   
+    println("_" * 10)
 
     val m2 = m1.setMarker(Marker(start.id, bin"1"))
-    println(s"${m2}\n${m2.toStateVector}")
+   
+    println(s"\nm2 = \n${m2}\n${m2.toStateVector} => ${m2.serialize}")
+    println("_" * 10)
 
     val m3 = m2.setMarker(Marker(left.id, bin"1")).setMarker(Marker(joint.id, bin"11"))
-    println(s"${m3}\n${m3.toStateVector}")
+
+    println(s"\nm3 = \n${m3}\n${m3.toStateVector} => ${m3.serialize}")
+    println("_" * 10)
 
     val m4 = Markers(pn, m3.toStateVector)
-    println(s"${m4}\n${m4.toStateVector} \n${m4.serialize}")
+    println(s"\nm4 = \n${m4}\n${m4.toStateVector} => ${m4.serialize}")
+
+  
+    println("_" * 10)
 
     val m5 = Markers(pn, m4.serialize)
-    println(s"${m5}\n${m5.toStateVector} \n${m5.serialize}")
+  
+    println(s"\nm5 = \n${m5}\n${m5.toStateVector} => ${m5.serialize}")
+    println("_" * 10)
+
     PetriPrinter(fileName = "petrinet1", petriNet = pn).print(Option(m3))
     val steps: State[Step, Unit] =
       for
@@ -83,9 +95,13 @@ class PetriSpec extends FunSuite {
         p2 <- pn.step
         p3 <- pn.step
       yield (
+        println("p0 = " + pn.peek(Step(m2)).mkString(",")),
         PetriPrinter(fileName = "petrinet2", petriNet = pn).print(Option(p1)),
+        println("p1 = " + pn.peek(Step(p1)).mkString(",")),
         PetriPrinter(fileName = "petrinet3", petriNet = pn).print(Option(p2)),
-        PetriPrinter(fileName = "petrinet4", petriNet = pn).print(Option(p3))
+        println("p2 = " + pn.peek(Step(p2)).mkString(",")),
+        PetriPrinter(fileName = "petrinet4", petriNet = pn).print(Option(p3)),
+        println("p3 = " +pn.peek(Step(p3)).mkString(","))
       )
     steps.run(Step(m3, true, 1)).value
 

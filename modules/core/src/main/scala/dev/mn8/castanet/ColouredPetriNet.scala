@@ -56,7 +56,7 @@ trait ColouredPetriNet:
 
     // all arcs that have a smaller guards than the number of markers in the place - i.e. it can step 
     val steps: Map[ArcId, Long] = flows.filter(f => f._2 <= step.inits(f._1.from).populationCount)
-
+     
     // all arcs from allowable transitions (steps) and their weights 
     val nextFlows: Map[ArcId, Long] = for
       s <- steps
@@ -84,5 +84,30 @@ trait ColouredPetriNet:
       // update the state and return the markers resulting from the step (reduced origin and increased destination steps)
       (Step(m2, step.show, step.count + 1), m2)
   )
+  def peek(step: Step) = 
+    val flows: Map[ArcId, Long] = arcs.filter(a => step.inits.keySet.contains(a._1.from))
+    val steps: Map[ArcId, Long] = flows.filter(f => f._2 <= step.inits(f._1.from).populationCount)
+    val nextFlows: Map[ArcId, Long] = for
+      s <- steps
+      n <- graph(s._1.to)
+    yield (ArcId(s._1.to, n.id), arcs(ArcId(s._1.to, n.id)))
+
+    // all arcs that have a wight that is less than the capacity allowed by the destination place
+    val nextPlaces = nextFlows.filter(f =>
+      f._2 <= elements(f._1.to)
+        .asInstanceOf[Place]
+        .capacity - step.markers.state(f._1.to).populationCount
+    ).map(f =>
+      elements(f._1.to)
+    )
+    val nextTransitions = nextFlows.filter(f =>
+      f._2 <= elements(f._1.to)
+        .asInstanceOf[Place]
+        .capacity - step.markers.state(f._1.to).populationCount
+    ).map(f =>
+      elements(f._1.from)
+    )
+    nextPlaces ++ nextTransitions
+
 end ColouredPetriNet
 

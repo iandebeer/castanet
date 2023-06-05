@@ -49,4 +49,6 @@ case class Markers(cpn: ColouredPetriNet, state: SortedMap[NodeId, BitVector]):
   )
 
   def serialize: String = toStateVector.toBase64
+  override def toString(): String = 
+    state.foldLeft("")((s, kv) => s + s"${cpn.elements(kv._1).name} -> ${kv._2}\n")
 end Markers

@@ -1,22 +1,22 @@
-val Scala3   = "3.2.1"
+val Scala3   = "3.3.0"
 val Scala213 = "2.13.8"
 
-val catsVersion          = "2.8.0"
-val ceVersion            = "3.3.14"
-val fs2Version           = "3.2.10"
-val munitVersion         = "1.0.0-M6"
+val catsVersion          = "2.9.0"
+val ceVersion            = "3.5.0"
+val fs2Version           = "3.7.0"
+val munitVersion         = "1.0.0-M7"
 val munitCEVersion       = "1.0.7"
-val munitCheckEffVersion = "1.0.0-M1"
+val munitCheckEffVersion = "1.0.0-M7"
 val googleProtoVersion   = "3.19.1"
-val circeVersion         = "0.14.2"
-val monocleVersion       = "3.1.0"
-val scodecVersion        = "1.1.34"
+val circeVersion         = "0.14.5"
+val monocleVersion       = "3.2.0"
+val scodecVersion        = "1.1.37"
 val junitVersion         = "0.11"
 val refinedVersion       = "0.9.27"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 ThisBuild / scalaVersion      := Scala3
-ThisBuild / version           := "0.1.5"
+ThisBuild / version           := "0.1.6"
 
 ThisBuild / organization         := "dev.mn8"
 ThisBuild / organizationName     := "MN8 Technology ÖU"
@@ -29,6 +29,8 @@ ThisBuild / scmInfo := Some(
   )
 )
 
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
 ThisBuild / developers := List(
   Developer(
     id = "iandebeer",
@@ -38,11 +40,11 @@ ThisBuild / developers := List(
   )
 )
 
-ThisBuild / description := "Coloured Petri fo Scala 3"
+ThisBuild / description := "Coloured Petri for Scala3"
 ThisBuild / licenses := List(
   "MIT License" -> new URL("https://tldrlegal.com/license/mit-license#summary")
 )
-ThisBuild / homepage := Some(url("https://github.com/username/project"))
+ThisBuild / homepage := Some(url("https://github.com/iandebeer/castanet"))
 
 // Remove all additional repository other than Maven Central from POM
 ThisBuild / pomIncludeRepository := { _ => false }
@@ -81,7 +83,7 @@ lazy val core = project
       "dev.optics"     %% "monocle-core"        % monocleVersion,
       "org.scodec"     %% "scodec-bits"         % scodecVersion,
       "org.scala-lang" %% "scala3-staging"      % Scala3,
-      "io.circe" %% "circe-yaml"                % "0.14.1",
+      "io.circe" %% "circe-yaml"                % "0.14.2",
       "org.scalameta"  %% "munit"               % munitVersion   % Test,
       "org.scalameta"  %% "munit-scalacheck"    % munitVersion   % Test,
       "org.typelevel"  %% "munit-cats-effect-3" % munitCEVersion % Test

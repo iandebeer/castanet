@@ -95,15 +95,15 @@ class PetriSpec extends FunSuite {
         p2 <- pn.step
         p3 <- pn.step
       yield (
-        println("p0 = " + pn.peek(Step(m2)).mkString(",")),
+        println("p0 = " + pn.peek(Step(m2,1))),
         PetriPrinter(fileName = "petrinet2", petriNet = pn).print(Option(p1)),
-        println("p1 = " + pn.peek(Step(p1)).mkString(",")),
+        println("p1 = " + pn.peek(Step(p1,2))),
         PetriPrinter(fileName = "petrinet3", petriNet = pn).print(Option(p2)),
-        println("p2 = " + pn.peek(Step(p2)).mkString(",")),
+        println("p2 = " + pn.peek(Step(p2,3))),
         PetriPrinter(fileName = "petrinet4", petriNet = pn).print(Option(p3)),
-        println("p3 = " +pn.peek(Step(p3)).mkString(","))
+        println("p3 = " + pn.peek(Step(p3,4)))
       )
-    steps.run(Step(m3, true, 1)).value
+    steps.run(Step(m3, 1)).value
 
   }
 }

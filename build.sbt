@@ -57,7 +57,7 @@ ThisBuild / pomIncludeRepository := { _ => false }
 
 ThisBuild /  githubOwner := "iandebeer"
 ThisBuild /githubRepository := "castanet"
-ThisBuild / githubTokenSource :=  TokenSource.Environment("GITHUB_TOKEN")
+ThisBuild / githubTokenSource := TokenSource.GitConfig("github.token") || TokenSource.Environment("GITHUB_TOKEN")
 
 ThisBuild / publishMavenStyle := true
 
@@ -80,7 +80,6 @@ lazy val core = project
     publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
     resolvers += "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository",
     resolvers += Resolver.githubPackages("OWNER"),
-    githubTokenSource := TokenSource.GitConfig("github.token"),
     libraryDependencies ++= Seq(
       "org.typelevel"  %% "cats-core"           % catsVersion,
       "co.fs2"         %% "fs2-core"            % fs2Version,

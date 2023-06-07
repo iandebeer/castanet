@@ -3,7 +3,7 @@
 ## SBT configuration
 
 ```sbt
-libraryDependencies += "dev.mn8" %% "castanet" % "0.1.4"
+libraryDependencies += "dev.mn8" %% "castanet" % "0.1.9"
 ```
 
 ## Getting Started
@@ -66,7 +66,7 @@ State is attributed to the Petri Net through Markers that associate a BitVector 
     val m5 = Markers(pn, m4.serialize)  
 ```
 
-![alt text](resources/Heads-Tails-Net.png "Head Tails")
+![alt text](docs/Heads-Tails-Net.png "Head Tails")
 
 For a given set of Markers (current state) the PetriNet can be asked to step through to the next state (set of markers) as indicated by the guards placed on the Arcs that join Places and Transitions.
 

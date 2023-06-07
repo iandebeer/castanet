@@ -16,7 +16,7 @@ val refinedVersion       = "0.9.27"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 ThisBuild / scalaVersion      := Scala3
-ThisBuild / version           := "0.1.7"
+ThisBuild / version           := "0.1.9"
 
 ThisBuild / organization         := "dev.mn8"
 ThisBuild / organizationName     := "MN8 Technology ÖU"
@@ -49,11 +49,15 @@ ThisBuild / homepage := Some(url("https://github.com/iandebeer/castanet"))
 // Remove all additional repository other than Maven Central from POM
 ThisBuild / pomIncludeRepository := { _ => false }
 
-ThisBuild / publishTo := {
+/*ThisBuild / publishTo := {
   val nexus = "https://s01.oss.sonatype.org/"
   if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
   else Some("releases" at nexus + "service/local/staging/deploy/maven2")
-}
+}*/
+
+ThisBuild /  githubOwner := "iandebeer"
+ThisBuild /githubRepository := "castanet"
+ThisBuild / githubTokenSource := TokenSource.GitConfig("github.token")
 
 ThisBuild / publishMavenStyle := true
 
@@ -75,6 +79,8 @@ lazy val core = project
     publishConfiguration      := publishConfiguration.value.withOverwrite(true),
     publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true),
     resolvers += "Local Maven Repository" at "file://" + Path.userHome.absolutePath + "/.m2/repository",
+    resolvers += Resolver.githubPackages("OWNER"),
+    githubTokenSource := TokenSource.GitConfig("github.token"),
     libraryDependencies ++= Seq(
       "org.typelevel"  %% "cats-core"           % catsVersion,
       "co.fs2"         %% "fs2-core"            % fs2Version,

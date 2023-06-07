@@ -49,11 +49,11 @@ ThisBuild / homepage := Some(url("https://github.com/iandebeer/castanet"))
 // Remove all additional repository other than Maven Central from POM
 ThisBuild / pomIncludeRepository := { _ => false }
 
-ThisBuild / publishTo := {
-  val nexus = "https://s01.oss.sonatype.org/"
-  if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
-  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
-}
+ThisBuild / githubTokenSource := TokenSource.Environment("GITHUB_TOKEN")
+ThisBuild / githubOwner := sys.env.get("GITHUB_OWNER").getOrElse("iandebeer")
+ThisBuild / githubRepository := sys.env.get("GITHUB_REPO").getOrElse("castanet")
+
+ThisBuild / publishTo := githubPublishTo.value
 
 ThisBuild / publishMavenStyle := true
 

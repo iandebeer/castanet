@@ -57,7 +57,7 @@ ThisBuild / pomIncludeRepository := { _ => false }
 
 ThisBuild /  githubOwner := "iandebeer"
 ThisBuild /githubRepository := "castanet"
-ThisBuild / githubTokenSource := TokenSource.GitConfig("github.token")
+ThisBuild / githubTokenSource := TokenSource.GitConfig("github.token") || TokenSource.Environment("GITHUB_TOKEN")
 
 ThisBuild / publishMavenStyle := true
 

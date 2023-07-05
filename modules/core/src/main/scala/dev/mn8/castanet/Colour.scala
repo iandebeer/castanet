@@ -26,4 +26,4 @@ object Colour:
     if ord < Colour.values.size then
       (Colour.fromOrdinal(ord).toString,Colour.fromOrdinal(ord).toHex)
     else
-      (s"COLOUR$ord", "%06x".format(0))
+      (s"COLOUR$ord", "%06x".format(0))   

@@ -65,7 +65,7 @@ trait ColouredPetriNet:
       n <- graph(s._1.to)
     yield (ArcId(s._1.to, n.id), arcs(ArcId(s._1.to, n.id)))
 
-    // all arcs that have a wight that is less than the capacity allowed by the destination place
+    // all arcs that have a weight that is less than the capacity allowed by the destination place
     val nextSteps = nextFlows.filter(f =>
       f._2 <= elements(f._1.to)
         .asInstanceOf[Place]
@@ -90,7 +90,7 @@ trait ColouredPetriNet:
   /**
    * Shows the next places and transitions that can be reached from the current state without changing the state
    * @param step
-  * @return a tuple of the next places and transitions that can be reached from the current state given a set of Markers
+  * @return a tuple of the current places and next transitions that can be reached from the current state given a set of Markers
    */
 
   def peek(step: Step): (Set[LinkableElement], Set[LinkableElement])= 
@@ -101,22 +101,26 @@ trait ColouredPetriNet:
       n <- graph(s._1.to)
     yield (ArcId(s._1.to, n.id), arcs(ArcId(s._1.to, n.id)))
 
-    // all arcs that have a wight that is less than the capacity allowed by the destination place
-    val nextPlaces = nextFlows.filter(f =>
+    // all arcs that have a weight that is less than the capacity allowed by the destination place
+    val currentPlaces = nextFlows.filter(f =>
       f._2 <= elements(f._1.to)
         .asInstanceOf[Place]
         .capacity - step.markers.state(f._1.to).populationCount
     ).map(f =>
-      elements(f._1.to)
-    )
+      elements.get(f._1.from) /* match
+        case Some(p: Place) => p.name
+        case _ => "" */
+    ).flatten
     val nextTransitions = nextFlows.filter(f =>
       f._2 <= elements(f._1.to)
         .asInstanceOf[Place]
         .capacity - step.markers.state(f._1.to).populationCount
     ).map(f =>
-      elements(f._1.from)
-    )
-    (nextPlaces.toSet, nextTransitions.toSet)
+      elements.get(f._1.to)/*  match
+        case Some(t: Transition) => t.name
+        case _ => "" */
+    ).flatten
+    (currentPlaces.toSet, nextTransitions.toSet)
 
 end ColouredPetriNet
 

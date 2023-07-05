@@ -8,4 +8,4 @@ addSbtPlugin("org.scalameta" % "sbt-native-image" % "0.3.2")
 
 addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.2.0-M2")
 
-addSbtPlugin("com.codecommit" % "sbt-github-packages" % "0.5.3")
+//§addSbtPlugin("com.codecommit" % "sbt-github-packages" % "0.5.3")

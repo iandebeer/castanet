@@ -4,7 +4,7 @@ val Scala213 = "2.13.8"
 val catsVersion          = "2.9.0"
 val ceVersion            = "3.5.0"
 val fs2Version           = "3.7.0"
-val munitVersion         = "1.0.0-M7"
+val munitVersion         = "1.0.0-M8"
 val munitCEVersion       = "1.0.7"
 val munitCheckEffVersion = "1.0.0-M7"
 val googleProtoVersion   = "3.19.1"
@@ -16,7 +16,7 @@ val refinedVersion       = "0.9.27"
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 ThisBuild / scalaVersion      := Scala3
-ThisBuild / version           := "0.1.9"
+ThisBuild / version           := "0.1.10"
 
 ThisBuild / organization         := "dev.mn8"
 ThisBuild / organizationName     := "MN8 Technology ÖU"
@@ -28,9 +28,7 @@ ThisBuild / scmInfo := Some(
     "scm:git@github.iandebeer/castanet.git"
   )
 )
-
-Global / onChangedBuildSource := ReloadOnSourceChanges
-
+  
 ThisBuild / developers := List(
   Developer(
     id = "iandebeer",
@@ -55,10 +53,10 @@ ThisBuild / pomIncludeRepository := { _ => false }
   else Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }*/
 
-ThisBuild /  githubOwner := "iandebeer"
+/*ThisBuild /  githubOwner := "iandebeer"
 ThisBuild /githubRepository := "castanet"
 ThisBuild / githubTokenSource := TokenSource.GitConfig("github.token") || TokenSource.Environment("GITHUB_TOKEN")
-
+*/
 ThisBuild / publishMavenStyle := true
 
 ThisBuild / versionScheme := Some("early-semver")
